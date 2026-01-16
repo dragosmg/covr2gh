@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright (c) 2026 covrxtra autors
+Copyright (c) 2026 covr2md autors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
