@@ -47,7 +47,7 @@ test_that("derive_badge_value() complains", {
   )
 })
 
-test_that("build_badge_colour() works", {
+test_that("derive_badge_colour() works", {
   expect_identical(
     derive_badge_colour(10),
     "red"
@@ -86,6 +86,26 @@ test_that("build_badge_colour() works", {
   expect_identical(
     derive_badge_colour(NULL),
     "lightgrey"
+  )
+})
+
+test_that("derive_badge_colour() complains", {
+  expect_error(
+    derive_badge_colour(c(78.5, 32.5)),
+    "`percentage` must be a scalar double.",
+    fixed = TRUE
+  )
+
+  expect_error(
+    derive_badge_colour("foo"),
+    "`percentage` must be a scalar double.",
+    fixed = TRUE
+  )
+
+  expect_error(
+    derive_badge_colour(TRUE),
+    "`percentage` must be a scalar double.",
+    fixed = TRUE
   )
 })
 
