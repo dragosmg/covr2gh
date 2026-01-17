@@ -11,9 +11,9 @@
 #' library(covr)
 #'
 #' covr::package_coverage("myawesomepkg") |>
-#'   calculate_file_coverage()
+#'   digest_coverage()
 #' }
-calculate_file_coverage <- function(x = covr::package_coverage()) {
+digest_coverage <- function(x = covr::package_coverage()) {
   if (!inherits(x, "coverage")) {
     rlang::abort(
       "`x` must be a coverage object"
