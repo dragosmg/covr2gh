@@ -7,30 +7,59 @@ build_badge_url <- function(percentage = NULL) {
     rlang::abort("`percentage` must be a scalar double.")
   }
 
-  if (rlang::is_null(percentage)) {
-    value <- "unknown"
-    colour <- "lightgrey"
-  } else {
-    value <- dplyr::case_when(
-      rlang::is_dbl_na(percentage) ~ "unknown",
-      .default = paste0(percentage, "%25")
-    )
-
-    colour <- dplyr::case_when(
-      rlang::is_null(percentage) ~ "lightgrey",
-      percentage >= 95 ~ "brightgreen",
-      percentage >= 90 ~ "green",
-      percentage >= 80 ~ "yellowgreen",
-      percentage >= 70 ~ "yellow",
-      percentage >= 60 ~ "orange",
-      percentage >= 0 ~ "red",
-      .default = "lightgrey"
-    )
-  }
+  value <- derive_badge_value(percentage)
+  colour <- derive_badge_colour(percentage)
 
   svg_badge_url <- glue::glue(
     "https://img.shields.io/badge/coverage-{value}-{colour}.svg"
   )
 
   svg_badge_url
+}
+
+derive_badge_value <- function(percentage) {
+  if (rlang::is_null(percentage)) {
+    value <- "unknown"
+    return(value)
+  }
+
+  if (!rlang::is_scalar_double(percentage)) {
+    rlang::abort(
+      "`percentage` must be a scalar double.",
+      call = rlang::caller_env()
+    )
+  }
+
+  value <- dplyr::case_when(
+    rlang::is_dbl_na(percentage) ~ "unknown",
+    .default = paste0(round(percentage, 2), "%25")
+  )
+
+  value
+}
+
+derive_badge_colour <- function(percentage) {
+  if (rlang::is_null(percentage)) {
+    colour <- "lightgrey"
+    return(colour)
+  }
+
+  if (!rlang::is_scalar_double(percentage)) {
+    rlang::abort(
+      "`percentage` must be a scalar double.",
+      call = rlang::caller_env()
+    )
+  }
+
+  colour <- dplyr::case_when(
+    percentage >= 90 ~ "brightgreen",
+    percentage >= 80 ~ "green",
+    percentage >= 70 ~ "yellowgreen",
+    percentage >= 60 ~ "yellow",
+    percentage >= 50 ~ "orange",
+    percentage >= 0 ~ "red",
+    .default = "lightgrey"
+  )
+
+  colour
 }
