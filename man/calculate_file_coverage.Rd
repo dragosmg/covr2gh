@@ -7,7 +7,7 @@
 calculate_file_coverage(x = covr::package_coverage())
 }
 \arguments{
-\item{x}{(\verb{<coverage>} object, defaults to \code{\link[covr:package_coverage]{covr::package_coverage()}}.}
+\item{x}{\verb{<coverage>} object, defaults to \code{\link[covr:package_coverage]{covr::package_coverage()}}.}
 }
 \value{
 a \code{tibble} with 2 columns (\code{File} and \code{Coverage}) summarising the
