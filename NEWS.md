@@ -1,3 +1,4 @@
 # covr2md (development version)
 
-* Added `digest_coverage()` to summarise coverage at file level from the output of `covr::package_coverage()`.
+* added `build_badge_url()` a function building the badge URL.
+* added `digest_coverage()` summarises coverage (assessed with `covr::package_coverage()`) by file.

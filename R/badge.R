@@ -1,7 +1,20 @@
-# build a badge which badge needs to be in 2 places:
+# Build the URL for the badge
+#
+#  build a badge which badge needs to be in 2 places:
 #   * in the PR comment
 #   * in the Readme
 #   * maybe stored in a separate branch (e.g. coverage-artifacts)?
+#' Build the badge URL
+#'
+#' Badge is generated with shields.io
+#'
+#' @param percentage (numeric)
+#'
+#' @returns a character scalar representing the URL to the SVG badge
+#'
+#' @export
+#' @examples
+#' build_badge_url(15.43)
 build_badge_url <- function(percentage = NULL) {
   if (!rlang::is_null(percentage) && !rlang::is_scalar_double(percentage)) {
     rlang::abort("`percentage` must be a scalar double.")
