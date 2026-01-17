@@ -7,8 +7,7 @@ build_comment <- function(x) {
       sep = "\n"
     )
 
-  total_coverage <- covr::percent_coverage(x) |>
-    round(digits = 2)
+  total_coverage <- covr::percent_coverage(x)
 
   badge_url <- build_badge_url(total_coverage)
 
