@@ -3,7 +3,7 @@
     Code
       build_comment(coverage)
     Output
-      ![badge](https://img.shields.io/badge/coverage-91.87%25-green.svg)
+      ![badge](https://img.shields.io/badge/coverage-91.87%25-brightgreen.svg)
       
       ## Summary
       

@@ -1,11 +1,11 @@
-# build_coverage_badge() works
+# build_badge_url() works
 
     Code
       build_badge_url(10)
     Output
       https://img.shields.io/badge/coverage-10%25-red.svg
 
-# build_coverage_badge() with NA and NULL
+# build_badge_url() with NA and NULL
 
     Code
       build_badge_url(NA_real_)
@@ -19,7 +19,7 @@
     Output
       https://img.shields.io/badge/coverage-unknown-lightgrey.svg
 
-# build_coverage_badge() complains
+# build_badge_url() complains
 
     Code
       build_badge_url(c(75, 80))
