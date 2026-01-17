@@ -4,6 +4,7 @@
 #   * in the PR comment
 #   * in the Readme
 #   * maybe stored in a separate branch (e.g. coverage-artifacts)?
+
 #' Build the badge URL
 #'
 #' Badge is generated with shields.io
