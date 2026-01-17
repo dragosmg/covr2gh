@@ -10,11 +10,11 @@ build_comment <- function(x) {
   total_coverage <- covr::percent_coverage(x) |>
     round(digits = 2)
 
-  badge <- build_coverage_badge(total_coverage)
+  badge_url <- build_badge_url(total_coverage)
 
   glue::glue(
     "
-    ![badge]({badge})
+    ![badge]({badge_url})
 
     ## Summary
 
