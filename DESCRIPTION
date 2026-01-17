@@ -12,6 +12,7 @@ Depends:
 Imports:
     covr,
     dplyr,
+    knitr,
     purrr,
     rlang,
     tibble
