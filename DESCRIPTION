@@ -11,12 +11,15 @@ BugReports: https://github.com/dragosmg/covr2md/issues
 Depends:
     R (>= 4.1.0)
 Imports:
+    cli,
     covr,
     dplyr,
+    gh,
     glue,
     knitr,
     purrr,
     rlang,
+    stringr,
     tibble
 Suggests:
     testthat (>= 3.0.0)

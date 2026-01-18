@@ -1,4 +1,7 @@
-#' Calculate file coverage
+#' Digest file coverage
+#'
+#' Take a `coverage` object (the output of [covr::package_coverage()], extract
+#' the filecoverage component and transform it into a `data.frame`/`tibble`.
 #'
 #' @param x `<coverage>` object, defaults to [covr::package_coverage()].
 #'
@@ -15,7 +18,7 @@
 #' }
 digest_coverage <- function(x = covr::package_coverage()) {
   if (!inherits(x, "coverage")) {
-    rlang::abort(
+    cli::cli_abort(
       "`x` must be a coverage object"
     )
   }
@@ -26,15 +29,52 @@ digest_coverage <- function(x = covr::package_coverage()) {
       "filecoverage"
     ) |>
     tibble::enframe(
-      name = "File",
-      value = "Coverage"
-    ) |>
-    dplyr::mutate(
-      Coverage = paste0(
-        .data$Coverage,
-        "%"
-      )
+      name = "file",
+      value = "coverage"
     )
 
   output
+}
+
+#' Derive a coverage tibble for the changed files
+#'
+#' @inheritParams compose_comment
+#' @param keep_all_files (logical) indicates whether to subset only for the
+#'   relevant (i.e. under `R/` or `src/`) changed files. Defaults to `FALSE`.
+#'
+#' @returns a`tibble` with 4 columns:
+#'   * `file`: file name
+#'   * `coverage_head`: coverage for the current branch
+#'   * `coverage_base` coverage for the base branch, and
+#'   * `delta`: difference in coverage between head and base.
+#'
+#' @keywords internal
+derive_diff_df <- function(
+  head_coverage,
+  base_coverage,
+  changed_files,
+  keep_all_files = FALSE
+) {
+  head_coverage_digest <- digest_coverage(head_coverage)
+
+  base_coverage_digest <- digest_coverage(base_coverage)
+
+  diff_df <- head_coverage_digest |>
+    dplyr::left_join(
+      base_coverage_digest,
+      by = dplyr::join_by(file),
+      suffix = c("_head", "_base")
+    ) |>
+    dplyr::mutate(
+      delta = .data$coverage_head - .data$coverage_base
+    )
+
+  if (!keep_all_files) {
+    diff_df <- diff_df |>
+      dplyr::filter(
+        file %in% changed_files
+      )
+  }
+
+  diff_df
 }

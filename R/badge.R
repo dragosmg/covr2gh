@@ -18,7 +18,9 @@
 #' build_badge_url(15.43)
 build_badge_url <- function(percentage = NULL) {
   if (!rlang::is_null(percentage) && !rlang::is_scalar_double(percentage)) {
-    rlang::abort("`percentage` must be a scalar double.")
+    cli::cli_abort(
+      "`percentage` must be a scalar double."
+    )
   }
 
   value <- derive_badge_value(percentage)
@@ -38,7 +40,7 @@ derive_badge_value <- function(percentage) {
   }
 
   if (!rlang::is_scalar_double(percentage)) {
-    rlang::abort(
+    cli::cli_abort(
       "`percentage` must be a scalar double.",
       call = rlang::caller_env()
     )
@@ -59,7 +61,7 @@ derive_badge_colour <- function(percentage) {
   }
 
   if (!rlang::is_scalar_double(percentage)) {
-    rlang::abort(
+    cli::cli_abort(
       "`percentage` must be a scalar double.",
       call = rlang::caller_env()
     )
