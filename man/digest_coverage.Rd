@@ -2,7 +2,7 @@
 % Please edit documentation in R/digest.R
 \name{digest_coverage}
 \alias{digest_coverage}
-\title{Calculate file coverage}
+\title{Digest file coverage}
 \usage{
 digest_coverage(x = covr::package_coverage())
 }
@@ -14,7 +14,8 @@ a \code{tibble} with 2 columns (\code{File} and \code{Coverage}) summarising
 testing coverage at file level.
 }
 \description{
-Calculate file coverage
+Take a \code{coverage} object (the output of \code{\link[covr:package_coverage]{covr::package_coverage()}}, extract
+the filecoverage component and transform it into a \code{data.frame}/\code{tibble}.
 }
 \examples{
 \dontrun{
