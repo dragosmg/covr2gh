@@ -1,0 +1,8 @@
+linters: all_linters(
+    implicit_integer_linter = NULL,
+    todo_comment_linter = NULL
+  ) # see vignette("lintr")
+encoding: "UTF-8"
+exclusions: list(
+    "tests/testthat.R"
+  ) # see ?lintr::exclude
