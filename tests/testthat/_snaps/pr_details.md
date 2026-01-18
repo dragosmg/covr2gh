@@ -3,6 +3,9 @@
     Code
       get_pr_details(owner = "dragosmg", repo = "covr2mddemo", pr_number = 2)
     Output
+      $pr_number
+      [1] 2
+      
       $head_name
       [1] "add_three"
       
