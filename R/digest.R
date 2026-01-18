@@ -1,4 +1,7 @@
-#' Calculate file coverage
+#' Digest file coverage
+#'
+#' Take a `coverage` object (the output of [covr::package_coverage()], extract
+#' the filecoverage component and transform it into a `data.frame`/`tibble`.
 #'
 #' @param x `<coverage>` object, defaults to [covr::package_coverage()].
 #'
@@ -15,7 +18,7 @@
 #' }
 digest_coverage <- function(x = covr::package_coverage()) {
   if (!inherits(x, "coverage")) {
-    rlang::abort(
+    cli::cli_abort(
       "`x` must be a coverage object"
     )
   }
@@ -26,14 +29,8 @@ digest_coverage <- function(x = covr::package_coverage()) {
       "filecoverage"
     ) |>
     tibble::enframe(
-      name = "File",
-      value = "Coverage"
-    ) |>
-    dplyr::mutate(
-      Coverage = paste0(
-        .data$Coverage,
-        "%"
-      )
+      name = "file",
+      value = "coverage"
     )
 
   output
