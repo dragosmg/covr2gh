@@ -13,10 +13,12 @@ Depends:
 Imports:
     covr,
     dplyr,
+    gh,
     glue,
     knitr,
     purrr,
     rlang,
+    stringr,
     tibble
 Suggests:
     testthat (>= 3.0.0)
