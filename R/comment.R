@@ -20,23 +20,42 @@
 #    by subsequent runs
 #
 # args:
-#   * x - head coverage (coverage object)
-#   * y - base coverage (coverage object)
+#   * head_coverage (coverage object)
+#   * base_coverage (coverage object)
 #   * z - pr number
 #
-compose_comment <- function(x, y, pr_number) {
-  table_as_string <- to_md(x) |>
-    glue::glue_collapse(
-      sep = "\n"
-    )
+compose_comment <- function(
+  head_coverage,
+  base_coverage,
+  owner,
+  repo,
+  pr_number
+) {
+  changed_files <- get_changed_files(
+    owner = owner,
+    repo = repo,
+    pr_number = pr_number
+  )
 
-  head_coverage_digest <- digest_coverage(x)
-  base_coverage_digest <- digest_coverage(y)
+  diff_md_table <- compose_coverage_details(
+    head_coverage = head_coverage,
+    base_coverage = base_coverage,
+    changed_files = changed_files
+  )
 
-  total_head_coverage <- covr::percent_coverage(x)
-  total_base_coverage <- covr::percent_coverage(y)
+  pr_details <- get_pr_details(
+    owner = owner,
+    repo = repo,
+    pr_number = pr_number
+  )
+
+  total_head_coverage <- covr::percent_coverage(head_coverage)
+  total_base_coverage <- covr::percent_coverage(base_coverage)
+  delta_total_coverage <- round(total_head_coverage - total_base_coverage, 2)
 
   badge_url <- build_badge_url(total_head_coverage)
+
+  coverage_summary <- compose_coverage_summary(pr_details, delta_total_coverage)
 
   glue::glue(
     "
@@ -46,13 +65,13 @@ compose_comment <- function(x, y, pr_number) {
 
     ## Coverage summary
 
-
+    {coverage_summary}
 
     ## Coverage details
 
-    {table_as_string}
+    {diff_md_table}
 
-    Results for commit: [insert commit hash / URL here]
+    Results for commit: {pr_details$head_sha}
 
     :recycle: Comment updated with the latest results.
     "
@@ -68,11 +87,76 @@ compose_comment <- function(x, y, pr_number) {
 #  * base_name
 #  * base_sha
 #  * delta in coverage.
-compose_coverage_summary <- function(pr_details) {
+compose_coverage_summary <- function(pr_details, delta) {
+  delta_translation <- dplyr::case_when(
+    delta > 0 ~ "increase",
+    delta < 0 ~ "decrease",
+    delta == 0 ~ "not change"
+  )
+
   glue::glue(
-    "Merging this PR ([#{github.event.pull_request.number}]({pr_html_url}) - {head_sha}) \\
-  into {base_name} branch ({base_sha}) - will **increase** / **decrease** / **not change** coverage."
+    "Merging this PR ([#{ pr_details$pr_number}]({pr_details$pr_html_url}) - \\
+    {pr_details$head_sha}) into _{pr_details$base_name}_ \\
+    ({pr_details$base_sha}) - will **{delta_translation}** coverage."
   )
 }
 
-# compose_coverage_details <- function()
+compose_coverage_details <- function(
+  head_coverage,
+  base_coverage,
+  changed_files
+) {
+  # TODO handle the case when there are no relevant changed files
+  # browser()
+  head_coverage_digest <- digest_coverage(head_coverage)
+
+  base_coverage_digest <- digest_coverage(base_coverage)
+
+  diff_df <- head_coverage_digest |>
+    dplyr::filter(
+      file %in% changed_files
+    ) |>
+    dplyr::left_join(
+      base_coverage_digest,
+      by = dplyr::join_by(file),
+      suffix = c("_head", "_base")
+    ) |>
+    dplyr::mutate(
+      delta = .data$coverage_head - .data$coverage_base,
+      delta = dplyr::case_when(
+        delta > 0 ~ ":arrow_up:",
+        delta < 0 ~ ":arrow_down:",
+        delta == 0 ~ ":heavy_equals_sign:"
+      ),
+      coverage_head = paste0(
+        .data$coverage_head,
+        "%"
+      ),
+      coverage_base = paste0(
+        .data$coverage_base,
+        "%"
+      )
+    )
+
+  diff_df_names <- diff_df |>
+    names() |>
+    stringr::str_to_sentence() |>
+    stringr::str_replace_all(
+      stringr::fixed("_"),
+      " "
+    ) |>
+    stringr::str_replace(
+      "Delta",
+      "&Delta;"
+    )
+
+  names(diff_df) <- diff_df_names
+
+  diff_md_table <- diff_df |>
+    knitr::kable(align = "rrrc") |>
+    glue::glue_collapse(
+      sep = "\n"
+    )
+
+  diff_md_table
+}
