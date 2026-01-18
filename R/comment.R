@@ -24,6 +24,35 @@
 #   * base_coverage (coverage object)
 #   * z - pr number
 #
+
+#' Compose a coverage GitHub comment
+#'
+#' @param head_coverage (coverage) active / current branch (`HEAD`) coverage.
+#'   The output of [covr::package_coverage()] on the branch.
+#' @param base_coverage (coverage) base / target branch coverage (coverage for
+#'   the branch merging into). The output of [covr::package_coverage()] on the
+#'   branch.
+#' @param owner (character scalar) repo owner
+#' @param repo (character scalar) repo name
+#' @param pr_number (integerish) pull request number
+#'
+#' @returns a character scalar with the content of the GitHub comment
+#'
+#' @export
+#' @examples
+#' \dontrun{
+#' head_coverage <- covr::package_coverage()
+#' system2("git", c("checkout", "main"))
+#' base_coverage <- covr::package_coverage()
+#'
+#' compose_comment(
+#'   head_coverage = head_coverage,
+#'   base_coverage = base_coverage,
+#'   owner = "dragosmg",
+#'   repo = "covr2mddemo",
+#'   pr_number = 3
+#' )
+#' }
 compose_comment <- function(
   head_coverage,
   base_coverage,
@@ -108,55 +137,28 @@ compose_coverage_details <- function(
 ) {
   # TODO handle the case when there are no relevant changed files
   # browser()
-  head_coverage_digest <- digest_coverage(head_coverage)
+  diff_df <- derive_diff_df(
+    head_coverage = head_coverage,
+    base_coverage = base_coverage,
+    changed_files = changed_files,
+    keep_all_files = FALSE
+  )
+  # head_coverage_digest <- digest_coverage(head_coverage)
 
-  base_coverage_digest <- digest_coverage(base_coverage)
+  # base_coverage_digest <- digest_coverage(base_coverage)
 
-  diff_df <- head_coverage_digest |>
-    dplyr::filter(
-      file %in% changed_files
-    ) |>
-    dplyr::left_join(
-      base_coverage_digest,
-      by = dplyr::join_by(file),
-      suffix = c("_head", "_base")
-    ) |>
-    dplyr::mutate(
-      delta = .data$coverage_head - .data$coverage_base,
-      delta = dplyr::case_when(
-        delta > 0 ~ ":arrow_up:",
-        delta < 0 ~ ":arrow_down:",
-        delta == 0 ~ ":heavy_equals_sign:"
-      ),
-      coverage_head = paste0(
-        .data$coverage_head,
-        "%"
-      ),
-      coverage_base = paste0(
-        .data$coverage_base,
-        "%"
-      )
-    )
+  # diff_df <- head_coverage_digest |>
+  #   dplyr::filter(
+  #     file %in% changed_files
+  #   ) |>
+  #   dplyr::left_join(
+  #     base_coverage_digest,
+  #     by = dplyr::join_by(file),
+  #     suffix = c("_head", "_base")
+  #   ) |>
+  #   dplyr::mutate(
+  #     delta = .data$coverage_head - .data$coverage_base
+  #   )
 
-  diff_df_names <- diff_df |>
-    names() |>
-    stringr::str_to_sentence() |>
-    stringr::str_replace_all(
-      stringr::fixed("_"),
-      " "
-    ) |>
-    stringr::str_replace(
-      "Delta",
-      "&Delta;"
-    )
-
-  names(diff_df) <- diff_df_names
-
-  diff_md_table <- diff_df |>
-    knitr::kable(align = "rrrc") |>
-    glue::glue_collapse(
-      sep = "\n"
-    )
-
-  diff_md_table
+  diff_df_to_md(diff_df)
 }
