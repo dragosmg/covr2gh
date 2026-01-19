@@ -15,15 +15,15 @@
 #'   * `base_sha`: the sha of most recent commit on the destination branch
 #'   * `pr_html_url`: the URL to the PR HTML branch
 #'
-#' @export
+#' @keywords internal
 #' @examples
 #' \dontrun{
 #' get_pr_details("dragosmg", "covr2mddemo", "2")
 #' }
 get_pr_details <- function(
-  owner = character(),
-  repo = character(),
-  pr_number = integer(),
+  owner,
+  repo,
+  pr_number,
   call = rlang::caller_env()
 ) {
   if (!rlang::is_scalar_character(owner)) {
@@ -73,15 +73,15 @@ get_pr_details <- function(
 #'
 #' @returns a character vector containing the names of the changed files.
 #'
-#' @export
+#' @keywords internal
 #' @examples
 #' \dontrun{
 #' get_changed_files("dragosmg", "covr2mddemo", 2)
 #' }
 get_changed_files <- function(
-  owner = character(),
-  repo = character(),
-  pr_number = integer(),
+  owner,
+  repo,
+  pr_number,
   call = rlang::caller_env()
 ) {
   if (!rlang::is_scalar_character(owner)) {
