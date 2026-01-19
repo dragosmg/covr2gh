@@ -4,12 +4,7 @@
 \alias{get_pr_details}
 \title{Get pull request details}
 \usage{
-get_pr_details(
-  owner = character(),
-  repo = character(),
-  pr_number = integer(),
-  call = rlang::caller_env()
-)
+get_pr_details(owner, repo, pr_number, call = rlang::caller_env())
 }
 \arguments{
 \item{owner}{(character) the repo owner.}
@@ -39,3 +34,4 @@ Sends a GET request to the GitHub API and outputs details about the PR.
 get_pr_details("dragosmg", "covr2mddemo", "2")
 }
 }
+\keyword{internal}
