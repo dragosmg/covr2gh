@@ -22,7 +22,7 @@ post_comment(
 
 \item{pr_number}{(integer) the PR number}
 
-\item{comment_id}{(numeric) the ID for the issue comment to update. If \code{NULL}
+\item{comment_id}{(numeric) the ID of the issue comment to update. If \code{NULL}
 (the default), a new comment will be posted.}
 
 \item{marker}{(character scalar) string used to identify an issue
