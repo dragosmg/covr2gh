@@ -1,4 +1,4 @@
-# compose_comment() works
+# compose_comment works
 
     Code
       compose_comment(head_coverage, base_coverage, owner = "dragosmg", repo = "covr2mddemo",
@@ -24,10 +24,4 @@
       Results for commit: da6f721f1cf4ee278b9cb5261b7db3a1ad0a496e
       
       :recycle: Comment updated with the latest results.
-
-# post_comment, get_comment_id & delete_comment work
-
-    Code
-      a <- post_comment(body = "this is a test :sweat_smile:", owner = "dragosmg",
-        repo = "covr2mddemo", pr_number = 3, marker = "<!-- covr2md-test -->")
 
