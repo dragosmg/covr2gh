@@ -3,7 +3,7 @@ test_that("post_comment, get_comment_id & delete_comment work", {
   skip_on_ci()
   expect_no_error(
     a <- post_comment(
-      body = "this is a test :sweat_smile:",
+      body = glue::glue("{Sys.Date()}: today's test :sweat_smile:"),
       owner = "dragosmg",
       repo = "covr2mddemo",
       pr_number = 3,
