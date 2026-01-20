@@ -24,9 +24,9 @@ test_that("compose_comment works", {
 })
 
 test_that("compose_coverage_summary works", {
-  expect_equal(2 * 2, 4)
+  expect_identical(2 * 2, 4)
 })
 
 test_that("compose_coverage_details works", {
-  expect_equal(2 * 2, 4)
+  expect_identical(2 * 2, 4)
 })
