@@ -108,25 +108,38 @@ compose_comment <- function(
 
   coverage_summary <- compose_coverage_summary(pr_details, delta_total_coverage)
 
+  # TODO update URL
+  sup <- glue::glue(
+    "<sup>Created on {Sys.Date()} with \\
+    [covr2md {packageVersion('covr2md')}](https://reprex.tidyverse.org)</sup>"
+  )
+
   glue::glue(
     "
     {marker}
 
-    # Coverage report
+    ## Coverage summary
 
     ![badge]({badge_url})
 
-    ## Coverage summary
-
     {coverage_summary}
 
-    ## Coverage details
+
+    <details>
+
+    <summary>Changes in file coverage</summary>
+    <br>
 
     {diff_md_table}
+
+    </details>
+
     <br>
     Results for commit: {pr_details$head_sha}
 
     :recycle: Comment updated with the latest results.
+
+    {sup}
     "
   )
 }
@@ -140,6 +153,33 @@ compose_comment <- function(
 #  * base_name
 #  * base_sha
 #  * delta in coverage.
+
+#' Compose coverage summary
+#'
+#' Builds the top level sentences of the summary.
+#'
+#' @param pr_details a `<pr_details>` object representing a subset of the pull
+#'   request metadata we need. The output of [get_pr_details()].
+#' @param delta (numeric scalar) difference in total coverage between head of
+#'   current branch and base branch.
+#'
+#' @returns a string (character scalar) containing the text for the coverage
+#'   summary.
+#'
+#' @keywords internal
+#' @examples
+#' \dontrun{
+#' pr_details <- get_pr_details(
+#'   owner = "dragosmg",
+#'   repo = "covr2mddemo",
+#'   pr_number = 2
+#' )
+#'
+#' coverage_summary <- compose_coverage_summary(
+#'   pr_details = pr_details,
+#'   delta = 20.43
+#' )
+#' }
 compose_coverage_summary <- function(pr_details, delta) {
   delta_translation <- dplyr::case_when(
     delta > 0 ~ "increase",
@@ -147,10 +187,24 @@ compose_coverage_summary <- function(pr_details, delta) {
     delta == 0 ~ "not change"
   )
 
+  by_delta <- glue::glue(" by {delta} percentage points")
+
+  by_delta <- dplyr::if_else(
+    delta == 0,
+    "",
+    by_delta
+  )
+
+  emoji <- dplyr::if_else(
+    delta >= 0,
+    ":white_check_mark: ",
+    ":x: "
+  )
+
   glue::glue(
-    "Merging this PR ([#{ pr_details$pr_number}]({pr_details$pr_html_url}) - \\
+    "{emoji}Merging this PR ([#{ pr_details$pr_number}]({pr_details$pr_html_url}) - \\
     {pr_details$head_sha}) into _{pr_details$base_name}_ \\
-    ({pr_details$base_sha}) - will **{delta_translation}** coverage."
+    ({pr_details$base_sha}) - will **{delta_translation}** coverage{by_delta}."
   )
 }
 

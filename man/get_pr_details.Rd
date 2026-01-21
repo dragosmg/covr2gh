@@ -17,7 +17,8 @@ get_pr_details(owner, repo, pr_number, call = rlang::caller_env())
 Defaults to \code{\link[rlang:stack]{rlang::caller_env()}}.}
 }
 \value{
-a list with the following elements:
+an object of class \verb{<pr_details>} - a list with the following
+elements:
 \itemize{
 \item \code{head_name}: name of the current branch
 \item \code{head_sha}: the sha of the last commit in the current branch
