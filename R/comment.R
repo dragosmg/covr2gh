@@ -1,14 +1,19 @@
 # PRs are issues
 # All PRs are issues, but not all issues are PRs.
-#' Get the ID of the covr2md PR comment (if it exists)
+#' Get the ID of the covr2md comment
 #'
-#' These are identified by the `"<!-- covr2md-code-coverage -->"` marker. We
-#' need the ID of the comment before updating it.
+#' Comments are identified by a specific comment, the "marker", by default
+#' `"<!-- covr2md-code-coverage -->"` marker. `get_comment_id()` looks for this
+#' marker. If it can find it, it returns the comment ID, otherwise it returns
+#' `NULL`.
+#'
+#' The output of `get_comment_id()` is the used downstream by `post_comment()`
+#' post a new comment or to update an existing one.
 #'
 #' @inheritParams get_pr_details
 #' @inheritParams compose_comment
 #'
-#' @returns a numeric scalar representing the comment id
+#' @returns a numeric scalar representing the comment id or `NULL`
 #'
 #' @export
 #' @examples
@@ -73,14 +78,14 @@ get_comment_id <- function(
   comments_info[[comment_index]]$id
 }
 
-# if a comment with the marker exists, update it, if it doesn't then post a
-# new one
+
 #' Post a new comment or update an existing one
 #'
 #' @inheritParams get_pr_details
 #' @param body (character scalar) the content of the body of the message.
 #' @param comment_id (numeric) the ID of the issue comment to update. If `NULL`
-#'   (the default), a new comment will be posted.
+#'   (the default), a new comment will be posted. Usually the output of
+#'   [get_comment_id()].
 #' @inheritParams compose_comment
 #'
 #' @returns a `gh_response` object containing the API response
@@ -92,16 +97,14 @@ get_comment_id <- function(
 #'   "this is amazing",
 #'   repo = "dragosmg/my-test-repo",
 #'   pr_number = 3,
-#'   comment_id = 123456789,
-#'   marker = "<!-- I am a comment -->"
+#'   comment_id = 123456789
 #' )
 #' }
 post_comment <- function(
   body,
   repo,
   pr_number,
-  comment_id = NULL,
-  marker = "<!-- covr2md-code-coverage -->"
+  comment_id = NULL
 ) {
   # TODO add checks for
   #  * body
@@ -125,16 +128,8 @@ post_comment <- function(
     )
   }
 
-  body_with_marker <- glue::glue(
-    "
-    {marker}
-
-    {body}
-    "
-  )
-
   response <- glue::glue("POST {api_url}") |>
-    gh::gh(body = body_with_marker)
+    gh::gh(body = body)
 
   response
 }

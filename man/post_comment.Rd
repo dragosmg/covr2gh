@@ -4,13 +4,7 @@
 \alias{post_comment}
 \title{Post a new comment or update an existing one}
 \usage{
-post_comment(
-  body,
-  repo,
-  pr_number,
-  comment_id = NULL,
-  marker = "<!-- covr2md-code-coverage -->"
-)
+post_comment(body, repo, pr_number, comment_id = NULL)
 }
 \arguments{
 \item{body}{(character scalar) the content of the body of the message.}
@@ -21,11 +15,8 @@ post_comment(
 \item{pr_number}{(integer) the PR number}
 
 \item{comment_id}{(numeric) the ID of the issue comment to update. If \code{NULL}
-(the default), a new comment will be posted.}
-
-\item{marker}{(character scalar) string used to identify an issue
-comment generated with covr2md. Defaults to
-\code{"<!-- covr2md-code-coverage -->"}.}
+(the default), a new comment will be posted. Usually the output of
+\code{\link[=get_comment_id]{get_comment_id()}}.}
 }
 \value{
 a \code{gh_response} object containing the API response
@@ -39,8 +30,7 @@ post_comment(
   "this is amazing",
   repo = "dragosmg/my-test-repo",
   pr_number = 3,
-  comment_id = 123456789,
-  marker = "<!-- I am a comment -->"
+  comment_id = 123456789
 )
 }
 }
