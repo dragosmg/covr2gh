@@ -10,7 +10,7 @@
       
       ![badge](https://img.shields.io/badge/coverage-31.58%25-red.svg)
       
-      :white_check_mark: Merging this PR ([#3](https://github.com/dragosmg/covr2mddemo/pull/3) - <removed-commit-sha>) into _main_ (<removed-commit-sha>) - will **increase** coverage by 21.05 percentage points.
+      :white_check_mark: Merging PR [#3](https://github.com/dragosmg/covr2mddemo/pull/3) (<removed-commit-sha>) into _main_ (<removed-commit-sha>) - will **increase** coverage by 21.05 percentage points.
       
       
       <details>

@@ -195,8 +195,8 @@ compose_coverage_summary <- function(pr_details, delta) {
   )
 
   glue::glue(
-    "{emoji}Merging this PR ([#{ pr_details$pr_number}]({pr_details$pr_html_url}) - \\
-    {pr_details$head_sha}) into _{pr_details$base_name}_ \\
+    "{emoji}Merging PR [#{ pr_details$pr_number}]({pr_details$pr_html_url}) \\
+    ({pr_details$head_sha}) into _{pr_details$base_name}_ \\
     ({pr_details$base_sha}) - will **{delta_translation}** coverage{by_delta}."
   )
 }
