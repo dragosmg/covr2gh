@@ -2,7 +2,7 @@
 % Please edit documentation in R/comment.R
 \name{get_comment_id}
 \alias{get_comment_id}
-\title{Get the ID of the covr2md PR comment (if it exists)}
+\title{Get the ID of the covr2md comment}
 \usage{
 get_comment_id(
   repo,
@@ -25,11 +25,17 @@ comment generated with covr2md. Defaults to
 Defaults to \code{\link[rlang:stack]{rlang::caller_env()}}.}
 }
 \value{
-a numeric scalar representing the comment id
+a numeric scalar representing the comment id or \code{NULL}
 }
 \description{
-These are identified by the \code{"<!-- covr2md-code-coverage -->"} marker. We
-need the ID of the comment before updating it.
+Comments are identified by a specific comment, the "marker", by default
+\code{"<!-- covr2md-code-coverage -->"}. \code{get_comment_id()} looks for this
+marker. If it can find it, it returns the comment ID, otherwise it returns
+\code{NULL}.
+}
+\details{
+The output of \code{get_comment_id()} is the used downstream by \code{post_comment()}
+post a new comment or to update an existing one.
 }
 \examples{
 \dontrun{
