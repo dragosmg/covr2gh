@@ -4,8 +4,7 @@ test_that("post_comment, get_comment_id & delete_comment work", {
   expect_no_error(
     a <- post_comment(
       body = glue::glue("{Sys.Date()}: today's test :sweat_smile:"),
-      owner = "dragosmg",
-      repo = "covr2mddemo",
+      repo = "dragosmg/covr2mddemo",
       pr_number = 3,
       marker = "<!-- covr2md-test -->"
     )
@@ -15,8 +14,7 @@ test_that("post_comment, get_comment_id & delete_comment work", {
 
   expect_no_error(
     get_comment_id(
-      owner = "dragosmg",
-      repo = "covr2mddemo",
+      repo = "dragosmg/covr2mddemo",
       pr_number = 3,
       marker = "<!-- covr2md-test -->"
     )
@@ -24,8 +22,7 @@ test_that("post_comment, get_comment_id & delete_comment work", {
 
   expect_identical(
     get_comment_id(
-      owner = "dragosmg",
-      repo = "covr2mddemo",
+      repo = "dragosmg/covr2mddemo",
       pr_number = 3,
       marker = "<!-- covr2md-code-coverage -->"
     ),
@@ -34,8 +31,7 @@ test_that("post_comment, get_comment_id & delete_comment work", {
 
   expect_no_error(
     d <- delete_comment(
-      owner = "dragosmg",
-      repo = "covr2mddemo",
+      repo = "dragosmg/covr2mddemo",
       comment_id = a$id
     )
   )

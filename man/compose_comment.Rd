@@ -7,7 +7,6 @@
 compose_comment(
   head_coverage,
   base_coverage,
-  owner,
   repo,
   pr_number,
   marker = "<!-- covr2md-code-coverage -->",
@@ -23,11 +22,10 @@ The output of \code{\link[covr:package_coverage]{covr::package_coverage()}} on t
 the branch merging into). The output of \code{\link[covr:package_coverage]{covr::package_coverage()}} on the
 branch.}
 
-\item{owner}{(character scalar) repo owner}
+\item{repo}{(character) the repository name in the GitHub format
+(\code{"OWNER/REPO"}).}
 
-\item{repo}{(character scalar) repo name}
-
-\item{pr_number}{(integerish scalar) pull request number}
+\item{pr_number}{(integer) the PR number}
 
 \item{marker}{(character scalar) string used to identify an issue
 comment generated with covr2md. Defaults to
@@ -58,8 +56,7 @@ base_coverage <- covr::package_coverage()
 compose_comment(
   head_coverage = head_coverage,
   base_coverage = base_coverage,
-  owner = "dragosmg",
-  repo = "covr2mddemo",
+  repo = "dragosmg/covr2mddemo",
   pr_number = 3
 )
 }

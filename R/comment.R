@@ -13,22 +13,14 @@
 #' @keywords internal
 #' @examples
 #' \dontrun{
-#' get_comment_id("dragosmg", "demo-repo", 3)
+#' get_comment_id("dragosmg/demo-repo", 3)
 #' }
 get_comment_id <- function(
-  owner,
   repo,
   pr_number,
   marker = "<!-- covr2md-code-coverage -->",
   call = rlang::caller_env()
 ) {
-  if (!rlang::is_scalar_character(owner)) {
-    cli::cli_abort(
-      "`owner` must be a character scalar.",
-      call = call
-    )
-  }
-
   if (!rlang::is_scalar_character(repo)) {
     cli::cli_abort(
       "`repo` must be a character scalar.",
@@ -51,7 +43,7 @@ get_comment_id <- function(
   }
 
   api_url <- glue::glue(
-    "https://api.github.com/repos/{owner}/{repo}/issues/{pr_number}/comments"
+    "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
   )
 
   comments_info <- glue::glue("GET {api_url}") |>
@@ -86,8 +78,7 @@ get_comment_id <- function(
 #' \dontrun{
 #' post_comment(
 #'   "this is amazing",
-#'   owner = "dragosmg",
-#'   repo = "my-test-repo",
+#'   repo = "dragosmg/my-test-repo",
 #'   pr_number = 3,
 #'   comment_id = 123456789,
 #'   marker = "<!-- I am a comment -->"
@@ -95,7 +86,6 @@ get_comment_id <- function(
 #' }
 post_comment <- function(
   body,
-  owner,
   repo,
   pr_number,
   comment_id = NULL,
@@ -103,7 +93,6 @@ post_comment <- function(
 ) {
   # TODO add checks for
   #  * body
-  #  * owner
   #  * repo
   #  * pr_number
   #  * comment_id
@@ -114,13 +103,13 @@ post_comment <- function(
 
   # post / create a new issue comment
   api_url <- glue::glue(
-    "https://api.github.com/repos/{owner}/{repo}/issues/{pr_number}/comments"
+    "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
   )
 
   if (!rlang::is_null(comment_id)) {
     # update an existing issue comment
     api_url <- glue::glue(
-      "https://api.github.com/repos/{owner}/{repo}/issues/comments/{comment_id}"
+      "https://api.github.com/repos/{repo}/issues/comments/{comment_id}"
     )
   }
 
@@ -150,15 +139,14 @@ post_comment <- function(
 #' @keywords internal
 #' @examples
 #' \dontrun{
-#' delete_comment("dragosmg", "this-is-my-repo", 4553)
+#' delete_comment("dragosmg/this-is-my-repo", 4553)
 #' }
 delete_comment <- function(
-  owner,
   repo,
   comment_id
 ) {
   api_url <- glue::glue(
-    "https://api.github.com/repos/{owner}/{repo}/issues/comments/{comment_id}"
+    "https://api.github.com/repos/{repo}/issues/comments/{comment_id}"
   )
 
   response <- glue::glue("DELETE {api_url}") |>

@@ -16,8 +16,7 @@ test_that("compose_comment works", {
     compose_comment(
       head_coverage,
       base_coverage,
-      owner = "dragosmg",
-      repo = "covr2mddemo",
+      repo = "dragosmg/covr2mddemo",
       pr_number = 3
     ),
     transform = remove_date_commit_sha

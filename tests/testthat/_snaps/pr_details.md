@@ -1,7 +1,7 @@
 # get_pr_details() works
 
     Code
-      get_pr_details(owner = "dragosmg", repo = "covr2mddemo", pr_number = 2)
+      get_pr_details(repo = "dragosmg/covr2mddemo", pr_number = 2)
     Output
       $pr_number
       [1] 2
@@ -27,7 +27,7 @@
 # get_changed_files() works
 
     Code
-      get_changed_files(owner = "dragosmg", repo = "covr2mddemo", pr_number = 2)
+      get_changed_files(repo = "dragosmg/covr2mddemo", pr_number = 2)
     Output
       [1] "R/add_one.R"   "R/add_three.R" "R/add_two.R"  
 

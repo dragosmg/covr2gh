@@ -43,8 +43,7 @@ Compose coverage details
 \examples{
 \dontrun{
 changed_files <- get_changed_files(
-  owner = "dragosmg",
-  repo = "covr2mddemo",
+  repo = "dragosmg/covr2mddemo",
   pr_number = 2
 )
 

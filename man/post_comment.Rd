@@ -6,7 +6,6 @@
 \usage{
 post_comment(
   body,
-  owner,
   repo,
   pr_number,
   comment_id = NULL,
@@ -16,9 +15,8 @@ post_comment(
 \arguments{
 \item{body}{(character scalar) the content of the body of the message.}
 
-\item{owner}{(character) the repo owner.}
-
-\item{repo}{(character) the repo name}
+\item{repo}{(character) the repository name in the GitHub format
+(\code{"OWNER/REPO"}).}
 
 \item{pr_number}{(integer) the PR number}
 
@@ -39,8 +37,7 @@ Post a new comment or update an existing one
 \dontrun{
 post_comment(
   "this is amazing",
-  owner = "dragosmg",
-  repo = "my-test-repo",
+  repo = "dragosmg/my-test-repo",
   pr_number = 3,
   comment_id = 123456789,
   marker = "<!-- I am a comment -->"

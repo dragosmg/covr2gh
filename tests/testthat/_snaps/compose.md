@@ -1,7 +1,7 @@
 # compose_comment works
 
     Code
-      compose_comment(head_coverage, base_coverage, owner = "dragosmg", repo = "covr2mddemo",
+      compose_comment(head_coverage, base_coverage, repo = "dragosmg/covr2mddemo",
         pr_number = 3)
     Output
       <!-- covr2md-code-coverage -->

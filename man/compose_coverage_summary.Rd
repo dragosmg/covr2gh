@@ -23,8 +23,7 @@ Builds the top level sentences of the summary.
 \examples{
 \dontrun{
 pr_details <- get_pr_details(
-  owner = "dragosmg",
-  repo = "covr2mddemo",
+  repo = "dragosmg/covr2mddemo",
   pr_number = 2
 )
 

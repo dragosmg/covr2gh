@@ -32,9 +32,7 @@
 #' @param base_coverage (coverage) base / target branch coverage (coverage for
 #'   the branch merging into). The output of [covr::package_coverage()] on the
 #'   branch.
-#' @param owner (character scalar) repo owner
-#' @param repo (character scalar) repo name
-#' @param pr_number (integerish scalar) pull request number
+#' @inheritParams get_pr_details
 #' @param marker (character scalar) string used to identify an issue
 #'   comment generated with covr2md. Defaults to
 #'   `"<!-- covr2md-code-coverage -->"`.
@@ -54,15 +52,13 @@
 #' compose_comment(
 #'   head_coverage = head_coverage,
 #'   base_coverage = base_coverage,
-#'   owner = "dragosmg",
-#'   repo = "covr2mddemo",
+#'   repo = "dragosmg/covr2mddemo",
 #'   pr_number = 3
 #' )
 #' }
 compose_comment <- function(
   head_coverage,
   base_coverage,
-  owner,
   repo,
   pr_number,
   marker = "<!-- covr2md-code-coverage -->",
@@ -73,7 +69,6 @@ compose_comment <- function(
 
   if (isFALSE(keep_all_files)) {
     changed_files <- get_changed_files(
-      owner = owner,
       repo = repo,
       pr_number = pr_number
     )
@@ -95,7 +90,6 @@ compose_comment <- function(
   )
 
   pr_details <- get_pr_details(
-    owner = owner,
     repo = repo,
     pr_number = pr_number
   )
@@ -170,8 +164,7 @@ compose_comment <- function(
 #' @examples
 #' \dontrun{
 #' pr_details <- get_pr_details(
-#'   owner = "dragosmg",
-#'   repo = "covr2mddemo",
+#'   repo = "dragosmg/covr2mddemo",
 #'   pr_number = 2
 #' )
 #'
@@ -221,8 +214,7 @@ compose_coverage_summary <- function(pr_details, delta) {
 #' @examples
 #' \dontrun{
 #' changed_files <- get_changed_files(
-#'   owner = "dragosmg",
-#'   repo = "covr2mddemo",
+#'   repo = "dragosmg/covr2mddemo",
 #'   pr_number = 2
 #' )
 #'

@@ -5,7 +5,6 @@
 \title{Get the ID of the covr2md PR comment (if it exists)}
 \usage{
 get_comment_id(
-  owner,
   repo,
   pr_number,
   marker = "<!-- covr2md-code-coverage -->",
@@ -13,9 +12,8 @@ get_comment_id(
 )
 }
 \arguments{
-\item{owner}{(character) the repo owner.}
-
-\item{repo}{(character) the repo name}
+\item{repo}{(character) the repository name in the GitHub format
+(\code{"OWNER/REPO"}).}
 
 \item{pr_number}{(integer) the PR number}
 
@@ -35,7 +33,7 @@ need the ID of the comment before updating it.
 }
 \examples{
 \dontrun{
-get_comment_id("dragosmg", "demo-repo", 3)
+get_comment_id("dragosmg/demo-repo", 3)
 }
 }
 \keyword{internal}

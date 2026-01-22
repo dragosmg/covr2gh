@@ -4,12 +4,11 @@
 \alias{get_pr_details}
 \title{Get pull request details}
 \usage{
-get_pr_details(owner, repo, pr_number, call = rlang::caller_env())
+get_pr_details(repo, pr_number, call = rlang::caller_env())
 }
 \arguments{
-\item{owner}{(character) the repo owner.}
-
-\item{repo}{(character) the repo name}
+\item{repo}{(character) the repository name in the GitHub format
+(\code{"OWNER/REPO"}).}
 
 \item{pr_number}{(integer) the PR number}
 
@@ -33,6 +32,6 @@ contains a subset of these, needed for downstream use.
 }
 \examples{
 \dontrun{
-get_pr_details("dragosmg", "covr2mddemo", 2)
+get_pr_details("dragosmg/covr2mddemo", 2)
 }
 }

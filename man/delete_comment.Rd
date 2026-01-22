@@ -4,12 +4,11 @@
 \alias{delete_comment}
 \title{Delete a comment}
 \usage{
-delete_comment(owner, repo, comment_id)
+delete_comment(repo, comment_id)
 }
 \arguments{
-\item{owner}{(character) the repo owner.}
-
-\item{repo}{(character) the repo name}
+\item{repo}{(character) the repository name in the GitHub format
+(\code{"OWNER/REPO"}).}
 
 \item{comment_id}{(numeric) the ID of the issue comment to delete.}
 }
@@ -21,7 +20,7 @@ Thin wrapper for making a \code{DELETE} request to the GitHub API.
 }
 \examples{
 \dontrun{
-delete_comment("dragosmg", "this-is-my-repo", 4553)
+delete_comment("dragosmg/this-is-my-repo", 4553)
 }
 }
 \keyword{internal}
