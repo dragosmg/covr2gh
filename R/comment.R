@@ -46,8 +46,16 @@ get_comment_id <- function(
     "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
   )
 
-  comments_info <- glue::glue("GET {api_url}") |>
-    gh::gh()
+  # TODO add test to confirm everything works with a NULL
+  comments_info <- tryCatch(
+    glue::glue("GET {api_url}") |>
+      gh::gh(),
+    error = function(e) return(NULL)
+  )
+
+  if (rlang::is_null(comments_info)) {
+    return(NULL)
+  }
 
   # identify the comment that contains the marker we set
   comment_index <- comments_info |>
