@@ -78,17 +78,6 @@ compose_comment <- function(
     # keep_all_files <- TRUE
   }
 
-  # TODO given that changed_files is kinda optional, make sure
-  # compose_file_cov_details works
-  # FIXME changed_files is misleading a bit. I think the focus should be not so
-  # much on the files for which the content has changed, but rather on the files
-  # for which the coverage has changed.
-  #   * we can have PRs which do not touch files under R/ or src/ but rather
-  #   focus on adding more unit tests. These are currently note reported, but
-  #   they should.
-  # or better we focus on both (either files that have changed and see what
-  # effects the change has had in terms of coverage)
-  #
   diff_md_table <- compose_file_cov_details(
     head_coverage = head_coverage,
     base_coverage = base_coverage,
