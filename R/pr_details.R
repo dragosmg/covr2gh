@@ -191,11 +191,11 @@ extract_added_lines <- function(diff_text) {
     # classify lines
     dplyr::mutate(
       type = dplyr::case_when(
-        stringr::str_detect(.data$raw, "^\\+") &
+        stringr::str_starts(.data$raw, "\\+") &
           # ++ indicates a line that did not exist in either parent
           # was introduced by the merge resolution itself
-          !stringr::str_detect(.data$raw, "^\\+\\+") ~ "added",
-        stringr::str_detect(.data$raw, "^-") ~ "deleted",
+          stringr::str_starts(.data$raw, "\\+\\+", negate = TRUE) ~ "added",
+        stringr::str_starts(.data$raw, "-") ~ "deleted",
         TRUE ~ "context"
       ),
       advances = .data$type %in% c("added", "context")
