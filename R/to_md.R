@@ -77,8 +77,8 @@ diff_df_to_md <- function(diff_df, align = "rrrc") {
 line_coverage_to_md <- function(diff_line_coverage) {
   diff_coverage <- diff_line_coverage |>
     dplyr::summarise(
-      total_lines_added = sum(lines_added),
-      total_lines_covered = sum(lines_covered)
+      total_lines_added = sum(.data$lines_added),
+      total_lines_covered = sum(.data$lines_covered)
     )
 
   percentage_line_coverage <- diff_coverage$total_lines_covered /
