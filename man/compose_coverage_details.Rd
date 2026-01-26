@@ -8,7 +8,6 @@ compose_coverage_details(
   head_coverage,
   base_coverage,
   changed_files,
-  keep_all_files = FALSE,
   align = "rrrc"
 )
 }
@@ -22,9 +21,6 @@ branch.}
 
 \item{changed_files}{(character) names of files changed by the PR. Usually
 the output of \code{\link[=get_changed_files]{get_changed_files()}}.}
-
-\item{keep_all_files}{(logical) include all files in the diff coverage table
-or just those modified by the PR.}
 
 \item{align}{Column alignment: a character vector consisting of \code{'l'}
 (left), \code{'c'} (center) and/or \code{'r'} (right). By default or if

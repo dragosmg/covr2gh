@@ -4,13 +4,7 @@
 \alias{derive_diff_df}
 \title{Derive a coverage tibble for the changed files}
 \usage{
-derive_diff_df(
-  head_coverage,
-  base_coverage,
-  changed_files,
-  keep_all_files = FALSE,
-  keep_totals = TRUE
-)
+derive_diff_df(head_coverage, base_coverage, changed_files)
 }
 \arguments{
 \item{head_coverage}{(coverage) active / current branch (\code{HEAD}) coverage.
@@ -19,9 +13,6 @@ The output of \code{\link[covr:package_coverage]{covr::package_coverage()}} on t
 \item{base_coverage}{(coverage) base / target branch coverage (coverage for
 the branch merging into). The output of \code{\link[covr:package_coverage]{covr::package_coverage()}} on the
 branch.}
-
-\item{keep_all_files}{(logical) indicates whether to subset only for the
-relevant (i.e. under \verb{R/} or \verb{src/}) changed files. Defaults to \code{FALSE}.}
 }
 \value{
 a\code{tibble} with 4 columns:

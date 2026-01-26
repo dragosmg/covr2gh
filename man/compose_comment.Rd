@@ -10,7 +10,6 @@ compose_comment(
   repo,
   pr_number,
   marker = "<!-- covr2md-code-coverage -->",
-  keep_all_files = FALSE,
   align = "rrrc"
 )
 }
@@ -30,9 +29,6 @@ branch.}
 \item{marker}{(character scalar) string used to identify an issue
 comment generated with covr2md. Defaults to
 \code{"<!-- covr2md-code-coverage -->"}.}
-
-\item{keep_all_files}{(logical) include all files in the diff coverage table
-or just those modified by the PR.}
 
 \item{align}{Column alignment: a character vector consisting of \code{'l'}
 (left), \code{'c'} (center) and/or \code{'r'} (right). By default or if
