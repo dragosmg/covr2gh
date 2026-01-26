@@ -16,6 +16,7 @@ Imports:
     dplyr,
     gh,
     glue,
+    htmltools,
     knitr,
     purrr,
     rlang (>= 1.1.0),
