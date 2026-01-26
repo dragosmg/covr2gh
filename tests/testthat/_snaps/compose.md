@@ -15,7 +15,9 @@
       
       <details>
         <summary>Details on changes in file coverage</summary>
-          |          File| Coverage head| Coverage base| &Delta; |                    |
+        <br/>
+      
+        |          File| Coverage head| Coverage base| &Delta; |                    |
       |-------------:|-------------:|-------------:|:-------:|-------------------:|
       |   R/add_one.R|           40%|           40%|  0.00   | :heavy_equals_sign:|
       | R/add_three.R|            0%|            0%|  0.00   | :heavy_equals_sign:|
@@ -25,7 +27,9 @@
       
       <details>
         <summary>Details on diff coverage</summary>
-          |          File| Lines added| Lines tested| Coverage|
+        <br/>
+      
+        |          File| Lines added| Lines tested| Coverage|
       |-------------:|-----------:|------------:|--------:|
       |   R/add_one.R|           3|            0|       0%|
       | R/add_three.R|           3|            0|       0%|
