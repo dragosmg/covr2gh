@@ -20,7 +20,8 @@ Imports:
     purrr,
     rlang (>= 1.1.0),
     stringr,
-    tibble
+    tibble,
+    tidyr
 Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
