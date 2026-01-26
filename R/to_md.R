@@ -114,9 +114,9 @@ line_coverage_to_md <- function(
     ) |>
     dplyr::rename(
       File = file,
-      `Lines added` = .data$lines_added,
-      `Lines tested` = .data$lines_covered,
-      Coverage = coverage
+      `Lines added` = "lines_added",
+      `Lines tested` = "lines_covered",
+      Coverage = "coverage"
     )
 
   output |>
