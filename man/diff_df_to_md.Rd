@@ -4,7 +4,7 @@
 \alias{diff_df_to_md}
 \title{Transform the diff df into markdown}
 \usage{
-diff_df_to_md(diff_df, align = "rrrc")
+diff_df_to_md(diff_df, align = "rrrrc")
 }
 \arguments{
 \item{diff_df}{(\code{tibble}) a diff df, the output of \code{\link[=derive_diff_df]{derive_diff_df()}}}
