@@ -85,7 +85,7 @@ derive_diff_df <- function(
     changed_files <- c(changed_files, "Total")
   }
 
-  if (!keep_all_files) {
+  if (isFALSE(keep_all_files)) {
     diff_df <- diff_df |>
       dplyr::filter(
         file %in% changed_files
