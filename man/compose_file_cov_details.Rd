@@ -8,7 +8,7 @@ compose_file_cov_details(
   head_coverage,
   base_coverage,
   changed_files,
-  align = "rrrc"
+  align = "rrrrc"
 )
 }
 \arguments{
@@ -21,13 +21,6 @@ branch.}
 
 \item{changed_files}{(character) names of files changed by the PR. Usually
 the output of \code{\link[=get_changed_files]{get_changed_files()}}.}
-
-\item{align}{Column alignment: a character vector consisting of \code{'l'}
-(left), \code{'c'} (center) and/or \code{'r'} (right). By default or if
-\code{align = NULL}, numeric columns are right-aligned, and other columns
-are left-aligned. If \code{length(align) == 1L}, the string will be
-expanded to a vector of individual letters, e.g. \code{'clc'} becomes
-\code{c('c', 'l', 'c')}, unless the output format is LaTeX.}
 }
 \value{
 a markdown table of changes in coverage at file level between the
