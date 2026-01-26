@@ -1,29 +1,18 @@
-coverage_to_md <- function(x, align = "rr") {
-  x |>
-    digest_coverage() |>
-    knitr::kable(
-      align = align
-    )
-}
-
-
-# TODO needs a better name. this is file level. needs to be distinguishable from
-# line-level
-
-#' Transform the diff df into markdown
+#' Transform the file coverage tibble into markdown
 #'
-#' Makes the column names and the contents of the `delta` column more readable.
-#' Transforms the output to markdown and collapses into a single string.
+#' Makes the column names human readable, formats the data, and adds an
+#' interpretation column. The transforms the output to markdown and collapses
+#' into a single string.
 #'
-#' @param diff_df (`tibble`) a diff df, the output of [derive_file_cov_df()]
+#' @param file_cov_df (`tibble`) a diff df, the output of [derive_file_cov_df()]
 #' @inheritParams knitr::kable
 #'
 #' @returns a character scalar containing markdown version of the diff df
 #'   collapsed into a single string.
 #'
 #' @keywords internal
-file_cov_df_to_md <- function(diff_df, align = "rrrrc") {
-  diff_df_prep <- diff_df |>
+file_cov_df_to_md <- function(file_cov_df, align = "rrrrc") {
+  file_cov_df_prep <- file_cov_df |>
     dplyr::mutate(
       # add a brief visual interpretation of the delta with arrows or equal sign
       interpretation = dplyr::case_when(
@@ -43,7 +32,7 @@ file_cov_df_to_md <- function(diff_df, align = "rrrrc") {
     )
 
   # rename to something more human readable
-  diff_df_names <- diff_df_prep |>
+  file_cov_df_prep_names <- file_cov_df_prep |>
     names() |>
     stringr::str_to_sentence() |>
     stringr::str_replace_all(
@@ -59,9 +48,9 @@ file_cov_df_to_md <- function(diff_df, align = "rrrrc") {
       ""
     )
 
-  names(diff_df_prep) <- diff_df_names
+  names(file_cov_df_prep) <- file_cov_df_prep_names
 
-  diff_df_prep |>
+  file_cov_df_prep |>
     knitr::kable(
       align = align
     ) |>
@@ -70,6 +59,18 @@ file_cov_df_to_md <- function(diff_df, align = "rrrrc") {
     )
 }
 
+#' Transform a line coverage tibble to markdown
+#'
+#' Adds a total row, make column names more readable. Then transforms it to
+#' markdown which gets collapsed into a single string.
+#'
+#' @param diff_line_coverage (`tibble`) diff line coverage data. The output of
+#'   [derive_file_cov_df()]
+#' @inheritParams knitr::kable
+#'
+#' @returns a markdown table as a string
+#'
+#' @keywords internal
 line_coverage_to_md <- function(
   diff_line_coverage,
   align = "rrrr"
