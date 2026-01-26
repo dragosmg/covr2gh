@@ -67,7 +67,7 @@ derive_diff_df <- function(
   changed_files
 ) {
   head_coverage_digest <- digest_coverage(head_coverage)
-  browser()
+
   base_coverage_digest <- digest_coverage(base_coverage)
 
   diff_df <- head_coverage_digest |>

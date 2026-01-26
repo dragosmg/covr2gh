@@ -111,7 +111,7 @@ compose_comment <- function(
     pr_details,
     delta_total_coverage
   )
-  browser()
+
   diff_line_coverage <- get_diff_line_coverage(
     repo = repo,
     pr_details = pr_details,
