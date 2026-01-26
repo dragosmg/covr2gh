@@ -73,8 +73,13 @@ derive_diff_df <- function(
   diff_df <- head_coverage_digest |>
     dplyr::left_join(
       base_coverage_digest,
-      by = dplyr::join_by(file),
-      suffix = c("_head", "_base")
+      by = dplyr::join_by(
+        file
+      ),
+      suffix = c(
+        "_head",
+        "_base"
+      )
     ) |>
     dplyr::mutate(
       delta = .data$coverage_head - .data$coverage_base
@@ -89,11 +94,17 @@ derive_diff_df <- function(
       file
     )
 
-  changed_files <- c(changed_files, "Total")
+  impacted_files <- c(
+    union(
+      changed_files,
+      cov_change_files
+    ),
+    "Total"
+  )
 
   diff_df <- diff_df |>
     dplyr::filter(
-      file %in% changed_files
+      file %in% impacted_files
     )
 
   diff_df
