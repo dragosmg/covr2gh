@@ -127,7 +127,6 @@ compose_comment <- function(
     [covr2md {packageVersion('covr2md')}](https://reprex.tidyverse.org)</sup>"
   )
 
-  # TODO use diff_line_table for the second details
   glue::glue(
     "
     {marker}
