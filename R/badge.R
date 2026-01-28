@@ -168,6 +168,22 @@ coverage_thresholds <- tibble::tibble(
   )
 )
 
+
+#' Derive the colour for the value part of the badge
+#'
+#' Maps a value to a certain interval and chooses the corresponding colour.
+#'
+#' @param value (integer-like scalar) coverage percentage
+#' @param colours (`tibble`) a tibble with 2 columns `value` (threshold) and
+#'   `colour`.
+#'
+#' @returns a colour hexcode as string
+#'
+#' @noRd
+#' @examples
+#' \dontrun{
+#' derive_value_colour(5)
+#' }
 derive_value_colour <- function(
   value,
   colours = coverage_thresholds
