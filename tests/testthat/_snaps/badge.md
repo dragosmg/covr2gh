@@ -135,7 +135,7 @@
               <rect x="60"
                       width="35"
                       height="20"
-                      fill="#D9534F"/>
+                      fill="#E4804E"/>
               <rect width="95"
                       height="20"
                       fill="url(#gradient)"/>
@@ -229,7 +229,7 @@
               <rect x="60"
                       width="35"
                       height="20"
-                      fill="#F0AD4E"/>
+                      fill="#DFB317"/>
               <rect width="95"
                       height="20"
                       fill="url(#gradient)"/>
@@ -323,7 +323,7 @@
               <rect x="60"
                       width="35"
                       height="20"
-                      fill="#DFB317"/>
+                      fill="#A4C61D"/>
               <rect width="95"
                       height="20"
                       fill="url(#gradient)"/>
