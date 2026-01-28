@@ -1,9 +1,9 @@
 # PRs are issues
 # All PRs are issues, but not all issues are PRs.
-#' Get the ID of the covr2md comment
+#' Get the ID of the covr2gh comment
 #'
 #' Comments are identified by a specific comment, the "marker", by default
-#' `"<!-- covr2md-code-coverage -->"`. `get_comment_id()` looks for this
+#' `"<!-- covr2gh-code-coverage -->"`. `get_comment_id()` looks for this
 #' marker. If it can find it, it returns the comment ID, otherwise it returns
 #' `NULL`.
 #'
@@ -23,7 +23,7 @@
 get_comment_id <- function(
   repo,
   pr_number,
-  marker = "<!-- covr2md-code-coverage -->",
+  marker = "<!-- covr2gh-code-coverage -->",
   call = rlang::caller_env()
 ) {
   if (!rlang::is_scalar_character(repo)) {

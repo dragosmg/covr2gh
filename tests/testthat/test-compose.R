@@ -16,7 +16,7 @@ test_that("compose_comment works", {
     compose_comment(
       head_coverage,
       base_coverage,
-      repo = "dragosmg/covr2mddemo", # nolint
+      repo = "dragosmg/covr2ghdemo", # nolint
       pr_number = 3
     ),
     transform = remove_date_commit_sha

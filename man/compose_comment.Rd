@@ -9,7 +9,7 @@ compose_comment(
   base_coverage,
   repo,
   pr_number,
-  marker = "<!-- covr2md-code-coverage -->"
+  marker = "<!-- covr2gh-code-coverage -->"
 )
 }
 \arguments{
@@ -26,8 +26,8 @@ branch.}
 \item{pr_number}{(integer) the PR number}
 
 \item{marker}{(character scalar) string used to identify an issue
-comment generated with covr2md. Defaults to
-\code{"<!-- covr2md-code-coverage -->"}.}
+comment generated with covr2gh. Defaults to
+\code{"<!-- covr2gh-code-coverage -->"}.}
 }
 \value{
 a character scalar with the content of the GitHub comment
@@ -44,7 +44,7 @@ base_coverage <- covr::package_coverage()
 compose_comment(
   head_coverage = head_coverage,
   base_coverage = base_coverage,
-  repo = "dragosmg/covr2mddemo",
+  repo = "dragosmg/covr2ghdemo",
   pr_number = 3
 )
 }

@@ -24,7 +24,7 @@ involved in the PR. It only includes files that are under \verb{R/} or \verb{src
 }
 \examples{
 \dontrun{
-get_changed_files("dragosmg/covr2mddemo", 2)
+get_changed_files("dragosmg/covr2ghdemo", 2)
 }
 }
 \keyword{internal}
