@@ -10,7 +10,7 @@ generate_badge(value)
 \item{value}{(a numeric scalar) percentage coverage.}
 }
 \value{
-an SVG string invisibly
+a SVG string invisibly
 }
 \description{
 Generate a coverage badge

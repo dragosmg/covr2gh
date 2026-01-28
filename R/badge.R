@@ -6,7 +6,7 @@
 #'
 #' @param value (a numeric scalar) percentage coverage.
 #'
-#' @returns an SVG string invisibly
+#' @returns a SVG string invisibly
 #'
 #' @export
 #' @examples
@@ -173,7 +173,6 @@ coverage_thresholds <- tibble::tibble(
   )
 )
 
-
 #' Derive the colour for the value part of the badge
 #'
 #' Maps a value to a certain interval and chooses the corresponding colour.
@@ -196,6 +195,10 @@ derive_value_colour <- function(
   if (is.null(value) || is.na(value)) {
     value_colour <- "#9f9f9f"
     return(value_colour)
+  }
+
+  if (is.null(colours)) {
+    colours <- coverage_thresholds
   }
 
   idx <- findInterval(
