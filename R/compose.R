@@ -86,7 +86,9 @@ compose_comment <- function(
   total_base_coverage <- covr::percent_coverage(base_coverage)
   delta_total_coverage <- round(total_head_coverage - total_base_coverage, 2)
 
-  badge_url <- build_badge_url(total_head_coverage)
+  # make the badge then save it somewhere
+  # badge_url <- build_badge_url(total_head_coverage)
+  badge_url <- "<placeholder>"
 
   coverage_summary <- compose_coverage_summary(
     pr_details,
