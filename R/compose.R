@@ -124,7 +124,7 @@ compose_comment <- function(
   # TODO update URL with the correct pkgdown one once there is one
   sup <- glue::glue(
     "<sup>Created on {Sys.Date()} with \\
-    [covr2md {packageVersion('covr2md')}](https://reprex.tidyverse.org)</sup>"
+    [covr2md {packageVersion('covr2md')}](https://url-placeholder)</sup>"
   )
 
   glue::glue(
