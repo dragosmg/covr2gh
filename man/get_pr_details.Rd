@@ -33,6 +33,6 @@ contains a subset of these, needed for downstream use.
 }
 \examples{
 \dontrun{
-get_pr_details("dragosmg/covr2mddemo", 2)
+get_pr_details("dragosmg/covr2ghdemo", 2)
 }
 }

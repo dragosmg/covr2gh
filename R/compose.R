@@ -34,8 +34,8 @@
 #'   branch.
 #' @inheritParams get_pr_details
 #' @param marker (character scalar) string used to identify an issue
-#'   comment generated with covr2md. Defaults to
-#'   `"<!-- covr2md-code-coverage -->"`.
+#'   comment generated with covr2gh. Defaults to
+#'   `"<!-- covr2gh-code-coverage -->"`.
 #' @inheritParams knitr::kable
 #'
 #' @returns a character scalar with the content of the GitHub comment
@@ -50,7 +50,7 @@
 #' compose_comment(
 #'   head_coverage = head_coverage,
 #'   base_coverage = base_coverage,
-#'   repo = "dragosmg/covr2mddemo",
+#'   repo = "dragosmg/covr2ghdemo",
 #'   pr_number = 3
 #' )
 #' }
@@ -59,7 +59,7 @@ compose_comment <- function(
   base_coverage,
   repo,
   pr_number,
-  marker = "<!-- covr2md-code-coverage -->"
+  marker = "<!-- covr2gh-code-coverage -->"
 ) {
   # TODO add some checks on inputs
   # FIXME
@@ -124,7 +124,7 @@ compose_comment <- function(
   # TODO update URL with the correct pkgdown one once there is one
   sup <- glue::glue(
     "<sup>Created on {Sys.Date()} with \\
-    [covr2md {packageVersion('covr2md')}](https://url-placeholder)</sup>"
+    [covr2gh {packageVersion('covr2gh')}](https://url-placeholder)</sup>"
   )
 
   glue::glue(
@@ -185,7 +185,7 @@ compose_comment <- function(
 #' @examples
 #' \dontrun{
 #' pr_details <- get_pr_details(
-#'   repo = "dragosmg/covr2mddemo",
+#'   repo = "dragosmg/covr2ghdemo",
 #'   pr_number = 2
 #' )
 #'
@@ -242,6 +242,7 @@ compose_diff_coverage_summary <- function(diff_line_coverage, target = 80) {
     ":x: "
   )
 
+  # TODO make target the current base coverage
   glue::glue(
     "{emoji} Diff coverage: {percentage_line_coverage}% \\
     ({diff_coverage$total_lines_covered} out of \\

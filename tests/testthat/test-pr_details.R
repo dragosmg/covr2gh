@@ -2,7 +2,7 @@ test_that("get_pr_details() works", {
   skip_if_offline()
   expect_snapshot(
     get_pr_details(
-      repo = "dragosmg/covr2mddemo", # nolint
+      repo = "dragosmg/covr2ghdemo", # nolint
       pr_number = 2
     )
   )
@@ -38,7 +38,7 @@ test_that("get_pr_details() complains with incorrect inputs", {
   # `pr_number` is not scalar
   expect_error(
     get_pr_details(
-      repo = "dragosmg/covr2mddemo", # nolint
+      repo = "dragosmg/covr2ghdemo", # nolint
       pr_number = c(2, 3)
     ),
     "`pr_number` must be an integer-like scalar.",
@@ -48,7 +48,7 @@ test_that("get_pr_details() complains with incorrect inputs", {
   # `pr_number` is not integerish
   expect_error(
     get_pr_details(
-      repo = "dragosmg/covr2mddemo", # nolint
+      repo = "dragosmg/covr2ghdemo", # nolint
       pr_number = "foo"
     ),
     "`pr_number` must be an integer-like scalar.",
@@ -57,7 +57,7 @@ test_that("get_pr_details() complains with incorrect inputs", {
 
   expect_error(
     get_pr_details(
-      repo = "dragosmg/covr2mddemo", # nolint
+      repo = "dragosmg/covr2ghdemo", # nolint
       pr_number = FALSE
     ),
     "`pr_number` must be an integer-like scalar.",
@@ -69,7 +69,7 @@ test_that("get_changed_files() works", {
   skip_if_offline()
   expect_snapshot(
     get_changed_files(
-      repo = "dragosmg/covr2mddemo", # nolint
+      repo = "dragosmg/covr2ghdemo", # nolint
       pr_number = 2
     )
   )
@@ -107,7 +107,7 @@ test_that("get_changed_files() complains with incorrect inputs", {
   # `pr_number` is not scalar
   expect_error(
     get_changed_files(
-      repo = "dragosmg/covr2mddemo", # nolint
+      repo = "dragosmg/covr2ghdemo", # nolint
       pr_number = c(2, 3)
     ),
     "`pr_number` must be an integer-like scalar.",
@@ -117,7 +117,7 @@ test_that("get_changed_files() complains with incorrect inputs", {
   # `pr_number` is not integerish
   expect_error(
     get_changed_files(
-      repo = "dragosmg/covr2mddemo", # nolint
+      repo = "dragosmg/covr2ghdemo", # nolint
       pr_number = "foo"
     ),
     "`pr_number` must be an integer-like scalar.",
@@ -126,7 +126,7 @@ test_that("get_changed_files() complains with incorrect inputs", {
 
   expect_error(
     get_changed_files(
-      repo = "dragosmg/covr2mddemo", # nolint
+      repo = "dragosmg/covr2ghdemo", # nolint
       pr_number = FALSE
     ),
     "`pr_number` must be an integer-like scalar.",

@@ -21,7 +21,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' get_pr_details("dragosmg/covr2mddemo", 2)
+#' get_pr_details("dragosmg/covr2ghdemo", 2)
 #' }
 get_pr_details <- function(
   repo,
@@ -76,7 +76,7 @@ get_pr_details <- function(
 #' @keywords internal
 #' @examples
 #' \dontrun{
-#' get_changed_files("dragosmg/covr2mddemo", 2)
+#' get_changed_files("dragosmg/covr2ghdemo", 2)
 #' }
 get_changed_files <- function(
   repo,
