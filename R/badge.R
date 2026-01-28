@@ -6,16 +6,25 @@ generate_badge <- function(value) {
   # enforce value being between 0 and 100
   # TODO message about it
   # TODO test
-  # > value = NULL
-  # > max(min(value, 100), 0)
-  # [1] 100
-  value <- max(min(value, 100), 0)
 
-  char_value <- dplyr::if_else(
-    is.null(value) | is.na(value),
-    "unknown",
-    paste0(round(value), "%")
-  )
+  # NAs are contagious, NULLs are not
+  if (!is.null(value)) {
+    value_adjusted <- max(min(value, 100), 0)
+
+    if (!identical(value, value_adjusted)) {
+      cli::cli_alert_info(
+        "The coverage percentage has been adjusted to {.val {value_adjusted}} \\
+        from the initial value of {.val {value}}."
+      )
+      value <- value_adjusted
+    }
+  }
+
+  char_value <- "unknown"
+
+  if (!is.null(value) && !is.na(value)) {
+    char_value <- paste0(round(value), "%")
+  }
 
   # the values hardcoded below generally work. i did not want to go down the
   # rabbit hole of trying to make the widths of the label and value boxes
@@ -46,22 +55,12 @@ generate_badge <- function(value) {
 
   value_colour <- derive_value_colour(value)
 
-  value_colour <- "#9f9f9f"
-
-  if (char_value != "unknown") {
-    idx <- findInterval(
-      value,
-      coverage_thresholds$value,
-      rightmost.closed = TRUE
-    )
-
-    value_colour <- coverage_thresholds$colour[idx]
-  }
-
-  glue::glue(
+  badge_svg <- glue::glue(
     badge_boilerplate,
     .trim = TRUE
   )
+
+  invisible(badge_svg)
 }
 
 badge_boilerplate <- '
