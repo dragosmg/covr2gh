@@ -116,15 +116,15 @@ post_comment <- function(
   # posting a new comment vs updating an existing one requires hitting a
   # different endpoint
 
-  # post / create a new issue comment
+  # update an existing issue comment
   api_url <- glue::glue(
-    "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
+    "https://api.github.com/repos/{repo}/issues/comments/{comment_id}"
   )
 
-  if (!rlang::is_null(comment_id)) {
-    # update an existing issue comment
+  if (rlang::is_null(comment_id)) {
+    # post / create a new issue comment
     api_url <- glue::glue(
-      "https://api.github.com/repos/{repo}/issues/comments/{comment_id}"
+      "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
     )
   }
 
