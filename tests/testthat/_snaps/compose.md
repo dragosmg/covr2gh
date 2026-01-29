@@ -8,13 +8,15 @@
       
       ## Coverage summary
       
-      ![badge](<placeholder>)
+      ![badge](badge.svg)
       
       :white_check_mark: Merging PR [#3](https://github.com/dragosmg/covr2ghdemo/pull/3) (<removed-commit-sha>) into _main_ (<removed-commit-sha>) - will **increase** coverage by `21.05` percentage points.
       :x:  Diff coverage: 0% (0 out of 7 added lines are covered by tests). Target coverage is at least `80%`.
       
       <details>
         <summary>Details on changes in file coverage</summary>
+      
+        Files impacted either by code or coverage changes.
         <br/>
       
         |          File| Coverage head| Coverage base| &Delta;|                     |
@@ -27,6 +29,8 @@
       
       <details>
         <summary>Details on diff coverage</summary>
+      
+        Coverage for added lines.
         <br/>
       
         |          File| Lines added| Lines tested| Coverage|
