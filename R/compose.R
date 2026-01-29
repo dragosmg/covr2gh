@@ -133,7 +133,7 @@ compose_comment <- function(
 
     ## Coverage summary
 
-    ![badge]({badge_url})
+    ![badge](badge.svg)
 
     {coverage_summary}
     {diff_coverage_summary}
