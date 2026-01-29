@@ -86,9 +86,7 @@ compose_comment <- function(
   total_base_coverage <- covr::percent_coverage(base_coverage)
   delta_total_coverage <- round(total_head_coverage - total_base_coverage, 2)
 
-  # make the badge then save it somewhere
-  # badge_url <- build_badge_url(total_head_coverage)
-  badge_url <- "<placeholder>"
+  badge_url <- build_badge_url(pr_details)
 
   coverage_summary <- compose_coverage_summary(
     pr_details,
@@ -120,8 +118,6 @@ compose_comment <- function(
   diff_line_md_table <- line_cov_to_md(
     diff_line_coverage
   )
-
-  badge_url <- "https://github.com/dragosmg/covr2ghdemo/blob/covr2gh-storage/badges/gha-t2/coverage_badge.svg"
 
   # TODO update URL with the correct pkgdown one once there is one
   sup <- glue::glue(
@@ -254,5 +250,15 @@ compose_diff_coverage_summary <- function(diff_line_coverage, target = 80) {
     ({diff_coverage$total_lines_covered} out of \\
     {diff_coverage$total_lines_added} added lines are covered by tests). \\
     Target coverage is at least `{target}%`."
+  )
+}
+
+build_badge_url <- function(pr_details) {
+  repo <- pr_details$repo
+  branch <- "covr2gh-storage/badges"
+  head <- pr_details$head_name
+
+  glue::glue(
+    "https://raw.githubusercontent.com/{repo}/{branch}/{head}/coverage_badge.svg"
   )
 }

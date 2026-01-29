@@ -3,6 +3,9 @@
     Code
       get_pr_details(repo = "dragosmg/covr2ghdemo", pr_number = 2)
     Output
+      $repo
+      [1] "dragosmg/covr2ghdemo"
+      
       $pr_number
       [1] 2
       
