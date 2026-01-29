@@ -140,6 +140,8 @@ compose_comment <- function(
 
     <details>
       <summary>Details on changes in file coverage</summary>
+
+      Files impacted either by code or coverage changes.
       <br/>
 
       {file_cov_md_table}
@@ -147,6 +149,8 @@ compose_comment <- function(
 
     <details>
       <summary>Details on diff coverage</summary>
+
+      Coverage for added lines.
       <br/>
 
       {diff_line_md_table}
