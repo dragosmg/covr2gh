@@ -15,8 +15,8 @@
       
       <details>
         <summary>Details on changes in file coverage</summary>
-      
-        Files impacted either by code or coverage changes.
+        <br/>
+        ### Files impacted either by code or coverage changes.
         <br/>
       
         |          File| Coverage head| Coverage base| &Delta;|                     |
@@ -29,8 +29,8 @@
       
       <details>
         <summary>Details on diff coverage</summary>
-      
-        Coverage for added lines.
+        <br/>
+        ### Coverage for added lines.
         <br/>
       
         |          File| Lines added| Lines tested| Coverage|
