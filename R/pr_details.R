@@ -52,6 +52,7 @@ get_pr_details <- function(
 
   structure(
     list(
+      repo = repo,
       pr_number = pr_number,
       head_name = pr_info$head$ref,
       head_sha = pr_info$head$sha,
