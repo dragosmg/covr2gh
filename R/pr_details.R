@@ -11,6 +11,9 @@
 #'
 #' @returns an object of class `pr_details` - a list with the following
 #' elements:
+#'   * `repo`: GitHub repository (the value passed to the `repo` input argument)
+#'   * `pr_number`: pull request number (the value passed to the `pr_number`
+#'      argument)
 #'   * `head_name`: name of the current branch
 #'   * `head_sha`: the sha of the last commit in the current branch
 #'   * `base_name`: the name of the destination branch
@@ -21,7 +24,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' get_pr_details("dragosmg/covr2ghdemo", 2)
+#' get_pr_details("<owner>/<myawesomerepo>", 2)
 #' }
 get_pr_details <- function(
     repo,
@@ -50,7 +53,7 @@ get_pr_details <- function(
     pr_info <- glue::glue("GET {pr_api_url}") |>
         gh::gh()
 
-    structure(
+    output <- structure(
         list(
             repo = repo,
             pr_number = pr_number,
@@ -63,12 +66,15 @@ get_pr_details <- function(
         ),
         class = "pr_details"
     )
+
+    output
 }
 
 #' Get changed files
 #'
-#' Sends a GET request to the GitHub API and retrieves the relevant files
-#' involved in the PR. It only includes files that are under `R/` or `src/`.
+#' Sends a GET request to the GitHub API and retrieves the files modified by
+#' the PR. It then subsets these to only includes the "relevant" files - i.e.
+#' those under `R/` or `src/`.
 #'
 #' @inheritParams get_pr_details
 #'
@@ -77,9 +83,9 @@ get_pr_details <- function(
 #' @keywords internal
 #' @examples
 #' \dontrun{
-#' get_changed_files("dragosmg/covr2ghdemo", 2)
+#' get_relevant_files("dragosmg/covr2ghdemo", 2)
 #' }
-get_changed_files <- function(
+get_relevant_files <- function(
     repo,
     pr_number,
     call = rlang::caller_env()
@@ -115,6 +121,20 @@ get_changed_files <- function(
     relevant_files_changed
 }
 
+#' Get the PR diff
+#'
+#' Sends a GET request to the GitHub API and retrieves the files modified by
+#' the PR. It then subsets these to only includes files under `R/` or `src/`.
+#'
+#' @inheritParams get_pr_details
+#'
+#' @returns a character vector containing the names of the changed files.
+#'
+#' @keywords internal
+#' @examples
+#' \dontrun{
+#' get_diff_text("<owner>/<repo>", 2)
+#' }
 get_diff_text <- function(
     repo,
     pr_details,
@@ -140,6 +160,7 @@ get_diff_text <- function(
     # the content of each element is the patch
     # we can then map over this list
     output <- reply$files |>
+        # we focus on `changed_files` to get to the added lines
         purrr::keep(
             \(x) x$filename %in% changed_files
         ) |>

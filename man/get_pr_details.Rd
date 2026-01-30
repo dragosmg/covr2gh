@@ -19,6 +19,9 @@ Defaults to \code{\link[rlang:stack]{rlang::caller_env()}}.}
 an object of class \code{pr_details} - a list with the following
 elements:
 \itemize{
+\item \code{repo}: GitHub repository (the value passed to the \code{repo} input argument)
+\item \code{pr_number}: pull request number (the value passed to the \code{pr_number}
+argument)
 \item \code{head_name}: name of the current branch
 \item \code{head_sha}: the sha of the last commit in the current branch
 \item \code{base_name}: the name of the destination branch
@@ -33,6 +36,6 @@ contains a subset of these, needed for downstream use.
 }
 \examples{
 \dontrun{
-get_pr_details("dragosmg/covr2ghdemo", 2)
+get_pr_details("<owner>/<myawesomerepo>", 2)
 }
 }

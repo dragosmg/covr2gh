@@ -4,7 +4,7 @@
       compose_comment(head_coverage, base_coverage, repo = "dragosmg/covr2ghdemo",
         pr_number = 3)
     Output
-      <!-- covr2gh-code-coverage -->
+      <!-- covr2gh-do-not-delete -->
       
       ## :safety_vest: Coverage summary
       
@@ -37,5 +37,7 @@
       
       :recycle: Comment updated with the latest results.
       
-      <sup>Created on <removed-date> with [covr2gh 0.0.0.9013](https://url-placeholder)</sup>
+      <sup>
+          Created on <removed-date> with [covr2gh](https://dragosmg.github.io/covr2gh/).
+      </sup>
 

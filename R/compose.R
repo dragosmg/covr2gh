@@ -33,9 +33,6 @@
 #'   the branch merging into). The output of [covr::package_coverage()] on the
 #'   branch.
 #' @inheritParams get_pr_details
-#' @param marker (character scalar) string used to identify an issue
-#'   comment generated with covr2gh. Defaults to
-#'   `"<!-- covr2gh-code-coverage -->"`.
 #' @inheritParams knitr::kable
 #'
 #' @returns a character scalar with the content of the GitHub comment
@@ -58,13 +55,15 @@ compose_comment <- function(
     head_coverage,
     base_coverage,
     repo,
-    pr_number,
-    marker = "<!-- covr2gh-code-coverage -->"
+    pr_number
 ) {
+    marker = "<!-- covr2gh-do-not-delete -->"
     # TODO add some checks on inputs
     # FIXME
 
-    changed_files <- get_changed_files(
+    marker <- "<!-- covr2gh-do-not-delete -->"
+
+    relevant_files <- get_relevant_files(
         repo = repo,
         pr_number = pr_number
     )
@@ -121,10 +120,11 @@ compose_comment <- function(
         diff_line_coverage
     )
 
-    # TODO update URL with the correct pkgdown one once there is one
-    sup <- glue::glue(
-        "<sup>Created on {Sys.Date()} with \\
-    [covr2gh {packageVersion('covr2gh')}](https://url-placeholder)</sup>"
+    footer <- glue::glue(
+        "<sup>
+            Created on {Sys.Date()} with \\
+        [covr2gh](https://dragosmg.github.io/covr2gh/).
+        </sup>"
     )
 
     glue::glue(
@@ -152,7 +152,7 @@ compose_comment <- function(
 
     :recycle: Comment updated with the latest results.
 
-    {sup}
+    {footer}
     "
     )
 }

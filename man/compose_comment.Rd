@@ -4,13 +4,7 @@
 \alias{compose_comment}
 \title{Compose a coverage comment}
 \usage{
-compose_comment(
-  head_coverage,
-  base_coverage,
-  repo,
-  pr_number,
-  marker = "<!-- covr2gh-code-coverage -->"
-)
+compose_comment(head_coverage, base_coverage, repo, pr_number)
 }
 \arguments{
 \item{head_coverage}{(coverage) active / current branch (\code{HEAD}) coverage.
@@ -24,10 +18,6 @@ branch.}
 (\code{"OWNER/REPO"}).}
 
 \item{pr_number}{(integer) the PR number}
-
-\item{marker}{(character scalar) string used to identify an issue
-comment generated with covr2gh. Defaults to
-\code{"<!-- covr2gh-code-coverage -->"}.}
 }
 \value{
 a character scalar with the content of the GitHub comment
