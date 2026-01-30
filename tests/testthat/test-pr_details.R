@@ -135,7 +135,12 @@ test_that("get_changed_files() complains with incorrect inputs", {
 })
 
 test_that("extract_added_lines works", {
-    test_diff_text <- "@@ -8,9 +8,10 @@\n #' @examples\n #' add_one(2)\n add_one <- function(x) {\n-  if (!rlang::is_double(x)) {\n+  if (!is.numeric(x)) {\n     cli::cli_abort(\n-      \"`x` must be numeric. You supplied a {.class {class(x)}}\"\n+      \"`x` must be numeric. You supplied a {.class {class(x)}}\",\n+      call = rlang::caller_env()\n     )\n   }\n   x + 1"
+    # TODO add a couple of tests with more complicated diffs
+    test_diff_text <- testthat::test_path("fixtures", "diff_text.txt") |>
+        readLines() |>
+        stringr::str_flatten(
+            collapse = "\n"
+        )
 
     expect_snapshot(
         extract_added_lines(
