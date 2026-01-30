@@ -1,15 +1,27 @@
 test_that("compose_line_coverage_details with empty input", {
     expect_identical(
         compose_line_coverage_details(NULL),
-        glue::as_glue("\n\n")
+        "\n\n"
+    )
+
+    expect_s3_class(
+        compose_line_coverage_details(NULL),
+        "glue"
     )
 })
 
 test_that("compose_line_coverage_details with df", {
     line_cov <- tibble::tibble(
-        file = c("foo.R", "bar.R", "baz.R"),
+        file = c("R/foo.R", "R/bar.R", "R/baz.R"),
         lines_added = c(5, 4, 10),
         lines_covered = c(2, 4, 6)
+    )
+
+    expect_s3_class(
+        compose_line_coverage_details(
+            line_cov
+        ),
+        "glue"
     )
 
     expect_snapshot(
