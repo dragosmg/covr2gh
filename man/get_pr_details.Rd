@@ -39,3 +39,4 @@ contains a subset of these, needed for downstream use.
 get_pr_details("<owner>/<myawesomerepo>", 2)
 }
 }
+\keyword{internal}

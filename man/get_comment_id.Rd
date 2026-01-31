@@ -19,17 +19,18 @@ Defaults to \code{\link[rlang:stack]{rlang::caller_env()}}.}
 a numeric scalar representing the comment id or \code{NULL}
 }
 \description{
-Comments are identified by a specific comment, the "marker", by default
-\code{"<!-- covr2gh-do-not-delete -->"}. \code{get_comment_id()} looks for this
-marker. If it can find it, it returns the comment ID, otherwise it returns
-\code{NULL}.
+Comments are identified by a specific "marker", in itself a comment. This is
+hardcoded to \code{"<!-- covr2gh-do-not-delete -->"}. \code{get_comment_id()} looks for
+this marker. If it can find it, it returns the comment ID, otherwise it
+returns \code{NULL}.
 }
 \details{
-The output of \code{get_comment_id()} is the used downstream by \code{post_comment()}
-post a new comment or to update an existing one.
+The output of \code{get_comment_id()} is the used \code{post_comment()} post a new
+comment or update an existing one.
 }
 \examples{
 \dontrun{
-get_comment_id("dragosmg/demo-repo", 3)
+get_comment_id("<owner>/<repo>", 3)
 }
 }
+\keyword{internal}

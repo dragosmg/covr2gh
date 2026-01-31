@@ -2,9 +2,9 @@
 % Please edit documentation in R/comment.R
 \name{post_comment}
 \alias{post_comment}
-\title{Post a new comment or update an existing one}
+\title{Post or update comment}
 \usage{
-post_comment(body, repo, pr_number, comment_id = NULL)
+post_comment(body, repo, pr_number)
 }
 \arguments{
 \item{body}{(character scalar) the content of the body of the message.}
@@ -13,24 +13,21 @@ post_comment(body, repo, pr_number, comment_id = NULL)
 (\code{"OWNER/REPO"}).}
 
 \item{pr_number}{(integer) the PR number}
-
-\item{comment_id}{(numeric) the ID of the issue comment to update. If \code{NULL}
-(the default), a new comment will be posted. Usually the output of
-\code{\link[=get_comment_id]{get_comment_id()}}.}
 }
 \value{
 a \code{gh_response} object containing the API response
 }
 \description{
-Post a new comment or update an existing one
+\code{post_comment()} first checks if a "known" \code{covr2gh} comment exists on the
+target pull request. If it does, then it updates it, if it doesn't, then a
+a new comment is posted.
 }
 \examples{
 \dontrun{
 post_comment(
   "this is amazing",
-  repo = "dragosmg/my-test-repo",
-  pr_number = 3,
-  comment_id = 123456789
+  repo = "<owner>/<repo>",
+  pr_number = 3
 )
 }
 }
