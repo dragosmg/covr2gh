@@ -14,8 +14,9 @@ a \code{tibble} with 2 columns (\code{File} and \code{Coverage}) summarising
 testing coverage at file level.
 }
 \description{
-Take a \code{coverage} object (the output of \code{\link[covr:package_coverage]{covr::package_coverage()}}, extract
-the filecoverage component and transform it into a \code{data.frame}/\code{tibble}.
+Takes a \code{coverage} object (the output of \code{\link[covr:package_coverage]{covr::package_coverage()}}, extracts
+the \code{"filecoverage"} component and transforms it into a \code{tibble}. It also
+extracts the \code{"totalcoverage"} and adds it as the \code{"Overall"} row.
 }
 \examples{
 \dontrun{
@@ -25,3 +26,4 @@ covr::package_coverage("myawesomepkg") |>
   file_coverage()
 }
 }
+\keyword{internal}
