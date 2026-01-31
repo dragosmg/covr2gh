@@ -1,22 +1,23 @@
 #' Digest file coverage
 #'
-#' Take a `coverage` object (the output of [covr::package_coverage()], extract
-#' the filecoverage component and transform it into a `data.frame`/`tibble`.
+#' Takes a `coverage` object (the output of [covr::package_coverage()], extracts
+#' the `"filecoverage"` component and transforms it into a `tibble`. It also
+#' extracts the `"totalcoverage"` and adds it as the `"Overall"` row.
 #'
 #' @param x `<coverage>` object, defaults to [covr::package_coverage()].
 #'
 #' @returns a `tibble` with 2 columns (`File` and `Coverage`) summarising
 #'   testing coverage at file level.
 #'
-#' @export
+#' @keywords internal
 #' @examples
 #' \dontrun{
 #' library(covr)
 #'
 #' covr::package_coverage("myawesomepkg") |>
-#'   digest_coverage()
+#'   file_coverage()
 #' }
-digest_coverage <- function(x = covr::package_coverage()) {
+file_coverage <- function(x) {
     if (!inherits(x, "coverage")) {
         cli::cli_abort(
             "`x` must be a coverage object"
@@ -38,7 +39,7 @@ digest_coverage <- function(x = covr::package_coverage()) {
         purrr::pluck("totalcoverage")
 
     total_coverage_df <- tibble::tibble(
-        file = "Total",
+        file = "Overall",
         coverage = total
     )
 
@@ -50,25 +51,23 @@ digest_coverage <- function(x = covr::package_coverage()) {
     output
 }
 
-#' Derive a coverage tibble for the changed files
+#' Combine head and base file-level coverage
 #'
 #' @inheritParams compose_comment
 #'
 #' @returns a`tibble` with 4 columns:
 #'   * `file`: file name
-#'   * `coverage_head`: coverage for the current branch
+#'   * `coverage_head`: coverage for the head branch
 #'   * `coverage_base` coverage for the base branch, and
 #'   * `delta`: difference in coverage between head and base.
 #'
 #' @keywords internal
-derive_file_cov_df <- function(
+combine_file_coverage <- function(
     head_coverage,
-    base_coverage,
-    changed_files
+    base_coverage
 ) {
-    head_coverage_digest <- digest_coverage(head_coverage)
-
-    base_coverage_digest <- digest_coverage(base_coverage)
+    head_coverage_digest <- file_coverage(head_coverage)
+    base_coverage_digest <- file_coverage(base_coverage)
 
     diff_df <- head_coverage_digest |>
         dplyr::left_join(
@@ -85,8 +84,9 @@ derive_file_cov_df <- function(
             delta = .data$coverage_head - .data$coverage_base
         )
 
-    # keep any files with changes in content (`changed_files`) or in coverage
+    # keep any files with changes in content (`relevant_files`) or in coverage
     cov_change_files <- diff_df |>
+        # TODO allow for some margin here. all.equal, etc
         dplyr::filter(
             .data$delta != 0
         ) |>
@@ -95,11 +95,8 @@ derive_file_cov_df <- function(
         )
 
     impacted_files <- c(
-        union(
-            changed_files,
-            cov_change_files
-        ),
-        "Total"
+        cov_change_files,
+        "Overall"
     )
 
     diff_df <- diff_df |>
@@ -108,4 +105,31 @@ derive_file_cov_df <- function(
         )
 
     diff_df
+}
+
+#' Compose the file coverage details section
+#'
+#' the section is made up of a subtitle (heading 3) and a table. if the input is
+#' `NULL`, the output is an empty string.
+#'
+#' @param file_cov_df a `tibble`, the output of [combine_file_coverage()]
+#'
+#' @returns a glue object, a string with the section content.
+#'
+#' @keywords internal
+compose_file_coverage_details <- function(file_cov_df) {
+    file_cov_md_table <- file_cov_to_md(file_cov_df)
+
+    subtitle <- ""
+
+    if (!is.null(file_cov_df)) {
+        subtitle <- "### Files with code or coverage changes"
+    }
+
+    file_cov_details <- glue::glue(
+        "{subtitle}
+
+        {file_cov_md_table}"
+    )
+    file_cov_details
 }

@@ -12,6 +12,7 @@ Convert covr code coverage output into Markdown in preparation for use with GitH
 Useful links:
 \itemize{
   \item \url{https://github.com/dragosmg/covr2gh}
+  \item \url{https://dragosmg.github.io/covr2gh/}
   \item Report bugs at \url{https://github.com/dragosmg/covr2gh/issues}
 }
 

@@ -1,31 +1,30 @@
-# PRs are issues
-# All PRs are issues, but not all issues are PRs.
-#' Get the ID of the covr2gh comment
+#' Identify the covr2gh comment
 #'
-#' Comments are identified by a specific comment, the "marker", by default
-#' `"<!-- covr2gh-code-coverage -->"`. `get_comment_id()` looks for this
-#' marker. If it can find it, it returns the comment ID, otherwise it returns
-#' `NULL`.
+#' Comments are identified by a specific "marker", in itself a comment. This is
+#' hardcoded to `"<!-- covr2gh-do-not-delete -->"`. `get_comment_id()` looks for
+#' this marker. If it can find it, it returns the comment ID, otherwise it
+#' returns `NULL`.
 #'
-#' The output of `get_comment_id()` is the used downstream by `post_comment()`
-#' post a new comment or to update an existing one.
+#' The output of `get_comment_id()` is the used `post_comment()` post a new
+#' comment or update an existing one.
 #'
 #' @inheritParams get_pr_details
 #' @inheritParams compose_comment
 #'
 #' @returns a numeric scalar representing the comment id or `NULL`
 #'
-#' @export
+#' @keywords internal
 #' @examples
 #' \dontrun{
-#' get_comment_id("dragosmg/demo-repo", 3)
+#' get_comment_id("<owner>/<repo>", 3)
 #' }
 get_comment_id <- function(
     repo,
     pr_number,
-    marker = "<!-- covr2gh-code-coverage -->",
     call = rlang::caller_env()
 ) {
+    marker <- "<!-- covr2gh-do-not-delete -->"
+
     if (!rlang::is_scalar_character(repo)) {
         cli::cli_abort(
             "`repo` must be a character scalar.",
@@ -36,13 +35,6 @@ get_comment_id <- function(
     if (!rlang::is_scalar_integerish(pr_number)) {
         cli::cli_abort(
             "`pr_number` must be an integer-like scalar.",
-            call = call
-        )
-    }
-
-    if (!rlang::is_scalar_character(marker)) {
-        cli::cli_abort(
-            "`marker` must be a character scalar.",
             call = call
         )
     }
@@ -62,9 +54,9 @@ get_comment_id <- function(
         return(NULL)
     }
 
-    # identify the comment that contains the marker we set
+    # identify the comment containing the marker
     comment_index <- comments_info |>
-        # look in the body of the comment for the marker
+        # look in the comment body
         purrr::map("body") |>
         # detect_index identifies the position of the first match
         purrr::detect_index(
@@ -79,13 +71,14 @@ get_comment_id <- function(
 }
 
 
-#' Post a new comment or update an existing one
+#' Post or update comment
+#'
+#' `post_comment()` first checks if a "known" `covr2gh` comment exists on the
+#' target pull request. If it does, then it updates it, if it doesn't, then a
+#' a new comment is posted.
 #'
 #' @inheritParams get_pr_details
 #' @param body (character scalar) the content of the body of the message.
-#' @param comment_id (numeric) the ID of the issue comment to update. If `NULL`
-#'   (the default), a new comment will be posted. Usually the output of
-#'   [get_comment_id()].
 #' @inheritParams compose_comment
 #'
 #' @returns a `gh_response` object containing the API response
@@ -95,48 +88,50 @@ get_comment_id <- function(
 #' \dontrun{
 #' post_comment(
 #'   "this is amazing",
-#'   repo = "dragosmg/my-test-repo",
-#'   pr_number = 3,
-#'   comment_id = 123456789
+#'   repo = "<owner>/<repo>",
+#'   pr_number = 3
 #' )
 #' }
 post_comment <- function(
     body,
     repo,
-    pr_number,
-    comment_id = NULL
+    pr_number
 ) {
+    comment_id <- get_comment_id(
+        repo = repo,
+        pr_number = pr_number
+    )
+
     # TODO add checks for
     #  * body
     #  * repo
     #  * pr_number
-    #  * comment_id
-    #  * marker
 
-    # posting a new comment vs updating an existing one requires hitting a
-    # different endpoint
+    # posting a new comment vs updating an existing one is accomplished by
+    # using different endpoints
 
-    # update an existing issue comment
+    # endpoint for posting a new issue comment
     api_url <- glue::glue(
-        "https://api.github.com/repos/{repo}/issues/comments/{comment_id}"
+        "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
     )
 
-    if (rlang::is_null(comment_id)) {
-        # post / create a new issue comment
+    if (!rlang::is_null(comment_id)) {
+        # endpoint for updating an existing one
         api_url <- glue::glue(
-            "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
+            "https://api.github.com/repos/{repo}/issues/comments/{comment_id}"
         )
     }
 
     response <- glue::glue("POST {api_url}") |>
         gh::gh(body = body)
 
-    response
+    invisible(response)
 }
 
 #' Delete a comment
 #'
-#' Thin wrapper for making a `DELETE` request to the GitHub API.
+#' Thin wrapper for making a `DELETE` request to the issue comments endpoint
+#' of the GitHub API.
 #'
 #' @inheritParams get_pr_details
 #' @param comment_id (numeric) the ID of the issue comment to delete.
@@ -146,7 +141,7 @@ post_comment <- function(
 #' @keywords internal
 #' @examples
 #' \dontrun{
-#' delete_comment("dragosmg/this-is-my-repo", 4553)
+#' delete_comment("<owner>/<repo>", 4553)
 #' }
 delete_comment <- function(
     repo,
@@ -159,5 +154,5 @@ delete_comment <- function(
     response <- glue::glue("DELETE {api_url}") |>
         gh::gh()
 
-    response
+    invisible(response)
 }

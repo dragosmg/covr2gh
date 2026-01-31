@@ -8,7 +8,7 @@ line_cov_to_md(diff_line_coverage, align = "rrrr")
 }
 \arguments{
 \item{diff_line_coverage}{(\code{tibble}) diff line coverage data. The output of
-\code{\link[=derive_file_cov_df]{derive_file_cov_df()}}}
+\code{\link[=combine_file_coverage]{combine_file_coverage()}}}
 
 \item{align}{Column alignment: a character vector consisting of \code{'l'}
 (left), \code{'c'} (center) and/or \code{'r'} (right). By default or if

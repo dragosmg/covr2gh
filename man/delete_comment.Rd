@@ -16,11 +16,12 @@ delete_comment(repo, comment_id)
 a \code{gh_response} object
 }
 \description{
-Thin wrapper for making a \code{DELETE} request to the GitHub API.
+Thin wrapper for making a \code{DELETE} request to the issue comments endpoint
+of the GitHub API.
 }
 \examples{
 \dontrun{
-delete_comment("dragosmg/this-is-my-repo", 4553)
+delete_comment("<owner>/<repo>", 4553)
 }
 }
 \keyword{internal}

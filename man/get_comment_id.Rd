@@ -2,24 +2,15 @@
 % Please edit documentation in R/comment.R
 \name{get_comment_id}
 \alias{get_comment_id}
-\title{Get the ID of the covr2gh comment}
+\title{Identify the covr2gh comment}
 \usage{
-get_comment_id(
-  repo,
-  pr_number,
-  marker = "<!-- covr2gh-code-coverage -->",
-  call = rlang::caller_env()
-)
+get_comment_id(repo, pr_number, call = rlang::caller_env())
 }
 \arguments{
 \item{repo}{(character) the repository name in the GitHub format
 (\code{"OWNER/REPO"}).}
 
 \item{pr_number}{(integer) the PR number}
-
-\item{marker}{(character scalar) string used to identify an issue
-comment generated with covr2gh. Defaults to
-\code{"<!-- covr2gh-code-coverage -->"}.}
 
 \item{call}{the execution environment to surface the error message from.
 Defaults to \code{\link[rlang:stack]{rlang::caller_env()}}.}
@@ -28,17 +19,18 @@ Defaults to \code{\link[rlang:stack]{rlang::caller_env()}}.}
 a numeric scalar representing the comment id or \code{NULL}
 }
 \description{
-Comments are identified by a specific comment, the "marker", by default
-\code{"<!-- covr2gh-code-coverage -->"}. \code{get_comment_id()} looks for this
-marker. If it can find it, it returns the comment ID, otherwise it returns
-\code{NULL}.
+Comments are identified by a specific "marker", in itself a comment. This is
+hardcoded to \code{"<!-- covr2gh-do-not-delete -->"}. \code{get_comment_id()} looks for
+this marker. If it can find it, it returns the comment ID, otherwise it
+returns \code{NULL}.
 }
 \details{
-The output of \code{get_comment_id()} is the used downstream by \code{post_comment()}
-post a new comment or to update an existing one.
+The output of \code{get_comment_id()} is the used \code{post_comment()} post a new
+comment or update an existing one.
 }
 \examples{
 \dontrun{
-get_comment_id("dragosmg/demo-repo", 3)
+get_comment_id("<owner>/<repo>", 3)
 }
 }
+\keyword{internal}
