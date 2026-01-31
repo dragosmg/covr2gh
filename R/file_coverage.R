@@ -1,14 +1,15 @@
 #' Digest file coverage
 #'
-#' Take a `coverage` object (the output of [covr::package_coverage()], extract
-#' the filecoverage component and transform it into a `data.frame`/`tibble`.
+#' Takes a `coverage` object (the output of [covr::package_coverage()], extracts
+#' the `"filecoverage"` component and transforms it into a `tibble`. It also
+#' extracts the `"totalcoverage"` and adds it as the `"Overall"` row.
 #'
 #' @param x `<coverage>` object, defaults to [covr::package_coverage()].
 #'
 #' @returns a `tibble` with 2 columns (`File` and `Coverage`) summarising
 #'   testing coverage at file level.
 #'
-#' @export
+#' @keywords internal
 #' @examples
 #' \dontrun{
 #' library(covr)
