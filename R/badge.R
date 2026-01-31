@@ -1,7 +1,3 @@
-#  build a badge which needs to be in 2 places:
-#   * in the PR comment
-#   * in the Readme
-#   * maybe stored in a separate branch (e.g. coverage-artifacts)?
 #' Generate a coverage badge
 #'
 #' @param value (a numeric scalar) percentage coverage.
@@ -37,7 +33,7 @@ generate_badge <- function(value) {
     # rabbit hole of trying to make the widths of the label and value boxes
     # entirely adaptive since:
     #   - the text in the label will always be "coverage"
-    #   - the font family and font size are not controlled by the user
+    #   - the font family and font size are not exposed to the user
     #   - the height of the badge is the "standard" 20
 
     label_width <- 60
@@ -118,10 +114,6 @@ derive_value_colour <- function(
     if (is.null(value) || is.na(value)) {
         value_colour <- "#9f9f9f"
         return(value_colour)
-    }
-
-    if (is.null(colours)) {
-        colours <- coverage_thresholds
     }
 
     idx <- findInterval(
