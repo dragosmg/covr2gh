@@ -1,4 +1,4 @@
 # covr2gh (development version)
 
-* added `build_badge_url()` a function building the badge URL.
-* added `digest_coverage()` summarises coverage (assessed with `covr::package_coverage()`) by file.
+* `generate_badge()` takes a coverage percentage and produces a badge.
+* `compose_comment()` builds a comment while `post_comment()` posts it.
