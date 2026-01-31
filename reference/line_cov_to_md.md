@@ -14,7 +14,7 @@ line_cov_to_md(diff_line_coverage, align = "rrrr")
 - diff_line_coverage:
 
   (`tibble`) diff line coverage data. The output of
-  [`derive_file_cov_df()`](https://dragosmg.github.io/covr2gh/reference/derive_file_cov_df.md)
+  [`combine_file_coverage()`](https://dragosmg.github.io/covr2gh/reference/combine_file_coverage.md)
 
 - align:
 

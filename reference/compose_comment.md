@@ -5,13 +5,7 @@ Compose a coverage comment
 ## Usage
 
 ``` r
-compose_comment(
-  head_coverage,
-  base_coverage,
-  repo,
-  pr_number,
-  marker = "<!-- covr2gh-code-coverage -->"
-)
+compose_comment(head_coverage, base_coverage, repo, pr_number)
 ```
 
 ## Arguments
@@ -36,11 +30,6 @@ compose_comment(
 - pr_number:
 
   (integer) the PR number
-
-- marker:
-
-  (character scalar) string used to identify an issue comment generated
-  with covr2gh. Defaults to `"<!-- covr2gh-code-coverage -->"`.
 
 ## Value
 

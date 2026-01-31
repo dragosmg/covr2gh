@@ -1,6 +1,7 @@
 # Delete a comment
 
-Thin wrapper for making a `DELETE` request to the GitHub API.
+Thin wrapper for making a `DELETE` request to the issue comments
+endpoint of the GitHub API.
 
 ## Usage
 
@@ -26,6 +27,6 @@ a `gh_response` object
 
 ``` r
 if (FALSE) { # \dontrun{
-delete_comment("dragosmg/this-is-my-repo", 4553)
+delete_comment("<owner>/<repo>", 4553)
 } # }
 ```

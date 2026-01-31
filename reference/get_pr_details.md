@@ -29,6 +29,12 @@ get_pr_details(repo, pr_number, call = rlang::caller_env())
 
 an object of class `pr_details` - a list with the following elements:
 
+- `repo`: GitHub repository (the value passed to the `repo` input
+  argument)
+
+- `pr_number`: pull request number (the value passed to the `pr_number`
+  argument)
+
 - `head_name`: name of the current branch
 
 - `head_sha`: the sha of the last commit in the current branch
@@ -45,6 +51,6 @@ an object of class `pr_details` - a list with the following elements:
 
 ``` r
 if (FALSE) { # \dontrun{
-get_pr_details("dragosmg/covr2ghdemo", 2)
+get_pr_details("<owner>/<myawesomerepo>", 2)
 } # }
 ```

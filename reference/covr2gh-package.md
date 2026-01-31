@@ -9,6 +9,8 @@ Useful links:
 
 - <https://github.com/dragosmg/covr2gh>
 
+- <https://dragosmg.github.io/covr2gh/>
+
 - Report bugs at <https://github.com/dragosmg/covr2gh/issues>
 
 ## Author
