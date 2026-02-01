@@ -53,7 +53,27 @@ test_that("build_badge_url when PR from fork", {
         ),
         class = "pr_details"
     )
-    build_badge_url(test_pr_details)
+
+    expect_snapshot(
+        build_badge_url(
+            test_pr_details,
+            78.35
+        )
+    )
+
+    expect_snapshot(
+        build_badge_url(
+            test_pr_details,
+            98.45
+        )
+    )
+
+    expect_snapshot(
+        build_badge_url(
+            test_pr_details,
+            23.35
+        )
+    )
 })
 
 test_that("build_badge_url when PR from fork", {
@@ -70,5 +90,26 @@ test_that("build_badge_url when PR from fork", {
             diff_url = "https://github.com/<owner>/<repo>/pull/3.diff"
         ),
         class = "pr_details"
+    )
+
+    expect_snapshot(
+        build_badge_url(
+            test_pr_details,
+            78.35
+        )
+    )
+
+    expect_snapshot(
+        build_badge_url(
+            test_pr_details,
+            98.45
+        )
+    )
+
+    expect_snapshot(
+        build_badge_url(
+            test_pr_details,
+            23.35
+        )
     )
 })
