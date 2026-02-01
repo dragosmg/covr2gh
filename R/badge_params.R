@@ -40,10 +40,10 @@ value_to_char <- function(value, verbose = FALSE, call = rlang::caller_env()) {
 
 estimate_width_value <- function(
     badge_value,
-    label_width = 60
+    width_label = 60
 ) {
     dplyr::case_when(
-        badge_value$char == "unknown" ~ label_width,
+        badge_value$char == "unknown" ~ width_label,
         badge_value$char == "100%" ~ 40,
         nchar(badge_value$char) < 3 ~ 30,
         .default = 35
@@ -57,4 +57,100 @@ estimate_text_length_value <- function(badge_value, text_length_label = 50) {
         nchar(badge_value$char) < 3 ~ 20,
         .default = 26
     )
+}
+
+# no badge_url
+# this should return all the parameters needed to build the badge
+#   * value as numeric
+#   * value as text
+#   * colour
+#   * badge_url
+#   * label_width
+#   * value_width based on value as text
+#   * text_length for label
+#   * text_length for value
+#   * total_width = label_width + value_width
+#   * text_value_start = label_width + value_width / 2
+
+derive_badge_params <- function(value) {
+    badge_value <- value_to_char(value)
+
+    value_colour <- derive_badge_colour(badge_value)
+
+    # the values hardcoded below generally work. i did not want to go down the
+    # rabbit hole of trying to make the widths of the label and value boxes
+    # entirely adaptive since:
+    #   - the text in the label will always be "coverage"
+    #   - the font family and font size are not exposed to the user
+    #   - the height of the badge is the "standard" 20
+
+    width_label <- 60
+
+    width_value <- estimate_width_value(badge_value, width_label)
+
+    text_length_label <- 50
+
+    text_length_value <- estimate_text_length_value(
+        badge_value,
+        text_length_label = text_length_label
+    )
+
+    list(
+        value_num = badge_value$num,
+        value_char = badge_value$char,
+        value_col = value_colour,
+        width_label = width_label,
+        width_value = width_value,
+        text_length_label = text_length_label,
+        text_length_value = text_length_value,
+        total_width = width_label + width_value,
+        text_start_value = width_label + width_value / 2
+    )
+}
+
+coverage_thresholds <- tibble::tibble(
+    value = c(0, 20, 40, 55, 70, 85, 100),
+    colour = c(
+        "#D9534F",
+        "#E4804E",
+        "#F0AD4E",
+        "#DFB317",
+        "#A4C61D",
+        "#5CB85C",
+        "#5CB85C"
+    )
+)
+
+#' Derive the colour for the value part of the badge
+#'
+#' Maps a value to a certain interval and chooses the corresponding colour.
+#'
+#' @param value (integer-like scalar) coverage percentage
+#' @param colours (`tibble`) a tibble with 2 columns `value` (threshold) and
+#'   `colour`.
+#'
+#' @returns a colour hexcode as string
+#'
+#' @keywords internal
+#' @examples
+#' \dontrun{
+#' derive_badge_colour(5)
+#' }
+derive_badge_colour <- function(
+    badge_value,
+    colours = coverage_thresholds
+) {
+    if (badge_value$char == "unknown") {
+        return("#9f9f9f")
+    }
+
+    idx <- findInterval(
+        badge_value$num,
+        coverage_thresholds$value,
+        rightmost.closed = TRUE
+    )
+
+    value_colour <- coverage_thresholds$colour[idx]
+
+    value_colour
 }
