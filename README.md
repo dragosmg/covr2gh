@@ -10,17 +10,17 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![R-CMD-check](https://github.com/dragosmg/covr2gh/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dragosmg/covr2gh/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-{covr2gh} was born from a need and a want to have code coverage
-information at hand (when reviewing a pull request) without depending on
-a 3rd party vendor, a 3rd part GitHub Actions or having to pull 2
-branches, run and compare coverages.
+{covr2gh} was born from a need to have test coverage information to hand
+when reviewing a pull request.
 
-This would be useful in many enterprise settings where external services
-are not easy to access (and neither are unvetted GitHub Actions).
+Due to constraints in enterprise environments, this often needs to be
+accomplished without depending on a 3rd party vendor, or an
+[un-verified](https://docs.github.com/en/actions/how-tos/create-and-publish-actions/publish-in-github-marketplace#about-badges-in-github-marketplace)
+/ unvetted GitHub Action.
 
-The main focus is on presenting a brief summary (extracted from the
-output of `covr::package_coverage()`) as a comment on a GitHub pull
-request (PR).
+The core functionality focuses on extracting coverage data (with
+`covr::package_coverage()`) and on presenting a brief summary as a
+comment on a GitHub pull request (PR).
 
 ## Installation
 
@@ -38,12 +38,7 @@ The package is designed to be used with GitHub Actions. It has an
 accompanying workflow that does the following:
 
 - runs `covr::package_coverage()` on both the head and base branches.
-- summarises the outputs in a couple of sentences.
+- compares and summarises the outputs in a couple of sentences.
 - adds collapsible sections with tables containing more details.
 - renders a badge and pushes it to a dedicated branch
   (`covr2gh-storage`).
-
-``` r
-library(covr2gh)
-my_pkg_coverage <- covr::package_coverage("path/to/myawesomepkg")
-```
