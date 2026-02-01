@@ -212,9 +212,9 @@ test_that("estimate_text_length_value()", {
     )
 })
 
-test_that("derive_badge_params() with NULL and NA", {
+test_that("badge_params() with NULL and NA", {
     expect_identical(
-        derive_badge_params(NA),
+        badge_params(NA),
         structure(
             list(
                 value_num = NA_real_,
@@ -232,7 +232,7 @@ test_that("derive_badge_params() with NULL and NA", {
     )
 
     expect_identical(
-        derive_badge_params(NULL),
+        badge_params(NULL),
         structure(
             list(
                 value_num = NA_real_,
@@ -250,9 +250,9 @@ test_that("derive_badge_params() with NULL and NA", {
     )
 })
 
-test_that("derive_badge_params() regular cases", {
+test_that("badge_params() regular cases", {
     expect_identical(
-        derive_badge_params(5.67),
+        badge_params(5.67),
         structure(
             list(
                 value_num = 5.67,
@@ -270,7 +270,7 @@ test_that("derive_badge_params() regular cases", {
     )
 
     expect_identical(
-        derive_badge_params(15.35),
+        badge_params(15.35),
         structure(
             list(
                 value_num = 15.35,
@@ -288,7 +288,7 @@ test_that("derive_badge_params() regular cases", {
     )
 
     expect_identical(
-        derive_badge_params(45.69),
+        badge_params(45.69),
         structure(
             list(
                 value_num = 45.69,
@@ -306,7 +306,7 @@ test_that("derive_badge_params() regular cases", {
     )
 
     expect_identical(
-        derive_badge_params(65.69),
+        badge_params(65.69),
         structure(
             list(
                 value_num = 65.69,
@@ -324,7 +324,7 @@ test_that("derive_badge_params() regular cases", {
     )
 
     expect_identical(
-        derive_badge_params(75.69),
+        badge_params(75.69),
         structure(
             list(
                 value_num = 75.69,
@@ -342,7 +342,7 @@ test_that("derive_badge_params() regular cases", {
     )
 
     expect_identical(
-        derive_badge_params(95.69),
+        badge_params(95.69),
         structure(
             list(
                 value_num = 95.69,
@@ -360,7 +360,7 @@ test_that("derive_badge_params() regular cases", {
     )
 
     expect_identical(
-        derive_badge_params(100),
+        badge_params(100),
         structure(
             list(
                 value_num = 100,
@@ -378,9 +378,9 @@ test_that("derive_badge_params() regular cases", {
     )
 })
 
-test_that("derive_badge_params() with gt 100 and lt 0", {
+test_that("badge_params() with gt 100 and lt 0", {
     expect_identical(
-        derive_badge_params(1470),
+        badge_params(1470),
         structure(
             list(
                 value_num = 100,
@@ -398,7 +398,7 @@ test_that("derive_badge_params() with gt 100 and lt 0", {
     )
 
     expect_identical(
-        derive_badge_params(-1470),
+        badge_params(-1470),
         structure(
             list(
                 value_num = 0,
