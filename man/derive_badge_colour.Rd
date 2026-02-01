@@ -7,10 +7,10 @@
 derive_badge_colour(badge_value, colours = coverage_thresholds)
 }
 \arguments{
+\item{badge_value}{a \code{badge_value} object representing a coverage percentage}
+
 \item{colours}{(\code{tibble}) a tibble with 2 columns \code{value} (threshold) and
 \code{colour}.}
-
-\item{value}{(integer-like scalar) coverage percentage}
 }
 \value{
 a colour hexcode as string

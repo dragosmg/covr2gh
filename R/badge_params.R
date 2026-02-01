@@ -206,7 +206,7 @@ coverage_thresholds <- tibble::tibble(
 #'
 #' Maps a value to a certain interval and chooses the corresponding colour.
 #'
-#' @param value (integer-like scalar) coverage percentage
+#' @param badge_value a `badge_value` object representing a coverage percentage
 #' @param colours (`tibble`) a tibble with 2 columns `value` (threshold) and
 #'   `colour`.
 #'
