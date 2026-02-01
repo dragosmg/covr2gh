@@ -68,22 +68,6 @@ compose_comment <- function(
     total_head_coverage <- covr::percent_coverage(head_coverage)
     total_base_coverage <- covr::percent_coverage(base_coverage)
 
-    if (
-        isTRUE(
-            all.equal(
-                total_head_coverage,
-                total_base_coverage,
-                tolerance = 0.0001
-            )
-        )
-    ) {
-        # TODO we probably want to exit here
-        # TODO prepare the badge and exit early
-        cli::cli_alert_info(
-            "No significant delta in coverage."
-        )
-    }
-
     delta_total_coverage <- round(
         total_head_coverage - total_base_coverage,
         2
@@ -97,6 +81,8 @@ compose_comment <- function(
     )
 
     # TODO handle the case when there are no relevant changed files
+    #  this works on just needs some tweaks
+
     # TODO think about when we would want to return all the files, not just
     # those touched or affected by the PR
 
