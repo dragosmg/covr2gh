@@ -9,122 +9,26 @@
 #' generate_badge(5)
 #' generate_badge(48)
 generate_badge <- function(value) {
-    # NAs are contagious, NULLs are not
-    if (!is.null(value)) {
-        value_adjusted <- max(min(value, 100), 0)
-
-        if (!identical(value, value_adjusted)) {
-            cli::cli_alert_info(
-                "The coverage percentage has been adjusted to \\
-                {.val {value_adjusted}} from the initial value of \\
-                {.val {value}}."
-            )
-            value <- value_adjusted
-        }
-    }
-
-    char_value <- "unknown" # nolint object_usage_linter
-
-    if (!is.null(value) && !is.na(value)) {
-        char_value <- paste0(round(value), "%")
-    }
-
-    # the values hardcoded below generally work. i did not want to go down the
-    # rabbit hole of trying to make the widths of the label and value boxes
-    # entirely adaptive since:
-    #   - the text in the label will always be "coverage"
-    #   - the font family and font size are not exposed to the user
-    #   - the height of the badge is the "standard" 20
-
-    label_width <- 60
-    value_width <- dplyr::case_when(
-        char_value == "unknown" ~ label_width,
-        char_value == "100%" ~ 40,
-        nchar(char_value) < 3 ~ 30,
-        .default = 35
-    )
-
-    # nolint start object_usage_linter
-    text_length_label <- 50
-    text_length_value <- dplyr::case_when(
-        char_value == "unknown" ~ text_length_label,
-        char_value == "100%" ~ 31,
-        nchar(char_value) < 3 ~ 20,
-        .default = 26
-    )
-
-    total_width <- label_width + value_width
-
-    text_value_start <- label_width + value_width / 2
-
-    value_colour <- derive_value_colour(value)
-
-    # nolint end
+    badge_params <- badge_params(value)
 
     badge_template_path <- fs::path_package(
         "templates",
         "badge.txt",
         package = "covr2gh"
     )
+
     badge_template <- readLines(badge_template_path) |>
         stringr::str_flatten(
             collapse = "\n"
         )
 
-    badge_svg <- glue::glue(
+    badge_svg <- glue::glue_data(
+        badge_params,
         badge_template,
         .trim = TRUE
     )
 
     invisible(badge_svg)
-}
-
-coverage_thresholds <- tibble::tibble(
-    value = c(0, 20, 40, 55, 70, 85, 100),
-    colour = c(
-        "#D9534F",
-        "#E4804E",
-        "#F0AD4E",
-        "#DFB317",
-        "#A4C61D",
-        "#5CB85C",
-        "#5CB85C"
-    )
-)
-
-#' Derive the colour for the value part of the badge
-#'
-#' Maps a value to a certain interval and chooses the corresponding colour.
-#'
-#' @param value (integer-like scalar) coverage percentage
-#' @param colours (`tibble`) a tibble with 2 columns `value` (threshold) and
-#'   `colour`.
-#'
-#' @returns a colour hexcode as string
-#'
-#' @noRd
-#' @examples
-#' \dontrun{
-#' derive_value_colour(5)
-#' }
-derive_value_colour <- function(
-    value,
-    colours = coverage_thresholds
-) {
-    if (is.null(value) || is.na(value)) {
-        value_colour <- "#9f9f9f"
-        return(value_colour)
-    }
-
-    idx <- findInterval(
-        value,
-        coverage_thresholds$value,
-        rightmost.closed = TRUE
-    )
-
-    value_colour <- coverage_thresholds$colour[idx]
-
-    value_colour
 }
 
 #' Build the URL to the badge SVG
@@ -155,7 +59,15 @@ derive_value_colour <- function(
 #' @returns a glue string.
 #'
 #' @keywords internal
-build_badge_url <- function(pr_details) {
+build_badge_url <- function(pr_details, badge_value) {
+    # browser()
+
+    is_fork <- pr_details$is_fork
+
+    if (isTRUE(is_fork)) {
+        # we need coverage details and colour
+    }
+
     repo <- pr_details$repo
     branch_folder <- glue::glue(
         "covr2gh-storage/badges/{pr_details$head_name}" # nolint
