@@ -38,7 +38,14 @@ The package is designed to be used with GitHub Actions. It has an
 accompanying workflow that does the following:
 
 - runs `covr::package_coverage()` on both the head and base branches.
-- compares and summarises the outputs in a couple of sentences.
-- adds collapsible sections with tables containing more details.
-- renders a badge and pushes it to a dedicated branch
-  (`covr2gh-storage`).
+- compares the outputs and prepares a comment, made up of:
+  - two high-level summary sentences (one focused on the overall text
+    coverage, the other focused on the diff coverage)
+  - a collapsible “Details” section containing two tables which offer
+    more insight into the high-level summaries.
+- produces a coverage badge for the head branch and pushes it to a
+  “storage” branch (`_covr2gh_storage`)^1 \[This is not possible for PRs
+  originating from forks as they will not have write permissions to the
+  repo. In this case the produced badge is not self-contained and an
+  external - to the repo - ULR is used instead of committing the badge
+  to the storage branch.\].
