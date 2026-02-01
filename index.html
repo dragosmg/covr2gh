@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">covr2gh</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,9 +51,9 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>{covr2gh} was born from a need and a want to have code coverage information at hand (when reviewing a pull request) without depending on a 3rd party vendor, a 3rd part GitHub Actions or having to pull 2 branches, run and compare coverages.</p>
-<p>This would be useful in many enterprise settings where external services are not easy to access (and neither are unvetted GitHub Actions).</p>
-<p>The main focus is on presenting a brief summary (extracted from the output of <code><a href="http://covr.r-lib.org/reference/package_coverage.html" class="external-link">covr::package_coverage()</a></code>) as a comment on a GitHub pull request (PR).</p>
+<p>{covr2gh} was born from a need to have test coverage information to hand when reviewing a pull request.</p>
+<p>Due to constraints in enterprise environments, this often needs to be accomplished without depending on a 3rd party vendor, or an <a href="https://docs.github.com/en/actions/how-tos/create-and-publish-actions/publish-in-github-marketplace#about-badges-in-github-marketplace" class="external-link">un-verified</a> / unvetted GitHub Action.</p>
+<p>The core functionality focuses on extracting coverage data (with <code><a href="http://covr.r-lib.org/reference/package_coverage.html" class="external-link">covr::package_coverage()</a></code>) and on presenting a brief summary as a comment on a GitHub pull request (PR).</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -68,13 +68,14 @@
 <p>The package is designed to be used with GitHub Actions. It has an accompanying workflow that does the following:</p>
 <ul>
 <li>runs <code><a href="http://covr.r-lib.org/reference/package_coverage.html" class="external-link">covr::package_coverage()</a></code> on both the head and base branches.</li>
-<li>summarises the outputs in a couple of sentences.</li>
-<li>adds collapsible sections with tables containing more details.</li>
-<li>renders a badge and pushes it to a dedicated branch (<code>covr2gh-storage</code>).</li>
+<li>compares the outputs and prepares a comment, made up of:
+<ul>
+<li>two high-level summary sentences (one focused on the overall text coverage, the other focused on the diff coverage)</li>
+<li>a collapsible “Details” section containing two tables which offer more insight into the high-level summaries.</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dragosmg/covr2gh" class="external-link">covr2gh</a></span><span class="op">)</span></span>
-<span><span class="va">my_pkg_coverage</span> <span class="op">&lt;-</span> <span class="fu">covr</span><span class="fu">::</span><span class="fu"><a href="http://covr.r-lib.org/reference/package_coverage.html" class="external-link">package_coverage</a></span><span class="op">(</span><span class="st">"path/to/myawesomepkg"</span><span class="op">)</span></span></code></pre></div>
+</li>
+<li>produces a coverage badge for the head branch and pushes it to a “storage” branch (<code>_covr2gh_storage</code>)^1 [This is not possible for PRs originating from forks as they will not have write permissions to the repo. In this case the produced badge is not self-contained and an external - to the repo - ULR is used instead of committing the badge to the storage branch.].</li>
+</ul>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
