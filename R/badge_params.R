@@ -225,3 +225,7 @@ derive_badge_colour <- function(
 is_badge_value <- function(x) {
     inherits(x, "badge_value")
 }
+
+is_badge_params <- function(x) {
+    inherits(x, "badge_params")
+}

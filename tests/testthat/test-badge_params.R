@@ -1,6 +1,6 @@
-test_that("value_to_char() works", {
+test_that("badge_value() works", {
     expect_identical(
-        value_to_char(34.34),
+        badge_value(34.34),
         structure(
             list(
                 num = 34.34,
@@ -11,7 +11,7 @@ test_that("value_to_char() works", {
     )
 
     expect_identical(
-        value_to_char(78.4334),
+        badge_value(78.4334),
         structure(
             list(
                 num = 78.4334,
@@ -22,7 +22,7 @@ test_that("value_to_char() works", {
     )
 
     expect_identical(
-        value_to_char(98.34),
+        badge_value(98.34),
         structure(
             list(
                 num = 98.34,
@@ -33,7 +33,7 @@ test_that("value_to_char() works", {
     )
 
     expect_identical(
-        value_to_char(25.34),
+        badge_value(25.34),
         structure(
             list(
                 num = 25.34,
@@ -44,7 +44,7 @@ test_that("value_to_char() works", {
     )
 
     expect_identical(
-        value_to_char(69.74),
+        badge_value(69.74),
         structure(
             list(
                 num = 69.74,
@@ -55,27 +55,33 @@ test_that("value_to_char() works", {
     )
 })
 
-test_that("value_to_char() works with NULL and NA", {
+test_that("badge_value() works with NULL and NA", {
     expect_identical(
-        value_to_char(NULL),
-        list(
-            num = NA_real_,
-            char = "unknown"
+        badge_value(NULL),
+        structure(
+            list(
+                num = NA_real_,
+                char = "unknown"
+            ),
+            class = "badge_value"
         )
     )
 
     expect_identical(
-        value_to_char(NA),
-        list(
-            num = NA_real_,
-            char = "unknown"
+        badge_value(NA),
+        structure(
+            list(
+                num = NA_real_,
+                char = "unknown"
+            ),
+            class = "badge_value"
         )
     )
 })
 
-test_that("value_to_char() clamps values gt 100 or lt 0", {
+test_that("badge_value() clamps values gt 100 or lt 0", {
     expect_identical(
-        value_to_char(110.78),
+        badge_value(110.78),
         structure(
             list(
                 num = 100,
@@ -86,7 +92,7 @@ test_that("value_to_char() clamps values gt 100 or lt 0", {
     )
 
     expect_identical(
-        value_to_char(-1),
+        badge_value(-1),
         structure(
             list(
                 num = 0,
@@ -98,14 +104,14 @@ test_that("value_to_char() clamps values gt 100 or lt 0", {
 
     # and complains about it if allowed
     expect_snapshot(
-        value_to_char(
+        badge_value(
             100.78,
             verbose = TRUE
         )
     )
 
     expect_snapshot(
-        value_to_char(
+        badge_value(
             -1,
             verbose = TRUE
         )
@@ -115,49 +121,49 @@ test_that("value_to_char() clamps values gt 100 or lt 0", {
 test_that("estimate_width_value()", {
     expect_identical(
         estimate_width_value(
-            value_to_char(NA)
+            badge_value(NA)
         ),
         60
     )
 
     expect_identical(
         estimate_width_value(
-            value_to_char(NULL)
+            badge_value(NULL)
         ),
         60
     )
 
     expect_identical(
         estimate_width_value(
-            value_to_char(5.45)
+            badge_value(5.45)
         ),
         30
     )
 
     expect_identical(
         estimate_width_value(
-            value_to_char(15.45)
+            badge_value(15.45)
         ),
         35
     )
 
     expect_identical(
         estimate_width_value(
-            value_to_char(45.45)
+            badge_value(45.45)
         ),
         35
     )
 
     expect_identical(
         estimate_width_value(
-            value_to_char(100)
+            badge_value(100)
         ),
         40
     )
 
     expect_identical(
         estimate_width_value(
-            value_to_char(145.45)
+            badge_value(145.45)
         ),
         40
     )
@@ -166,41 +172,41 @@ test_that("estimate_width_value()", {
 test_that("estimate_text_length_value()", {
     expect_identical(
         estimate_text_length_value(
-            value_to_char(NA)
+            badge_value(NA)
         ),
         50
     )
     expect_identical(
         estimate_text_length_value(
-            value_to_char(NULL)
+            badge_value(NULL)
         ),
         50
     )
 
     expect_identical(
         estimate_text_length_value(
-            value_to_char(45.56)
+            badge_value(45.56)
         ),
         26
     )
 
     expect_identical(
         estimate_text_length_value(
-            value_to_char(78.89)
+            badge_value(78.89)
         ),
         26
     )
 
     expect_identical(
         estimate_text_length_value(
-            value_to_char(178.89)
+            badge_value(178.89)
         ),
         31
     )
 
     expect_identical(
         estimate_text_length_value(
-            value_to_char(7)
+            badge_value(7)
         ),
         20
     )
@@ -411,7 +417,7 @@ test_that("derive_badge_params() with gt 100 and lt 0", {
 })
 
 test_that("derive_badge_colour()", {
-    coverage_values <- purrr::map(1:20 * 5, value_to_char)
+    coverage_values <- purrr::map(1:20 * 5, badge_value)
 
     expect_identical(
         purrr::map_chr(
@@ -427,7 +433,7 @@ test_that("derive_badge_colour()", {
 test_that("derive_badge_colour() with NULL and NA", {
     expect_identical(
         derive_badge_colour(
-            value_to_char(
+            badge_value(
                 NA_real_
             )
         ),
@@ -436,7 +442,7 @@ test_that("derive_badge_colour() with NULL and NA", {
 
     expect_identical(
         derive_badge_colour(
-            value_to_char(
+            badge_value(
                 NULL
             )
         ),
