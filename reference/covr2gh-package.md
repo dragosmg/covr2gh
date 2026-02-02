@@ -1,7 +1,7 @@
-# covr2gh: Tools to Convert covr Output to Markdown
+# covr2gh: Test Coverage Summary in 'GitHub'
 
-Convert covr code coverage output into Markdown in preparation for use
-with GitHub comments.
+Calculate test coverage data with 'covr', extract insights, and post
+them as comments in 'GitHub' pull requests.
 
 ## See also
 

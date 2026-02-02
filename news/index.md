@@ -8,3 +8,5 @@
   builds a comment while
   [`post_comment()`](https://dragosmg.github.io/covr2gh/reference/post_comment.md)
   posts it.
+  - can set coverage target `diff_cov_target`,
+    e.g. `compose_comment(..., diff_cov_target = 80, ...)`.

@@ -5,7 +5,13 @@ Compose a coverage comment
 ## Usage
 
 ``` r
-compose_comment(head_coverage, base_coverage, repo, pr_number)
+compose_comment(
+  head_coverage,
+  base_coverage,
+  repo,
+  pr_number,
+  diff_cov_target = NULL
+)
 ```
 
 ## Arguments
@@ -30,6 +36,11 @@ compose_comment(head_coverage, base_coverage, repo, pr_number)
 - pr_number:
 
   (integer) the PR number
+
+- diff_cov_target:
+
+  (numeric) minimum accepted diff coverage. Defaults to `NULL` which is
+  then interpreted as overall base branch coverage.
 
 ## Value
 
