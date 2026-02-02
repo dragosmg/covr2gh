@@ -3,7 +3,7 @@ Title: Test Coverage Summary in 'GitHub'
 Version: 0.0.0.9016
 Authors@R:
     person("Dragoș", "Moldovan-Grünfeld", , "dragos.mold@gmail.com", role = c("aut", "cre"))
-Description: Extract code coverage insights from 'covr' outputs and post them as
+Description: Extract test coverage insights from 'covr' outputs and post them as
     comments in 'GitHub' pull requests.
 License: MIT + file LICENSE
 URL: https://github.com/dragosmg/covr2gh, https://dragosmg.github.io/covr2gh/
