@@ -146,12 +146,11 @@ get_diff_text <- function(
     relevant_files,
     call = rlang::caller_env()
 ) {
-    # TODO pointless to have the repo as input. it's already in pr_details
+    # ! TODO need to test diff logic with more complex diffs
     # TODO add inputs checks
     # TODO standalone rlang?
-    browser()
     repo <- pr_details$repo
-
+    # browser()
     base_head <- glue::glue(
         "{pr_details$base_name}...{pr_details$head_name}"
     )
