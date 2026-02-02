@@ -38,7 +38,7 @@ get_diff_line_coverage(repo, pr_details, relevant_files, head_coverage)
 
   (coverage) active / current branch (`HEAD`) coverage. The output of
   [`covr::package_coverage()`](http://covr.r-lib.org/reference/package_coverage.md)
-  on the branch.
+  on the head branch.
 
 ## Value
 

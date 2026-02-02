@@ -34,6 +34,6 @@ a character vector containing the names of the changed files.
 
 ``` r
 if (FALSE) { # \dontrun{
-get_relevant_files("dragosmg/covr2ghdemo", 2)
+get_relevant_files("<owner>/covr2ghdemo", 2)
 } # }
 ```

@@ -7,14 +7,20 @@ by the PR. It then subsets these to only includes files under `R/` or
 ## Usage
 
 ``` r
-get_diff_text(repo, pr_details, relevant_files, call = rlang::caller_env())
+get_diff_text(pr_details, relevant_files, call = rlang::caller_env())
 ```
 
 ## Arguments
 
-- repo:
+- pr_details:
 
-  (character) the repository name in the GitHub format (`"OWNER/REPO"`).
+  a `<pr_details>` object representing a subset of the pull request
+  metadata we need. The output of
+  [`get_pr_details()`](https://dragosmg.github.io/covr2gh/reference/get_pr_details.md).
+
+- relevant_files:
+
+  (character) files with changes in coverage
 
 - call:
 
@@ -30,6 +36,9 @@ a character vector containing the names of the changed files.
 
 ``` r
 if (FALSE) { # \dontrun{
-get_diff_text("<owner>/<repo>", 2)
+pr_details <- get_pr_details("<owner>/<repo>", 2)
+# TODO example
+relevant_files <-
+diff_text <- get_diff_text(pr_details, relevant_files)
 } # }
 ```

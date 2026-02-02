@@ -31,7 +31,7 @@ summary.
 ``` r
 if (FALSE) { # \dontrun{
 pr_details <- get_pr_details(
-  repo = "dragosmg/covr2ghdemo",
+  repo = "<owner>/<repo>",
   pr_number = 2
 )
 

@@ -14,14 +14,14 @@ compose_comment(head_coverage, base_coverage, repo, pr_number)
 
   (coverage) active / current branch (`HEAD`) coverage. The output of
   [`covr::package_coverage()`](http://covr.r-lib.org/reference/package_coverage.md)
-  on the branch.
+  on the head branch.
 
 - base_coverage:
 
   (coverage) base / target branch coverage (coverage for the branch
   merging into). The output of
   [`covr::package_coverage()`](http://covr.r-lib.org/reference/package_coverage.md)
-  on the branch.
+  on the base branch.
 
 - repo:
 
@@ -39,14 +39,14 @@ a character scalar with the content of the GitHub comment
 
 ``` r
 if (FALSE) { # \dontrun{
-head_coverage <- covr::package_coverage()
+coverage_head <- covr::package_coverage()
 system("git checkout main")
-base_coverage <- covr::package_coverage()
+coverage_main <- covr::package_coverage()
 
 compose_comment(
-  head_coverage = head_coverage,
-  base_coverage = base_coverage,
-  repo = "dragosmg/covr2ghdemo",
+  head_coverage = coverage_head,
+  base_coverage = coverage_main,
+  repo = "<owner>/<repo>",
   pr_number = 3
 )
 } # }

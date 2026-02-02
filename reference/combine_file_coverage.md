@@ -14,14 +14,14 @@ combine_file_coverage(head_coverage, base_coverage)
 
   (coverage) active / current branch (`HEAD`) coverage. The output of
   [`covr::package_coverage()`](http://covr.r-lib.org/reference/package_coverage.md)
-  on the branch.
+  on the head branch.
 
 - base_coverage:
 
   (coverage) base / target branch coverage (coverage for the branch
   merging into). The output of
   [`covr::package_coverage()`](http://covr.r-lib.org/reference/package_coverage.md)
-  on the branch.
+  on the base branch.
 
 ## Value
 
