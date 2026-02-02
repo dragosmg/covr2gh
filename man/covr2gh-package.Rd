@@ -6,7 +6,7 @@
 \alias{covr2gh-package}
 \title{covr2gh: Test Coverage Summary in 'GitHub'}
 \description{
-Extract test coverage insights from 'covr' outputs and post them as comments in 'GitHub' pull requests.
+Calculate test coverage data with 'covr', extract insights, and post them as comments in 'GitHub' pull requests.
 }
 \seealso{
 Useful links:
