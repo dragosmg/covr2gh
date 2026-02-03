@@ -50,6 +50,20 @@ use_covr2gh_action <- function(badge = TRUE) {
 }
 
 
+#' Add a coverage README badge
+#'
+#' Inserts the markdown text for a coverage badge in the usethis block (between
+#' `<!-- badges: start -->` and `<!-- badges: end -->`). The URL for the badge
+#' SVG points to a storage branch in the repo(`covr2gh-storage`). The link out
+#' points to the covr2gh pkgdown website (not yet - TODO update once there is
+#' an article to point to).
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' use_covr2gh_badge()
+#' }
 use_covr2gh_badge <- function() {
     check_is_package()
 
@@ -64,6 +78,9 @@ use_covr2gh_badge <- function() {
     invisible(TRUE)
 }
 
+# helpers mostly copied from usethis, but simpler as the use case is not as
+# complex
+# TODO check attribution - both for this and the unexported covr function
 is_package <- function(base_path = usethis::proj_get()) {
     result <- tryCatch(
         rprojroot::find_package_root_file(
