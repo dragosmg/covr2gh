@@ -17,7 +17,7 @@
     Code
       compose_line_coverage_summary(NULL)
     Output
-      [1] ":heavy_equals_sign: Diff coverage: No lines added to source files."
+      [1] ":heavy_equals_sign: Diff coverage: No lines added to tracked source files."
 
 ---
 
