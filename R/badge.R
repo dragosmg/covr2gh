@@ -64,6 +64,10 @@ generate_badge <- function(value) {
 build_badge_url <- function(pr_details, value) {
     is_fork <- pr_details$is_fork
 
+    # make the URL external for now - the internal one does not work for private
+    # repos anyway
+    is_fork <- TRUE
+
     if (isTRUE(is_fork)) {
         # we use a shields badge as the workflow secret does not have enough
         # privileges to push to the storage branch
