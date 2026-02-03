@@ -8,10 +8,9 @@ use_covr2gh_badge()
 }
 \description{
 Inserts the markdown text for a coverage badge in the usethis block (between
-\verb{<!-- badges: start -->} and \verb{<!-- badges: end -->}). The URL for the badge
-SVG points to a storage branch in the repo(\code{covr2gh-storage}). The link out
-points to the covr2gh pkgdown website (not yet - TODO update once there is
-an article to point to).
+\verb{<!-- badges: start -->} and \verb{<!-- badges: end -->}). The \code{src} URL for the
+badge SVG points to a storage branch in the repo(\code{covr2gh-storage}). The link
+out points to the actions workflow page.
 }
 \examples{
 \dontrun{

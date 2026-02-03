@@ -55,10 +55,9 @@ use_covr2gh_action <- function(badge = TRUE) {
 #' Add a coverage README badge
 #'
 #' Inserts the markdown text for a coverage badge in the usethis block (between
-#' `<!-- badges: start -->` and `<!-- badges: end -->`). The URL for the badge
-#' SVG points to a storage branch in the repo(`covr2gh-storage`). The link out
-#' points to the covr2gh pkgdown website (not yet - TODO update once there is
-#' an article to point to).
+#' `<!-- badges: start -->` and `<!-- badges: end -->`). The `src` URL for the
+#' badge SVG points to a storage branch in the repo(`covr2gh-storage`). The link
+#' out points to the actions workflow page.
 #'
 #' @export
 #'
@@ -70,14 +69,14 @@ use_covr2gh_badge <- function() {
     check_is_package()
 
     # nolint start: nonportable_path_linter
-    image_source <- "/../covr2gh-storage/badges/main/coverage_badge.svg"
-    # nolint end
 
     usethis::use_badge(
         badge_name = "covr2gh coverage",
-        href = "",
-        src = image_source
+        href = "/../actions/workflows/covr2gh.yaml",
+        src = "/../covr2gh-storage/badges/main/coverage_badge.svg"
     )
+
+    # nolint end
 
     invisible(TRUE)
 }
