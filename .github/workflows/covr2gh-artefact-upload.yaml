@@ -1,10 +1,6 @@
 name: Coverage summary
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
+on: workflow_dispatch
 
 # multiple workflows might try to write to covr2gh-storage at the same time
 concurrency:
