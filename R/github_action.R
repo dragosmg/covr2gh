@@ -70,7 +70,7 @@ use_covr2gh_badge <- function() {
     image_source <- "/../covr2gh-storage/badges/main/coverage-badge.svg"
 
     usethis::use_badge(
-        badge_name = "coverage",
+        badge_name = "covr2gh coverage",
         href = "",
         src = image_source
     )
