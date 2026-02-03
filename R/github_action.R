@@ -70,14 +70,14 @@ use_covr2gh_badge <- function() {
     check_is_package()
 
     # nolint start: nonportable_path_linter
-    image_source <- "/../covr2gh-storage/badges/main/coverage_badge.svg"
-    # nolint end
 
     usethis::use_badge(
         badge_name = "covr2gh coverage",
-        href = "",
-        src = image_source
+        href = "/../actions/workflows/covr2gh.yaml",
+        src = "/../covr2gh-storage/badges/main/coverage_badge.svg"
     )
+
+    # nolint end
 
     invisible(TRUE)
 }
