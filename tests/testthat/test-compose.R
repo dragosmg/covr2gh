@@ -2,17 +2,17 @@ test_that("compose_comment works", {
     head_coverage <- readRDS(
         test_path(
             "fixtures",
-            "head_coverage.RDS"
+            "head_cov_pr3.RDS"
         )
     )
+
     base_coverage <- readRDS(
         test_path(
             "fixtures",
-            "base_coverage.RDS"
+            "base_cov_pr3.RDS"
         )
     )
-    skip("temp skip")
-    skip_on_covr()
+
     expect_snapshot(
         compose_comment(
             head_coverage,
