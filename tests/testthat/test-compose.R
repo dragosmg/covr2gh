@@ -12,6 +12,7 @@ test_that("compose_comment works", {
         )
     )
     skip_on_ci()
+    skip_on_covr()
     expect_snapshot(
         compose_comment(
             head_coverage,
