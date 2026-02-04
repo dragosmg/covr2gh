@@ -1,9 +1,8 @@
 #' Identify the covr2gh comment
 #'
-#' Comments posted by covr2gh are identified by a specific comment, hardcoded
-#' to `"<!-- covr2gh-do-not-delete -->"`. `get_comment_id()` looks for
-#' this comment. If it can find it, it returns the comment ID, otherwise it
-#' returns `NULL`.
+#' Comments posted by covr2gh are identified by the
+#' `"<!-- covr2gh-do-not-delete -->"` comment. `get_comment_id()` looks for it.
+#' If it can find it, it returns the comment ID, otherwise it returns `NULL`.
 #'
 #' The output of `get_comment_id()` is then used `post_comment()` post a new
 #' comment or update an existing one.
