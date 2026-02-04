@@ -8,7 +8,7 @@
       
       ## :safety_vest: Coverage summary
       
-      ![badge](https://raw.githubusercontent.com/dragosmg/covr2ghdemo/covr2gh-storage/badges/increase-coverage/coverage_badge.svg)
+      ![badge](https://img.shields.io/badge/coverage-32%25-E4804E.svg)
       
       :white_check_mark:  Merging PR [#3](https://github.com/dragosmg/covr2ghdemo/pull/3) ([`<removed-commit-sha>`](head_sha_url)) into _main_ ([`<removed-commit-sha>`](base_sha_url)) - will **increase** overall coverage by `21.05` percentage points.
       :x:  Diff coverage is 0% (0 out of 1 added lines are covered by tests). Minimum accepted is `10.53%`.
@@ -33,5 +33,5 @@
       
       :recycle: Comment updated with the latest results.
       
-      <sup>Created on <removed-date> with [covr2gh v0.0.0.9018](https://dragosmg.github.io/covr2gh).</sup>
+      <sup>Created on <removed-date> with [covr2gh v0.0.0.9019](https://dragosmg.github.io/covr2gh).</sup>
 
