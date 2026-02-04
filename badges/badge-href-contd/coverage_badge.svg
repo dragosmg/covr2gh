@@ -2,10 +2,10 @@
         width="95"
         height="20"
         role="img"
-        aria-label="coverage: 85%">
+        aria-label="coverage: 51%">
 
     <title>
-        coverage: 85%
+        coverage: 51%
     </title>
 
     <defs>
@@ -36,7 +36,7 @@
         <rect x="60"
                 width="35"
                 height="20"
-                fill="#A4C61D"/>
+                fill="#F0AD4E"/>
         <rect width="95"
                 height="20"
                 fill="url(#gradient)"/>
@@ -74,7 +74,7 @@
                 fill="#010101"
                 fill-opacity="0.3"
                 textLength="26">
-          85%
+          51%
         </text>
 
         <!-- value text -->
@@ -82,7 +82,7 @@
                 y="14"
                 fill="#fff"
                 textLength="26">
-          85%
+          51%
         </text>
     </g>
 </svg>
