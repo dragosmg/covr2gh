@@ -1,5 +1,6 @@
 # covr2gh (development version)
 
+* new details section: line coverage loss
 * SVG URL is only external as internal does not work with private repos.
 * `use_covr2gh_badge()` and `use_covr2gh_action()` need to be called with `repo`
 (in the GitHub `"<owner>/<repo>"` format) to avoid sophisticated repo guessing

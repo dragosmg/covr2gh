@@ -25,6 +25,9 @@
 #   * z - pr number
 #
 
+# helps us identify a comment posted with covr2gh
+covr2gh_comment <- "<!-- covr2gh-do-not-delete -->"
+
 #' Compose a coverage comment
 #'
 #' @param head_coverage (coverage) active / current branch (`HEAD`) coverage.
@@ -60,9 +63,13 @@ compose_comment <- function(
     diff_cov_target = NULL
 ) {
     # TODO add some checks on inputs
-    marker <- "<!-- covr2gh-do-not-delete -->"
 
     pr_details <- get_pr_details(
+        repo = repo,
+        pr_number = pr_number
+    )
+
+    changed_files <- get_changed_files(
         repo = repo,
         pr_number = pr_number
     )
@@ -84,7 +91,7 @@ compose_comment <- function(
         pr_details,
         delta_total_coverage
     )
-
+    # browser()
     # TODO handle the case when there are no relevant changed files
     #  this works on just needs some tweaks
 
@@ -94,33 +101,48 @@ compose_comment <- function(
     # TODO only focus on the file with changes in coverage or new files
     file_cov_df <- combine_file_coverage(
         head_coverage = head_coverage,
-        base_coverage = base_coverage
+        base_coverage = base_coverage,
+        changed_files = changed_files
     )
 
     file_coverage_details <- compose_file_coverage_details(
         file_cov_df
     )
 
+    # changed_files = files that are being changed by the PR
+    # relevant_files = files that are being changed by the PR and / or their
+    # coverage has changed or they have not existed before (their base coverage)
+    # is NA
     relevant_files <- setdiff(file_cov_df$file, "Overall")
 
-    diff_line_coverage <- get_diff_line_coverage(
-        head_coverage = head_coverage,
-        relevant_files = relevant_files,
+    line_coverage_dfs <- get_diff_line_coverage(
         repo = repo,
-        pr_details = pr_details
+        pr_details = pr_details,
+        relevant_files = relevant_files,
+        head_coverage = head_coverage,
+        base_coverage = base_coverage # to figure out if coverage for a given line has changed
     )
+
+    # TODO we need to capture lines that have not changed (they're neither added
+    # TODO nor removed), but their coverage has
+    # e.g. line 30 today is uncovered, used to be line 20 and covered (this is a
+    # change in logic that used to take some execution paths in the path, but no longer)
 
     if (is.null(diff_cov_target)) {
         diff_cov_target <- total_base_coverage
     }
 
     line_coverage_summary <- compose_line_coverage_summary(
-        diff_line_coverage,
+        line_coverage_dfs$diff_line_coverage,
         target = diff_cov_target
     )
 
     line_coverage_details <- compose_line_coverage_details(
-        diff_line_coverage
+        line_coverage_dfs$diff_line_coverage
+    )
+
+    line_cov_loss_details <- compose_line_coverage_loss_details(
+        line_coverage_dfs$lines_cov_change_wo_code_change
     )
 
     pkg_version <- glue::glue("v{packageVersion('covr2gh')}")
@@ -133,7 +155,17 @@ compose_comment <- function(
         "<sup>Created on {Sys.Date()} with {pkg_url}.</sup>"
     )
 
-    glue::glue(
+    glue::glue_data(
+        list(
+            marker = covr2gh_comment,
+            badge_url = badge_url,
+            coverage_summary = coverage_summary,
+            line_coverage_summary = line_coverage_summary,
+            file_coverage_details = file_coverage_details,
+            line_coverage_details = line_coverage_details,
+            line_cov_loss_details = line_cov_loss_details,
+            footer = footer
+        ),
         "{marker}
 
         ## :safety_vest: Coverage summary
@@ -149,6 +181,8 @@ compose_comment <- function(
         {file_coverage_details}
 
         {line_coverage_details}
+
+        {line_cov_loss_details}
         </details>
 
         :recycle: Comment updated with the latest results.

@@ -64,7 +64,8 @@ file_coverage <- function(x) {
 #' @keywords internal
 combine_file_coverage <- function(
     head_coverage,
-    base_coverage
+    base_coverage,
+    changed_files
 ) {
     head_coverage_digest <- file_coverage(head_coverage)
     base_coverage_digest <- file_coverage(base_coverage)
@@ -83,13 +84,19 @@ combine_file_coverage <- function(
         dplyr::mutate(
             delta = .data$coverage_head - .data$coverage_base
         )
+    # TODO this does not capture situations when the code has changed, but the coverage hasn't (i.e. coverage is 0)
+    # * this is relevant
+    # * need to return at capturing both files with changes to coverage and those
+    # with changes to content. In this case, because we use the files here to subset the diff_text,
+    # we miss a bunch of files functions with content change
 
     # keep any files with changes in coverage or missing delta
     diff_df |>
         # TODO allow for some margin here. all.equal, etc
         dplyr::filter(
-            .data$delta != 0 |
+            .data$delta != 0 | # change in coverage
                 is.na(.data$coverage_base) | # new files
+                .data$file %in% changed_files | # changed files
                 .data$file == "Overall"
         )
 }
