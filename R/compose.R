@@ -91,7 +91,7 @@ compose_comment <- function(
         pr_details,
         delta_total_coverage
     )
-    # browser()
+
     # TODO handle the case when there are no relevant changed files
     #  this works on just needs some tweaks
 

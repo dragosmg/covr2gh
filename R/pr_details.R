@@ -528,7 +528,8 @@ cov_change_wo_code_change <- function(
             suffix = c(
                 "_head",
                 "_base"
-            )
+            ),
+            multiple = "first"
         ) |>
         # we only want the lines that had coverage in base
         dplyr::filter(
