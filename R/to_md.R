@@ -165,7 +165,7 @@ line_cov_loss_to_md <- function(
         dplyr::rename(
             File = file,
             `Lines w/ coverage loss` = "lines_loss_cov",
-            `Which lines` = which_lines
+            `Which lines` = "which_lines"
         )
 
     output |>
