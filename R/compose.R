@@ -120,13 +120,15 @@ compose_comment <- function(
         pr_details = pr_details,
         relevant_files = relevant_files,
         head_coverage = head_coverage,
-        base_coverage = base_coverage # to figure out if coverage for a given line has changed
+        # to figure out if coverage for a given line has changed
+        base_coverage = base_coverage
     )
 
     # TODO we need to capture lines that have not changed (they're neither added
     # TODO nor removed), but their coverage has
     # e.g. line 30 today is uncovered, used to be line 20 and covered (this is a
-    # change in logic that used to take some execution paths in the path, but no longer)
+    # change in logic that used to take some execution paths in the path, but
+    # no longer)
 
     if (is.null(diff_cov_target)) {
         diff_cov_target <- total_base_coverage
