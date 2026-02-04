@@ -52,3 +52,37 @@
       2    14 "      \"`x` must be numeric. You supplied a {.class {class(x)}}\","
       3    15 "      call = rlang::caller_env()"                                  
 
+# extract_added_lines with a more complex diff
+
+    Code
+      purrr::map(slightly_complex_diff_text, extract_added_lines)
+    Output
+      $`R/badge.R`
+      # A tibble: 4 x 2
+         line text                                                                    
+        <dbl> <chr>                                                                   
+      1    68 "    # make the URL external for now - the internal one does not work f~
+      2    69 "    # repos anyway"                                                    
+      3    70 "    is_fork <- TRUE"                                                   
+      4    71 ""                                                                      
+      
+      $`R/github_action.R`
+      # A tibble: 14 x 2
+          line text                                                                  
+         <dbl> <chr>                                                                 
+       1    35 "#' @inheritParams get_pr_details"                                    
+       2    40 "#' use_covr2gh_action(\"<owner>/<repo>\")"                           
+       3    42 "use_covr2gh_action <- function(repo, badge = TRUE) {"                
+       4    50 "        use_covr2gh_badge(repo)"                                     
+       5    64 "#' @inheritParams get_pr_details"                                    
+       6    65 "#'"                                                                  
+       7    70 "#' use_covr2gh_badge(\"<owner>/<repo>\")"                            
+       8    72 "use_covr2gh_badge <- function(repo) {"                               
+       9    77 "    href <- glue::glue("                                             
+      10    78 "        \"https://github.com/{repo}/actions/workflows/covr2gh.yaml\""
+      11    79 "    )"                                                               
+      12    80 ""                                                                    
+      13    82 "        badge_name = \"covr2gh-coverage\","                          
+      14    83 "        href = href,"                                                
+      
+
