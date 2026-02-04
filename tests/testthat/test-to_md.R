@@ -15,3 +15,19 @@ test_that("line_cov_to_md works", {
         ""
     )
 })
+
+test_that("line_cov_loss_to_md", {
+    expect_snapshot(
+        tibble::tibble(
+            file = "R/badge.R",
+            lines_loss_cov = 6L,
+            which_lines = "87-89, 92, 93, 96"
+        ) |>
+            line_cov_loss_to_md()
+    )
+
+    expect_identical(
+        line_cov_loss_to_md(NULL),
+        ""
+    )
+})

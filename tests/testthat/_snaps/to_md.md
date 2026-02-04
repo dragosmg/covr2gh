@@ -12,3 +12,14 @@
       | baz.R|          10|            6|      60%|1-5, 8-10, 15, 16 |
       | Total|          19|           12|   63.16%|                  |
 
+# line_cov_loss_to_md
+
+    Code
+      line_cov_loss_to_md(tibble::tibble(file = "R/badge.R", lines_loss_cov = 6L,
+        which_lines = "87-89, 92, 93, 96"))
+    Output
+      |      File| Lines w/ coverage loss|Which lines       |
+      |---------:|----------------------:|:-----------------|
+      | R/badge.R|                      6|87-89, 92, 93, 96 |
+      |     Total|                      6|                  |
+
