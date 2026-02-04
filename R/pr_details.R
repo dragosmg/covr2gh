@@ -325,7 +325,15 @@ get_diff_line_coverage <- function(
             names_to = "file"
         )
 
-    lines_head <- line_coverage(head_coverage)
+    lines_head <- line_coverage(head_coverage) |>
+        dplyr::select(
+            -"source_prev",
+            -"source_next"
+        )
+    # TODO check with tally - maybe the implementation is simpler
+    # lines_head_tally <- covr::tally_coverage(head_coverage)
+    # lines_base_tally <- covr::tally_coverage(base_coverage)
+
     #   |>
     #         to_report_data() |>
     #         purrr::pluck("full") |>
@@ -446,22 +454,40 @@ get_diff_line_coverage <- function(
                 0,
                 1
             )
+        )
+
+    # TODO for the basic diff line coverage we can definitely use tally_coverage()
+    missing_line_cov <- diff_line_coverage |>
+        dplyr::select(
+            -"text"
+        ) |>
+        dplyr::filter(
+            .data$covered == 0
         ) |>
         dplyr::group_by(
             .data$file
         ) |>
         dplyr::summarise(
-            lines_added = dplyr::n(),
-            lines_covered = sum(.data$covered),
-            # TODO don't report which lines for positive outcomes
-            # focus on when they are a problem
-
-            which_lines = find_intervals(.data$line)
+            missing = find_intervals(.data$line)
         ) |>
         dplyr::ungroup()
 
+    agg_line_cov <- diff_line_coverage |>
+        dplyr::group_by(
+            .data$file
+        ) |>
+        dplyr::summarise(
+            lines_added = dplyr::n(),
+            lines_covered = sum(.data$covered)
+        ) |>
+        dplyr::ungroup() |>
+        dplyr::left_join(
+            missing_line_cov,
+            by = dplyr::join_by("file")
+        )
+
     list(
-        diff_line_coverage = diff_line_coverage,
+        diff_line_coverage = agg_line_cov,
         lines_cov_change_wo_code_change = lines_cov_change_wo_code_change
     )
 }
@@ -484,9 +510,13 @@ line_coverage <- function(coverage) {
             source_next = dplyr::lead(source, default = "<missing>")
         ) |>
         dplyr::ungroup() |>
+
         # NAs map to comments, documentation etc.
         dplyr::filter(
             !is.na(.data$coverage)
+        ) |>
+        dplyr::arrange(
+            .data$file
         )
 }
 
@@ -543,7 +573,7 @@ cov_change_wo_code_change <- function(
             -"source_next"
         )
 
-    head_lines_with_cov_change |>
+    output <- head_lines_with_cov_change |>
         dplyr::group_by(
             .data$file
         ) |>
@@ -552,4 +582,10 @@ cov_change_wo_code_change <- function(
             which_lines = find_intervals(.data$line_head)
         ) |>
         dplyr::ungroup()
+
+    if (nrow(output) == 0) {
+        return(NULL)
+    }
+
+    output
 }
