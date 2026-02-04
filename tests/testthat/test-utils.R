@@ -38,7 +38,7 @@ test_that("collapse_interval", {
 
     expect_identical(
         collapse_interval(c(3, 4)),
-        c("3, 4")
+        "3, 4"
     )
 
     expect_identical(

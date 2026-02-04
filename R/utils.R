@@ -12,9 +12,7 @@ find_intervals <- function(x) {
 
 collapse_interval <- function(x) {
     if (length(x) == 1) {
-        return(
-            as.character(x)
-        )
+        as.character(x)
     } else if (length(x) == 2) {
         stringr::str_flatten_comma(x)
     } else {

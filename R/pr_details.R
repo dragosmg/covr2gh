@@ -456,7 +456,7 @@ get_diff_line_coverage <- function(
             )
         )
 
-    # TODO for the basic diff line coverage we can definitely use tally_coverage()
+    # TODO for the basic diff line coverage use tally_coverage()
     missing_line_cov <- diff_line_coverage |>
         dplyr::select(
             -"text"
@@ -502,12 +502,18 @@ line_coverage <- function(coverage) {
             names_to = "file"
         ) |>
         dplyr::mutate(
-            coverage = as.numeric(.data$coverage),
+            coverage = as.numeric(.data$coverage)
         ) |>
         dplyr::group_by(file) |>
         dplyr::mutate(
-            source_prev = dplyr::lag(source, default = "<missing>"),
-            source_next = dplyr::lead(source, default = "<missing>")
+            source_prev = dplyr::lag(
+                .data$source,
+                default = "<missing>"
+            ),
+            source_next = dplyr::lead(
+                .data$source,
+                default = "<missing>"
+            )
         ) |>
         dplyr::ungroup() |>
 

@@ -39,7 +39,7 @@ test_that("combine_file_coverage works", {
         )
     )
 
-    changed_files <- "R/add_two.R"
+    changed_files <- "R/add_two.R" # nolint
 
     expect_snapshot(
         combine_file_coverage(
@@ -59,7 +59,7 @@ test_that("combine_file_coverage works", {
     )
 
     # test 2
-    changed_files2 <- c("R/badge.R", "R/github_action.R")
+    changed_files2 <- c("R/badge.R", "R/github_action.R") # nolint
     head_cov2 <- readRDS(
         test_path(
             "fixtures",

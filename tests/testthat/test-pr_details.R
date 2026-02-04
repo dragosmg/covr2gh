@@ -159,7 +159,7 @@ test_that("extract_added_lines works", {
             line = c(11, 13, 14),
             text = c(
                 "  if (!is.numeric(x)) {",
-                "      \"`x` must be numeric. You supplied a {.class {class(x)}}\",",
+                "      \"`x` must be numeric. You supplied a {.class {class(x)}}\",", # nolint
                 "      call = rlang::caller_env()"
             )
         )
@@ -215,7 +215,7 @@ test_that("cov_change_wo_code_change", {
             added_lines = added_lines
         ),
         tibble::tibble(
-            file = "R/badge.R",
+            file = "R/badge.R", # nolint
             lines_loss_cov = 6L,
             which_lines = "87-89, 92, 93, 96"
         )
