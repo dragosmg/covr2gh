@@ -65,20 +65,20 @@ test_that("get_pr_details() complains with incorrect inputs", {
     )
 })
 
-test_that("get_relevant_files() works", {
+test_that("get_changed_files() works", {
     skip_if_offline()
     expect_snapshot(
-        get_relevant_files(
+        get_changed_files(
             repo = "dragosmg/covr2ghdemo", # nolint
             pr_number = 2
         )
     )
 })
 
-test_that("get_relevant_files() complains with incorrect inputs", {
+test_that("get_changed_files() complains with incorrect inputs", {
     # `repo` is not scalar
     expect_error(
-        get_relevant_files(
+        get_changed_files(
             repo = c("foo", "bar")
         ),
         "`repo` must be a character scalar.",
@@ -87,7 +87,7 @@ test_that("get_relevant_files() complains with incorrect inputs", {
 
     # `repo` is not character
     expect_error(
-        get_relevant_files(
+        get_changed_files(
             repo = 1
         ),
         "`repo` must be a character scalar.",
@@ -95,7 +95,7 @@ test_that("get_relevant_files() complains with incorrect inputs", {
     )
 
     expect_error(
-        get_relevant_files(
+        get_changed_files(
             repo = FALSE
         ),
         "`repo` must be a character scalar.",
@@ -106,7 +106,7 @@ test_that("get_relevant_files() complains with incorrect inputs", {
 
     # `pr_number` is not scalar
     expect_error(
-        get_relevant_files(
+        get_changed_files(
             repo = "dragosmg/covr2ghdemo", # nolint
             pr_number = c(2, 3)
         ),
@@ -116,7 +116,7 @@ test_that("get_relevant_files() complains with incorrect inputs", {
 
     # `pr_number` is not integerish
     expect_error(
-        get_relevant_files(
+        get_changed_files(
             repo = "dragosmg/covr2ghdemo", # nolint
             pr_number = "foo"
         ),
@@ -125,7 +125,7 @@ test_that("get_relevant_files() complains with incorrect inputs", {
     )
 
     expect_error(
-        get_relevant_files(
+        get_changed_files(
             repo = "dragosmg/covr2ghdemo", # nolint
             pr_number = FALSE
         ),
@@ -136,7 +136,10 @@ test_that("get_relevant_files() complains with incorrect inputs", {
 
 test_that("extract_added_lines works", {
     # TODO add a couple of tests with more complicated diffs
-    test_diff_text <- testthat::test_path("fixtures", "diff_text.txt") |>
+    test_diff_text <- testthat::test_path(
+        "fixtures",
+        "diff_text.txt"
+    ) |>
         readLines() |>
         stringr::str_flatten(
             collapse = "\n"
@@ -145,6 +148,35 @@ test_that("extract_added_lines works", {
     expect_snapshot(
         extract_added_lines(
             test_diff_text
+        )
+    )
+
+    expect_identical(
+        extract_added_lines(
+            test_diff_text
+        ),
+        tibble::tibble(
+            line = c(11, 13, 14),
+            text = c(
+                "  if (!is.numeric(x)) {",
+                "      \"`x` must be numeric. You supplied a {.class {class(x)}}\",",
+                "      call = rlang::caller_env()"
+            )
+        )
+    )
+})
+
+test_that("extract_added_lines with a more complex diff", {
+    slightly_complex_diff_text <- testthat::test_path(
+        "fixtures",
+        "slightly_complex_diff_text.RDS"
+    ) |>
+        readRDS()
+
+    expect_snapshot(
+        purrr::map(
+            slightly_complex_diff_text,
+            extract_added_lines
         )
     )
 })
