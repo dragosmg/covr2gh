@@ -33,9 +33,9 @@ file_coverage <- function(x) {
         ) |>
         dplyr::mutate(
             file = dplyr::if_else(
-                .data$file == "",
-                "Overall",
-                .data$file
+                nzchar(.data$file),
+                .data$file,
+                "Overall"
             ),
             coverage = as.numeric(
                 .data$coverage
