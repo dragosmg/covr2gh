@@ -453,6 +453,9 @@ get_diff_line_coverage <- function(
         dplyr::summarise(
             lines_added = dplyr::n(),
             lines_covered = sum(.data$covered),
+            # TODO don't report which lines for positive outcomes
+            # focus on when they are a problem
+
             which_lines = find_intervals(.data$line)
         ) |>
         dplyr::ungroup()
