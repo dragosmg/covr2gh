@@ -111,10 +111,10 @@ line_cov_to_md <- function(
                 .data$coverage,
                 "%"
             ),
-            which_lines = dplyr::if_else(
-                is.na(.data$which_lines),
+            missing = dplyr::if_else(
+                is.na(.data$missing),
                 "",
-                .data$which_lines
+                .data$missing
             )
         ) |>
         dplyr::select(
@@ -122,7 +122,7 @@ line_cov_to_md <- function(
             `Lines added` = "lines_added",
             `Lines tested` = "lines_covered",
             Coverage = "coverage",
-            `Which lines` = "which_lines"
+            Missing = "missing"
         )
 
     output |>
@@ -156,16 +156,16 @@ line_cov_loss_to_md <- function(
         total_row
     ) |>
         dplyr::mutate(
-            which_lines = dplyr::if_else(
-                is.na(.data$which_lines),
+            missing = dplyr::if_else(
+                is.na(.data$missing),
                 "",
-                .data$which_lines
+                .data$missing
             )
         ) |>
         dplyr::rename(
             File = file,
             `Lines w/ coverage loss` = "lines_loss_cov",
-            `Which lines` = "which_lines"
+            Missing = "missing"
         )
 
     output |>
