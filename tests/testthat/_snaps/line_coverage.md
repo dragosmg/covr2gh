@@ -5,12 +5,12 @@
     Output
       ### Coverage for added lines
       
-      |    File| Lines added| Lines tested| Coverage|Which lines |
-      |-------:|-----------:|------------:|--------:|:-----------|
-      | R/foo.R|           5|            2|      40%|1-4, 6      |
-      | R/bar.R|           4|            4|     100%|5-7, 9      |
-      | R/baz.R|          10|            6|      60%|1-6, 10-13  |
-      |   Total|          19|           12|   63.16%|            |
+      |    File| Lines added| Lines tested| Coverage|Missing |
+      |-------:|-----------:|------------:|--------:|:-------|
+      | R/foo.R|           5|            2|      40%|2-4     |
+      | R/bar.R|           4|            4|     100%|        |
+      | R/baz.R|          10|            6|      60%|1-3, 10 |
+      |   Total|          19|           12|   63.16%|        |
 
 # compose_line_coverage_summary works
 
