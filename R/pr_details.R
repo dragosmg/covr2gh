@@ -113,32 +113,34 @@ get_changed_files <- function(
     files_info <- glue::glue("GET {files_api_url}") |>
         gh::gh()
 
-    relevant_files <- purrr::map_chr(files_info, "filename")
+    all_files <- purrr::map_chr(files_info, "filename")
 
-    relevant_files_changed <- stringr::str_subset(
-        relevant_files,
+    r_src_changed_files <- stringr::str_subset(
+        all_files,
         pattern = "^R/|^src"
     )
 
-    relevant_files_changed
+    r_src_changed_files
 }
 
 #' Get the PR diff
 #'
-#' Sends a GET request to the GitHub API and retrieves the files modified by
-#' the PR. It then subsets these to only includes files under `R/` or `src/`.
+#' Sends a GET request to the GitHub API and retrieves the full PR diff, which
+#' is a (comparison) between base (the starting point for the comparison) and
+#' head (the endpoint). The diff is then filtered to only include the "relevant
+#' files".
 #'
 #' @inheritParams get_pr_details
 #' @inheritParams get_diff_line_coverage
 #'
-#' @returns a character vector containing the names of the changed files.
+#' @returns a named list where the names are file names and the content of each
+#' element is the patch for the specific file.
 #'
 #' @keywords internal
 #' @examples
 #' \dontrun{
 #' pr_details <- get_pr_details("<owner>/<repo>", 2)
-#' # TODO example
-#' relevant_files <-
+#' relevant_files <- c("R/foo.R", "R/bar.R")
 #' diff_text <- get_diff_text(pr_details, relevant_files)
 #' }
 get_diff_text <- function(
@@ -146,27 +148,33 @@ get_diff_text <- function(
     relevant_files,
     call = rlang::caller_env()
 ) {
+    # browser()
     # ! TODO need to test diff logic with more complex diffs
     # TODO add inputs checks
     # TODO standalone rlang?
-    repo <- pr_details$repo
+    # repo <- pr_details$repo
 
-    base_head <- glue::glue(
-        "{pr_details$base_name}...{pr_details$head_name}"
+    # base_head <- glue::glue(
+    #     "{pr_details$base_name}...{pr_details$head_name}"
+    # )
+
+    # the endpoint can be used to compare branches. once the PR is merged and
+    # the head is deleted it returns a 404. comparing commits can be used, but
+    # the separation between commit hashes is 2-dots (`..`), not 3
+
+    req_url <- glue::glue_data(
+        list(
+            repo = pr_details$repo,
+            base = pr_details$base_name,
+            head = pr_details$head_name
+        ),
+        "https://api.github.com/repos/{repo}/compare/{base}...{head}"
     )
 
-    req_url <- glue::glue(
-        "https://api.github.com/repos/{repo}/compare/{base_head}"
-    )
-
-    # we can use this to somehow get the lines of code added
     reply <- glue::glue("GET {req_url}") |>
         gh::gh()
 
-    # get the file patches as a named list where the names are the filenames and
-    # the content of each element is the patch
-    # we can then map over this list
-    # TODO it would be useful if this worked when relevant files is NULL
+    # TODO check with relevant_files = NULL
     output <- reply$files |>
         # we focus on `relevant_files` to get to the added lines
         purrr::keep(
@@ -181,9 +189,8 @@ get_diff_text <- function(
                 names(output) <- x$filename
                 output
             }
-        )
-
-    # TODO check relevancy of file
+        ) |>
+        purrr::list_flatten()
 
     output
 }
@@ -192,80 +199,127 @@ get_diff_text <- function(
 # returns a data.frame with the position (line number) of the added lines (in
 # the output file) and their contents
 extract_added_lines <- function(diff_text) {
-    raw_df <- diff_text |>
-        stringr::str_split(
-            pattern = stringr::fixed("\n")
-        ) |>
-        # TODO check if one
-        purrr::pluck(1) |>
-        tibble::tibble(raw = _)
+    # browser()
+    split_diff <- diff_split(diff_text)
 
-    output <- raw_df |>
-        dplyr::mutate(
-            is_hunk = stringr::str_starts(
-                raw,
-                stringr::fixed("@@")
-            ),
-            # identify the start of the hunk in the destination file
-            new_start = dplyr::if_else(
-                .data$is_hunk,
-                stringr::str_extract(.data$raw, "\\+(\\d+)"),
-                NA_character_
-            ),
-            new_start = stringr::str_remove_all(
-                .data$new_start,
-                stringr::fixed("+")
-            ),
-            new_start = as.numeric(
-                .data$new_start
-            )
-        ) |>
-        # TODO this should hold with multiple hunks, but check
-        tidyr::fill(
-            "new_start",
-            .direction = "down"
-        ) |>
-        # classify lines
-        dplyr::mutate(
-            type = dplyr::case_when(
-                stringr::str_starts(
-                    .data$raw,
-                    stringr::fixed("+")
-                ) &
-                    # ++ indicates a line that did not exist in either parent
-                    # was introduced by the merge resolution itself
-                    stringr::str_starts(
-                        .data$raw,
-                        stringr::fixed("++"),
-                        negate = TRUE
-                    ) ~ "added",
-                stringr::str_starts(
-                    .data$raw,
-                    stringr::fixed("-")
-                ) ~ "deleted",
-                TRUE ~ "context"
-            ),
-            advances = .data$type %in% c("added", "context")
-        ) |>
-        # compute output line numbers within hunks
-        dplyr::group_by(
-            .data$new_start
-        ) |>
-        dplyr::mutate(
-            out_line = .data$new_start + cumsum(.data$advances) - 1
-        ) |>
-        dplyr::ungroup() |>
-        # keep only added lines
-        dplyr::filter(
-            .data$type == "added"
-        ) |>
-        dplyr::mutate(
-            line = .data$out_line,
-            text = stringr::str_remove(.data$raw, "^\\+"),
-            .keep = "none"
-        )
+    added_lines <- split_diff$head_lines
 
-    output
+    added_lines
+
+    # raw_df <- diff_text |>
+    #     stringr::str_split(
+    #         pattern = stringr::fixed("\n")
+    #     ) |>
+    #     # TODO check if one
+    #     purrr::pluck(1) |>
+    #     tibble::tibble(raw = _)
+
+    # combined_diff_df <- raw_df |>
+    #     dplyr::mutate(
+    #         base = stringr::str_starts(raw, stringr::fixed("-")),
+    #         head = stringr::str_starts(raw, stringr::fixed("+")),
+    #         context = !(base | head)
+    #     )
+
+    # head_df <- combined_diff_df |>
+    #     dplyr::filter(context | head) |>
+    #     dplyr::select(-"base") |>
+    #     dplyr::mutate(
+    #         is_hunk = stringr::str_starts(raw, "@@"),
+    #         add = as.numeric(!is_hunk),
+    #         head_start = dplyr::if_else(
+    #             .data$is_hunk,
+    #             stringr::str_extract(.data$raw, "\\+(\\d+)"),
+    #             NA_character_
+    #         ),
+    #         head_start = stringr::str_remove_all(
+    #             .data$head_start,
+    #             stringr::fixed("+")
+    #         ),
+    #         head_start = as.numeric(
+    #             .data$head_start
+    #         )
+    #     ) |>
+    #     tidyr::fill(
+    #         "head_start",
+    #         .direction = "down"
+    #     ) |>
+    #     dplyr::mutate(
+    #         line_num = .data$head_start + cumsum(.data$add) - 1
+    #     )
+
+    # base_df <- combined_diff_df |>
+    #     dplyr::filter(context | base) |>
+    #     dplyr::select(-"head")
+
+    # output <- raw_df |>
+    #     dplyr::mutate(
+    #         is_hunk = stringr::str_starts(
+    #             raw,
+    #             stringr::fixed("@@")
+    #         ),
+    #         # identify the start of the hunk in the destination file
+    #         new_start = dplyr::if_else(
+    #             .data$is_hunk,
+    #             stringr::str_extract(.data$raw, "\\+(\\d+)"),
+    #             NA_character_
+    #         ),
+    #         new_start = stringr::str_remove_all(
+    #             .data$new_start,
+    #             stringr::fixed("+")
+    #         ),
+    #         new_start = as.numeric(
+    #             .data$new_start
+    #         )
+    #     ) |>
+    # # TODO this should hold with multiple hunks, but check
+    # tidyr::fill(
+    #     "new_start",
+    #     .direction = "down"
+    # ) |>
+    # # classify lines
+    # dplyr::mutate(
+    #     type = dplyr::case_when(
+    #         stringr::str_starts(
+    #             .data$raw,
+    #             stringr::fixed("+")
+    #         ) &
+    #             # ++ indicates a line that did not exist in either parent
+    #             # was introduced by the merge resolution itself
+    #             stringr::str_starts(
+    #                 .data$raw,
+    #                 stringr::fixed("++"),
+    #                 negate = TRUE
+    #             ) ~ "added",
+    #         stringr::str_starts(
+    #             .data$raw,
+    #             stringr::fixed("-")
+    #         ) ~ "deleted",
+    #         .data$is_hunk ~ "hunk",
+    #         TRUE ~ "context"
+    #     ),
+    #     advances = .data$type %in% c("added", "context")
+    # ) |>
+    # # compute output line numbers within hunks
+    # dplyr::group_by(
+    #     .data$new_start
+    # ) |>
+    # dplyr::mutate(
+    #     # out_line = .data$new_start + cumsum(.data$advances) - 1
+    #     out_line = .data$new_start + cumsum(.data$advances)
+    # ) |>
+    # dplyr::ungroup() |>
+    # # keep only added lines
+    # dplyr::filter(
+    #     .data$type == "added"
+    # ) |>
+    # dplyr::mutate(
+    #     line = .data$out_line,
+    #     text = stringr::str_remove(.data$raw, "^\\+"),
+    #     .keep = "none"
+    # )
+
+    # output
 }
 
 #' Get the line coverage for the diff
@@ -282,7 +336,9 @@ extract_added_lines <- function(diff_text) {
 #'
 #' @inheritParams get_pr_details
 #' @inheritParams compose_coverage_summary
-#' @param relevant_files (character) files with changes in coverage
+#' @param relevant_files (character) files we are interested in. These are
+#'   either being changed by the PR, their coverage has changed or new files
+#'   (for which test coverage in base should be `NA`).
 #' @inheritParams compose_comment
 #'
 #' @returns a `tibble` with 3 columns:
@@ -297,11 +353,11 @@ get_diff_line_coverage <- function(
     relevant_files,
     head_coverage
 ) {
+    # browser()
     diff_text <- get_diff_text(
         pr_details = pr_details,
         relevant_files = relevant_files
-    ) |>
-        purrr::flatten() # TODO flatten is deprecated
+    )
 
     if (rlang::is_empty(diff_text)) {
         # TODO exit early it means the relevant files haven't actually changed
@@ -314,37 +370,53 @@ get_diff_line_coverage <- function(
             extract_added_lines
         ) |>
         purrr::list_rbind(
-            names_to = "file"
+            names_to = "file_name"
         )
 
-    lines_coverage <- head_coverage |>
-        to_report_data() |>
-        purrr::pluck("full") |>
-        purrr::list_rbind(
-            names_to = "file"
-        ) |>
-        dplyr::mutate(
-            coverage = as.numeric(.data$coverage)
-        )
+    line_coverage <- head_coverage |>
+        covr::tally_coverage() |>
+        tibble::as_tibble()
 
-    # TODO maybe do a sense check here as `text` should be identical to `source`
+    # lines_coverage <- head_coverage |>
+    #     to_report_data() |>
+    #     purrr::pluck("full") |>
+    #     purrr::list_rbind(
+    #         names_to = "file"
+    #     ) |>
+    #     dplyr::mutate(
+    #         coverage = as.numeric(.data$coverage)
+    #     )
+
     diff_line_coverage <- added_lines |>
         dplyr::left_join(
-            lines_coverage,
+            line_coverage,
             by = dplyr::join_by(
-                "file",
-                "line"
+                file_name == filename,
+                line
             )
+        ) |>
+        # missing coverage value implies the line does not contain runnable code
+        dplyr::filter(
+            !is.na(.data$value)
         ) |>
         dplyr::mutate(
-            covered = dplyr::case_when(
-                .data$coverage == 0 ~ 0,
-                is.na(.data$coverage) ~ 0,
-                .default = 1
-            )
+            covered = value != 0
+        )
+    missing_cov <- diff_line_coverage |>
+        dplyr::filter(
+            !covered
         ) |>
         dplyr::group_by(
-            .data$file
+            file_name
+        ) |>
+        dplyr::summarise(
+            missing = find_intervals(.data$line)
+        ) |>
+        dplyr::ungroup()
+
+    totals <- diff_line_coverage |>
+        dplyr::group_by(
+            .data$file_name
         ) |>
         dplyr::summarise(
             lines_added = dplyr::n(),
@@ -352,5 +424,39 @@ get_diff_line_coverage <- function(
         ) |>
         dplyr::ungroup()
 
-    diff_line_coverage
+    output <- totals |>
+        dplyr::left_join(
+            missing_cov,
+            by = dplyr::join_by(
+                file_name
+            )
+        )
+
+    # TODO maybe do a sense check here as `text` should be identical to `source`
+    # diff_line_coverage <- added_lines |>
+    #     dplyr::left_join(
+    #         lines_coverage,
+    #         by = dplyr::join_by(
+    #             "file",
+    #             "line"
+    #         )
+    #     ) |>
+    #     dplyr::mutate(
+    #         covered = dplyr::case_when(
+    #             .data$coverage == 0 ~ 0,
+    #             is.na(.data$coverage) ~ 0,
+    #             .default = 1
+    #         )
+    #     ) |>
+    #     dplyr::group_by(
+    #         .data$file
+    #     ) |>
+    #     dplyr::summarise(
+    #         lines_added = dplyr::n(),
+    #         lines_covered = sum(.data$covered)
+    #     ) |>
+    #     dplyr::ungroup()
+
+    # diff_line_coverage
+    output
 }
