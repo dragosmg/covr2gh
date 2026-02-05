@@ -46,9 +46,10 @@ compose_line_coverage_summary <- function(diff_line_coverage, target = 80) {
             lines_covered = diff_coverage$total_lines_covered,
             lines_added = diff_coverage$total_lines_added
         ),
-        "{emoji} Diff coverage is {line_coverage}% ({lines_covered} out of \\
-        {lines_added} added lines are covered by tests). Minimum accepted is \\
-        `{target}%`."
+        "{emoji} Diff coverage is `{line_coverage}%` (`{lines_covered}` out \\
+        of `{lines_added}` added lines are covered by tests). It's good \\
+        practice to aim for at least `{target}%` (the base branch test \\
+        coverage)."
     )
 }
 
