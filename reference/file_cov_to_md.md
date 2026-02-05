@@ -7,7 +7,7 @@ collapses into a single string.
 ## Usage
 
 ``` r
-file_cov_to_md(file_cov_df, align = "rrrcc")
+file_cov_to_md(file_cov_df, align = "lrrcc")
 ```
 
 ## Arguments
