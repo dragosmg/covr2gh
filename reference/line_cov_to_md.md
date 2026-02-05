@@ -6,7 +6,7 @@ markdown which gets collapsed into a single string.
 ## Usage
 
 ``` r
-line_cov_to_md(diff_line_coverage, align = "rrrr")
+line_cov_to_md(diff_line_coverage, align = "lrrrr")
 ```
 
 ## Arguments

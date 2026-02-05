@@ -32,7 +32,9 @@ get_diff_line_coverage(repo, pr_details, relevant_files, head_coverage)
 
 - relevant_files:
 
-  (character) files with changes in coverage
+  (character) files we are interested in. These are either being changed
+  by the PR, their coverage has changed or new files (for which test
+  coverage in base should be `NA`).
 
 - head_coverage:
 
