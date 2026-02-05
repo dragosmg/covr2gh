@@ -110,9 +110,7 @@ line_cov_to_md <- function(
             coverage = paste0(
                 .data$coverage,
                 "%"
-            )
-        ) |>
-        dplyr::mutate(
+            ),
             missing = dplyr::if_else(
                 is.na(.data$missing),
                 "",

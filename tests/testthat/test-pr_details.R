@@ -184,6 +184,7 @@ test_that("extract_added_lines with a more complex diff", {
 })
 
 test_that("extract_added_lines with a more complex diff reproducible", {
+    # nolint start: nonportable_path_linter
     files <- c(
         "R/compose.R",
         "R/file_coverage.R",
@@ -192,10 +193,11 @@ test_that("extract_added_lines with a more complex diff reproducible", {
         "R/pr_details.R",
         "R/to_md.R"
     )
+    # nolint end
 
     pr_details <- structure(
         list(
-            repo = "dragosmg/covr2gh",
+            repo = "dragosmg/covr2gh", # nolint
             pr_number = 90,
             is_fork = FALSE,
             head_name = "badge-href-contd",

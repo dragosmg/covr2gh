@@ -148,15 +148,8 @@ get_diff_text <- function(
     relevant_files,
     call = rlang::caller_env()
 ) {
-    # browser()
-    # ! TODO need to test diff logic with more complex diffs
     # TODO add inputs checks
     # TODO standalone rlang?
-    # repo <- pr_details$repo
-
-    # base_head <- glue::glue(
-    #     "{pr_details$base_name}...{pr_details$head_name}"
-    # )
 
     # the endpoint can be used to compare branches. once the PR is merged and
     # the head is deleted it returns a 404. comparing commits can be used, but
@@ -199,127 +192,11 @@ get_diff_text <- function(
 # returns a data.frame with the position (line number) of the added lines (in
 # the output file) and their contents
 extract_added_lines <- function(diff_text) {
-    # browser()
     split_diff <- diff_split(diff_text)
 
     added_lines <- split_diff$head_lines
 
     added_lines
-
-    # raw_df <- diff_text |>
-    #     stringr::str_split(
-    #         pattern = stringr::fixed("\n")
-    #     ) |>
-    #     # TODO check if one
-    #     purrr::pluck(1) |>
-    #     tibble::tibble(raw = _)
-
-    # combined_diff_df <- raw_df |>
-    #     dplyr::mutate(
-    #         base = stringr::str_starts(raw, stringr::fixed("-")),
-    #         head = stringr::str_starts(raw, stringr::fixed("+")),
-    #         context = !(base | head)
-    #     )
-
-    # head_df <- combined_diff_df |>
-    #     dplyr::filter(context | head) |>
-    #     dplyr::select(-"base") |>
-    #     dplyr::mutate(
-    #         is_hunk = stringr::str_starts(raw, "@@"),
-    #         add = as.numeric(!is_hunk),
-    #         head_start = dplyr::if_else(
-    #             .data$is_hunk,
-    #             stringr::str_extract(.data$raw, "\\+(\\d+)"),
-    #             NA_character_
-    #         ),
-    #         head_start = stringr::str_remove_all(
-    #             .data$head_start,
-    #             stringr::fixed("+")
-    #         ),
-    #         head_start = as.numeric(
-    #             .data$head_start
-    #         )
-    #     ) |>
-    #     tidyr::fill(
-    #         "head_start",
-    #         .direction = "down"
-    #     ) |>
-    #     dplyr::mutate(
-    #         line_num = .data$head_start + cumsum(.data$add) - 1
-    #     )
-
-    # base_df <- combined_diff_df |>
-    #     dplyr::filter(context | base) |>
-    #     dplyr::select(-"head")
-
-    # output <- raw_df |>
-    #     dplyr::mutate(
-    #         is_hunk = stringr::str_starts(
-    #             raw,
-    #             stringr::fixed("@@")
-    #         ),
-    #         # identify the start of the hunk in the destination file
-    #         new_start = dplyr::if_else(
-    #             .data$is_hunk,
-    #             stringr::str_extract(.data$raw, "\\+(\\d+)"),
-    #             NA_character_
-    #         ),
-    #         new_start = stringr::str_remove_all(
-    #             .data$new_start,
-    #             stringr::fixed("+")
-    #         ),
-    #         new_start = as.numeric(
-    #             .data$new_start
-    #         )
-    #     ) |>
-    # # TODO this should hold with multiple hunks, but check
-    # tidyr::fill(
-    #     "new_start",
-    #     .direction = "down"
-    # ) |>
-    # # classify lines
-    # dplyr::mutate(
-    #     type = dplyr::case_when(
-    #         stringr::str_starts(
-    #             .data$raw,
-    #             stringr::fixed("+")
-    #         ) &
-    #             # ++ indicates a line that did not exist in either parent
-    #             # was introduced by the merge resolution itself
-    #             stringr::str_starts(
-    #                 .data$raw,
-    #                 stringr::fixed("++"),
-    #                 negate = TRUE
-    #             ) ~ "added",
-    #         stringr::str_starts(
-    #             .data$raw,
-    #             stringr::fixed("-")
-    #         ) ~ "deleted",
-    #         .data$is_hunk ~ "hunk",
-    #         TRUE ~ "context"
-    #     ),
-    #     advances = .data$type %in% c("added", "context")
-    # ) |>
-    # # compute output line numbers within hunks
-    # dplyr::group_by(
-    #     .data$new_start
-    # ) |>
-    # dplyr::mutate(
-    #     # out_line = .data$new_start + cumsum(.data$advances) - 1
-    #     out_line = .data$new_start + cumsum(.data$advances)
-    # ) |>
-    # dplyr::ungroup() |>
-    # # keep only added lines
-    # dplyr::filter(
-    #     .data$type == "added"
-    # ) |>
-    # dplyr::mutate(
-    #     line = .data$out_line,
-    #     text = stringr::str_remove(.data$raw, "^\\+"),
-    #     .keep = "none"
-    # )
-
-    # output
 }
 
 #' Get the line coverage for the diff
@@ -374,16 +251,6 @@ get_diff_line_coverage <- function(
         covr::tally_coverage() |>
         tibble::as_tibble()
 
-    # lines_coverage <- head_coverage |>
-    #     to_report_data() |>
-    #     purrr::pluck("full") |>
-    #     purrr::list_rbind(
-    #         names_to = "file"
-    #     ) |>
-    #     dplyr::mutate(
-    #         coverage = as.numeric(.data$coverage)
-    #     )
-
     diff_line_coverage <- added_lines |>
         dplyr::left_join(
             line_coverage,
@@ -429,31 +296,5 @@ get_diff_line_coverage <- function(
             )
         )
 
-    # TODO maybe do a sense check here as `text` should be identical to `source`
-    # diff_line_coverage <- added_lines |>
-    #     dplyr::left_join(
-    #         lines_coverage,
-    #         by = dplyr::join_by(
-    #             "file",
-    #             "line"
-    #         )
-    #     ) |>
-    #     dplyr::mutate(
-    #         covered = dplyr::case_when(
-    #             .data$coverage == 0 ~ 0,
-    #             is.na(.data$coverage) ~ 0,
-    #             .default = 1
-    #         )
-    #     ) |>
-    #     dplyr::group_by(
-    #         .data$file
-    #     ) |>
-    #     dplyr::summarise(
-    #         lines_added = dplyr::n(),
-    #         lines_covered = sum(.data$covered)
-    #     ) |>
-    #     dplyr::ungroup()
-
-    # diff_line_coverage
     output
 }
