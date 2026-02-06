@@ -105,7 +105,7 @@ combine_file_coverage <- function(
 #' @keywords internal
 compose_file_coverage_details <- function(file_cov_df) {
     if (is.null(file_cov_df)) {
-        return("")
+        return(glue::as_glue(""))
     }
 
     file_cov_md_table <- file_cov_to_md(file_cov_df)
