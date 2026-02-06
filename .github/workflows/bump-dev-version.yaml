@@ -53,9 +53,15 @@ jobs:
         run: if (desc::desc_has_fields("Date")) desc::desc_set("Date", Sys.Date())
         shell: Rscript {0}
 
+      - name: Get new version 🔖
+        run:
+          bumped_version <- desc::desc_get_version()
+          cat(paste0("NEW_PKG_VERSION=", bumped_version), file = Sys.getenv("GITHUB_ENV"), append = TRUE)
+        shell: Rscript {0}
+
       - name: Commit and push changes 📤
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Bump dev version [skip version bump] skip-checks:true"
+          commit_message: "Bumped dev version to ${{ env.NEW_PKG_VERSION }} [skip version bump] skip-checks:true"
           file_pattern: |
             DESCRIPTION
