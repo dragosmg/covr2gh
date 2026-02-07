@@ -12,13 +12,12 @@
 #'     * switches to base branch and calculates test coverage.
 #'     * compares coverage for head and base and posts a comment with the main
 #'       findings.
-#'     * uploads base coverage and badge as artifacts.
+#'     * uploads base coverage and badge as artefacts.
 #'     * posts a workflow [summary](https://github.blog/news-insights/product-news/supercharging-github-actions-with-job-summaries/).
 #'   * on a *push to main*:
 #'     * calculates test coverage for head and creates a badge.
 #'     * switches to or creates the `covr2gh-storage` branch.
-#'     * commits badge (which is referenced in the README).
-#'     * uploads coverage as an artefact.
+#'     * commits badge (referenced in the README).
 #'
 #' `use_covr2gh_action()` wraps [usethis::use_github_action()].
 #'
