@@ -1,0 +1,22 @@
+---
+title: "What does the {covr2gh} GitHub action do?"
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+
+The workflow is triggered by a on a PR (pull request) or a push to main (a merged PR)
+
+1. Runs `covr::package_coverage()` on the HEAD commit (the most recent commit in the active branch).
+    * captures the output and creates a badge
+2. Uploads the badge to a storage branch, called `covr2gh-storage`.
+    * If the branch does not exist, it creates it.
+    * the badge is added to a subfolder of `badges/` named `<active branch>`
+3. When in a PR it calculates coverage for the target / base branch.
+4. It composes and posts a comment.
+    * Either a new comment or it updates an existing one.
+5. At the end posts a step summary (identical content with the comment).
+
+## What is included in the comment?

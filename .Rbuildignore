@@ -33,3 +33,4 @@
 ^man/line_cov_to_md\.Rd$
 ^vignettes/articles/*_files$
 ^vignettes/articles$
+^vignettes/articles/\.quarto$
