@@ -7,8 +7,7 @@
 get_diff_text(pr_details)
 }
 \arguments{
-\item{pr_details}{a \verb{<pr_details>} object representing a subset of the pull
-request metadata we need. The output of \code{\link[=get_pr_details]{get_pr_details()}}.}
+\item{pr_details}{a \code{pr_details} object.}
 }
 \value{
 a named list where the names are file names and the content of each
