@@ -20,7 +20,7 @@
 file_coverage <- function(x) {
     if (!inherits(x, "coverage")) {
         cli::cli_abort(
-            "`x` must be a coverage object"
+            "`x` must be a `coverage` object"
         )
     }
 
@@ -56,8 +56,7 @@ file_coverage <- function(x) {
 #' @keywords internal
 combine_file_coverage <- function(
     head_coverage,
-    base_coverage,
-    changed_files
+    base_coverage
 ) {
     head_coverage_digest <- file_coverage(head_coverage)
     base_coverage_digest <- file_coverage(base_coverage)
@@ -82,7 +81,6 @@ combine_file_coverage <- function(
         dplyr::filter(
             .data$delta != 0 | # change in coverage
                 is.na(.data$coverage_base) | # new files
-                .data$file_name %in% changed_files | # changed files
                 .data$file_name == "Overall"
         )
 
@@ -110,7 +108,7 @@ compose_file_coverage_details <- function(file_cov_df) {
 
     file_cov_md_table <- file_cov_to_md(file_cov_df)
 
-    subtitle <- "### Files with code or coverage changes"
+    subtitle <- "### Files with changes in coverage"
 
     file_cov_details <- glue::glue(
         "{subtitle}

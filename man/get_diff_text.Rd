@@ -4,18 +4,10 @@
 \alias{get_diff_text}
 \title{Get the PR diff}
 \usage{
-get_diff_text(pr_details, relevant_files, call = rlang::caller_env())
+get_diff_text(pr_details)
 }
 \arguments{
-\item{pr_details}{a \verb{<pr_details>} object representing a subset of the pull
-request metadata we need. The output of \code{\link[=get_pr_details]{get_pr_details()}}.}
-
-\item{relevant_files}{(character) files we are interested in. These are
-either being changed by the PR, their coverage has changed or new files
-(for which test coverage in base should be \code{NA}).}
-
-\item{call}{the execution environment to surface the error message from.
-Defaults to \code{\link[rlang:stack]{rlang::caller_env()}}.}
+\item{pr_details}{a \code{pr_details} object.}
 }
 \value{
 a named list where the names are file names and the content of each
@@ -30,8 +22,8 @@ files".
 \examples{
 \dontrun{
 pr_details <- get_pr_details("<owner>/<repo>", 2)
-relevant_files <- c("R/foo.R", "R/bar.R")
-diff_text <- get_diff_text(pr_details, relevant_files)
+
+diff_text <- get_diff_text(pr_details)
 }
 }
 \keyword{internal}
