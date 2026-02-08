@@ -69,27 +69,16 @@ tests at file level</p></li>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_diff_line_coverage</span><span class="op">(</span><span class="va">repo</span>, <span class="va">pr_details</span>, <span class="va">relevant_files</span>, <span class="va">head_coverage</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_diff_line_coverage</span><span class="op">(</span><span class="va">pr_details</span>, <span class="va">head_coverage</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-repo">repo<a class="anchor" aria-label="anchor" href="#arg-repo"></a></dt>
-<dd><p>(character) the repository name in the GitHub format
-(<code>"OWNER/REPO"</code>).</p></dd>
-
-
-<dt id="arg-pr-details">pr_details<a class="anchor" aria-label="anchor" href="#arg-pr-details"></a></dt>
+<dl><dt id="arg-pr-details">pr_details<a class="anchor" aria-label="anchor" href="#arg-pr-details"></a></dt>
 <dd><p>a <code>&lt;pr_details&gt;</code> object representing a subset of the pull
 request metadata we need. The output of <code><a href="get_pr_details.html">get_pr_details()</a></code>.</p></dd>
-
-
-<dt id="arg-relevant-files">relevant_files<a class="anchor" aria-label="anchor" href="#arg-relevant-files"></a></dt>
-<dd><p>(character) files we are interested in. These are
-either being changed by the PR, their coverage has changed or new files
-(for which test coverage in base should be <code>NA</code>).</p></dd>
 
 
 <dt id="arg-head-coverage">head_coverage<a class="anchor" aria-label="anchor" href="#arg-head-coverage"></a></dt>

@@ -15,26 +15,16 @@ Are the added lines covered by unit tests? Does this in several steps:
 ## Usage
 
 ``` r
-get_diff_line_coverage(repo, pr_details, relevant_files, head_coverage)
+get_diff_line_coverage(pr_details, head_coverage)
 ```
 
 ## Arguments
-
-- repo:
-
-  (character) the repository name in the GitHub format (`"OWNER/REPO"`).
 
 - pr_details:
 
   a `<pr_details>` object representing a subset of the pull request
   metadata we need. The output of
   [`get_pr_details()`](https://dragosmg.github.io/covr2gh/reference/get_pr_details.md).
-
-- relevant_files:
-
-  (character) files we are interested in. These are either being changed
-  by the PR, their coverage has changed or new files (for which test
-  coverage in base should be `NA`).
 
 - head_coverage:
 
