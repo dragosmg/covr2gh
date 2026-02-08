@@ -1,0 +1,14 @@
+---
+title: "What does covr2gh do?"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(covr2gh)
+```
