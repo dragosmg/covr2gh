@@ -93,11 +93,6 @@ get_pr_details <- function(
 #' diff_text <- get_diff_text(pr_details)
 #' }
 get_diff_text <- function(pr_details) {
-    # browser()
-
-    # if (rlang::is_empty(relevant_files)) {
-    #     return(NULL)
-    # }
     # TODO add inputs checks
     # TODO standalone rlang?
 
@@ -170,7 +165,6 @@ get_diff_line_coverage <- function(
     pr_details,
     head_coverage
 ) {
-    # browser()
     diff_text <- get_diff_text(
         pr_details = pr_details
     )

@@ -58,7 +58,6 @@ combine_file_coverage <- function(
     head_coverage,
     base_coverage
 ) {
-    # browser()
     head_coverage_digest <- file_coverage(head_coverage)
     base_coverage_digest <- file_coverage(base_coverage)
 

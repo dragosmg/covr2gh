@@ -10,6 +10,7 @@ test_that("file_coverage() works", {
         file_coverage(cov)
     )
 
+    # nolint start: nonportable_file_linter
     expect_identical(
         file_coverage(cov)[["file_name"]],
         c(
@@ -21,6 +22,7 @@ test_that("file_coverage() works", {
             "Overall"
         )
     )
+    # nolint end
 
     expect_s3_class(
         file_coverage(cov),

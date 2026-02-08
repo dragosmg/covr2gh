@@ -182,18 +182,11 @@ test_that("get_diff_text works", {
         "dragosmg/covr2ghdemo",
         3
     )
-
-    # relevant_files <- c(
-    #     "R/add_one.R",
-    #     "R/add_three.R",
-    #     "R/add_two.R"
-    # )
     # nolint end
 
     expect_snapshot(
         get_diff_text(
-            pr_details = pr_details #,
-            # relevant_files = relevant_files
+            pr_details = pr_details
         )
     )
 })

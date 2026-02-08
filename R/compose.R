@@ -63,7 +63,6 @@ compose_comment <- function(
     diff_cov_target = NULL
 ) {
     # TODO add some checks on inputs
-    # browser()
     pr_details <- get_pr_details(
         repo = repo,
         pr_number = pr_number
@@ -103,22 +102,22 @@ compose_comment <- function(
 
     details_section <- ""
 
-    # TODO we no longer have relevant_files, need to figure out something else
-    # if (!rlang::is_empty(relevant_files)) {
-    # we compose the details section only when relevant files is not empty
-    file_coverage_details <- compose_file_coverage_details(
-        file_cov_df
-    )
+    files <- setdiff(file_cov_df$file_name, "Overall")
 
-    line_coverage_details <- compose_line_coverage_details(
-        diff_line_coverage
-    )
+    if (!rlang::is_empty(files)) {
+        file_coverage_details <- compose_file_coverage_details(
+            file_cov_df
+        )
 
-    details_section <- compose_details_section(
-        file_coverage_details = file_coverage_details,
-        line_coverage_details = line_coverage_details
-    )
-    # }
+        line_coverage_details <- compose_line_coverage_details(
+            diff_line_coverage
+        )
+
+        details_section <- compose_details_section(
+            file_coverage_details = file_coverage_details,
+            line_coverage_details = line_coverage_details
+        )
+    }
 
     glue::glue_data(
         list(
