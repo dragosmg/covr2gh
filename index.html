@@ -65,7 +65,7 @@
 <blockquote>
 <p>Test Coverage Summary on ‘GitHub’</p>
 </blockquote>
-<p>On a GitHub pull request, {covr2gh} runs {covr}’s <code>package_coverage()</code> on both the current (head) and target (base) branches. It compares the two outputs, prepares a summary and posts it as a comment. The author and reviewer can then take action.</p>
+<p>On a GitHub pull request, {covr2gh} runs {covr}’s <code>package_coverage()</code> on both branches involved. It compares the two outputs, prepares a summary and posts it as a comment. Coverage information is helpful when reviewing a pull request.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -77,7 +77,7 @@
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>You use it in a package. It comes with a helper function that generates a GitHub action workflow.</p>
+<p>You use it in a package. It comes with a helper function that generates a GitHub action workflow. This also adds a badge to your Readme if it can find the {usethis} badge “block” (<code>&lt;!-- badges: start --&gt;</code> and <code>&lt;!-- badges: end --&gt;</code>).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">covr2gh</span><span class="fu">::</span><span class="fu"><a href="reference/use_covr2gh_action.html">use_covr2gh_action</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
