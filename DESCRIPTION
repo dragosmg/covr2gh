@@ -1,6 +1,6 @@
 Package: covr2gh
 Title: Test Coverage Summary on 'GitHub'
-Version: 0.0.0.9028
+Version: 0.0.0.9029
 Authors@R:
     person("Dragoș", "Moldovan-Grünfeld", , "dragos.mold@gmail.com", role = c("aut", "cre"))
 Description: Calculate test coverage data with 'covr', extract insights,
@@ -28,8 +28,9 @@ Imports:
     usethis
 Suggests:
     testthat (>= 3.0.0)
+Config/Needs/build: moodymudskipper/devtag
 Config/testthat/edition: 3
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
+Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace",
+    "devtag::dev_roclet"))
 RoxygenNote: 7.3.3
-Config/Needs/build: moodymudskipper/devtag
