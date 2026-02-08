@@ -8,7 +8,7 @@
 #'
 #' @returns a glue string, a sentence summarising the diff coverage.
 #'
-#' @keywords internal
+#' @dev
 compose_line_coverage_summary <- function(
     diff_line_coverage,
     target = 80,
@@ -84,7 +84,7 @@ compose_line_coverage_summary <- function(
 #'
 #' @returns a `glue` string
 #'
-#' @keywords internal
+#' @dev
 compose_line_coverage_details <- function(diff_line_coverage) {
     diff_line_md_table <- line_cov_to_md(diff_line_coverage)
 
