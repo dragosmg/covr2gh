@@ -4,7 +4,7 @@
 \alias{combine_file_coverage}
 \title{Combine head and base file-level coverage}
 \usage{
-combine_file_coverage(head_coverage, base_coverage, changed_files)
+combine_file_coverage(head_coverage, base_coverage)
 }
 \arguments{
 \item{head_coverage}{(coverage) active / current branch (\code{HEAD}) coverage.
