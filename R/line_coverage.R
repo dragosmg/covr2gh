@@ -18,7 +18,7 @@ compose_line_coverage_summary <- function(
 
     if (is.null(diff_line_coverage)) {
         return(
-            ":heavy_equals_sign: Diff coverage: No new lines in tracked files."
+            ":heavy_equals_sign: Diff coverage: No new lines in source files."
         )
     }
 
