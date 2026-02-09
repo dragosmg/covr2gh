@@ -10,7 +10,7 @@
       
       ![badge](https://img.shields.io/badge/coverage-29%25-E4804E.svg)
       
-      :x:  Merging PR [#3](https://github.com/dragosmg/covr2ghdemo/pull/3) ([`<removed-commit-sha>`](head_sha_url)) into _main_ ([`<removed-commit-sha>`](base_sha_url)) - will **decrease** overall coverage by `3` percentage points.
+      :x:  Merging PR [#3](https://github.com/dragosmg/covr2ghdemo/pull/3) ([`<removed-commit-sha>`](head_sha_url)) into _main_ ([`<removed-commit-sha>`](base_sha_url)) will **decrease** overall coverage by `3` percentage points.
       :x:  Diff coverage is `28.6%` (`2` out of `7` added lines are covered by tests). It's good practice to aim for at least `31.6%` (the base branch test coverage).
       
       <details>
@@ -49,7 +49,7 @@
       
       ![badge](https://img.shields.io/badge/coverage-29%25-E4804E.svg)
       
-      :x:  Merging PR [#3](https://github.com/dragosmg/covr2ghdemo/pull/3) ([`<removed-commit-sha>`](head_sha_url)) into _main_ ([`<removed-commit-sha>`](base_sha_url)) - will **decrease** overall coverage by `3` percentage points.
+      :x:  Merging PR [#3](https://github.com/dragosmg/covr2ghdemo/pull/3) ([`<removed-commit-sha>`](head_sha_url)) into _main_ ([`<removed-commit-sha>`](base_sha_url)) will **decrease** overall coverage by `3` percentage points.
       :x:  Diff coverage is `28.6%` (`2` out of `7` added lines are covered by tests). The minimum accepted coverage is `40%`.
       
       <details>
