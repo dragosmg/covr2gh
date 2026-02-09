@@ -30,11 +30,13 @@ Suggests:
     quarto,
     rmarkdown,
     testthat (>= 3.0.0)
+VignetteBuilder: 
+    knitr,
+    quarto
 Config/Needs/build: moodymudskipper/devtag
+Config/Needs/website: rmarkdown, quarto
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace",
     "devtag::dev_roclet"))
 RoxygenNote: 7.3.3
-Config/Needs/website: rmarkdown, quarto
-VignetteBuilder: knitr, quarto
