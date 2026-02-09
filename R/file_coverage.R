@@ -38,7 +38,7 @@ file_coverage <- function(x) {
                 "Overall"
             ),
             coverage = as.numeric(.data$coverage),
-            coverage = round(coverage, 1)
+            coverage = round(.data$coverage, 1)
         )
 }
 
