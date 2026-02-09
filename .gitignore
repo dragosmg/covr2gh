@@ -8,3 +8,7 @@
 /.quarto/
 **/*.quarto_ipynb
 docs
+**/.quarto/
+inst/doc
+/doc/
+/Meta/
