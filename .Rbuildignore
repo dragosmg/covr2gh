@@ -11,6 +11,8 @@
 ^pkgdown$
 ^vignettes/\.quarto$
 ^vignettes/*_files$
+^doc$
+^Meta$
 ^man/build_badge_url\.Rd$
 ^man/badge_value\.Rd$
 ^man/estimate_width_value\.Rd$
@@ -33,5 +35,3 @@
 ^man/get_diff_line_coverage\.Rd$
 ^man/file_cov_to_md\.Rd$
 ^man/line_cov_to_md\.Rd$
-^doc$
-^Meta$
