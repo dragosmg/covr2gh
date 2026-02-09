@@ -10,3 +10,16 @@ template:
 
 development:
   mode: auto
+
+reference:
+- title: Comment
+  contents:
+    - compose_comment
+    - post_comment
+- title: Badge
+  contents:
+    - generate_badge
+- title: Helpers
+  contents:
+  - use_covr2gh_action
+  - use_covr2gh_badge

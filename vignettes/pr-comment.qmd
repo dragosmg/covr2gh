@@ -21,7 +21,7 @@ The comment is made up of two parts:
 
 ## Summary
 
-Two sentences summarise the impact on test coverage, answering questions often raised during code review.
+Made up of two sentences, the *Summary* answers questions often raised during code review.
 
 The first sentence indicates whether merging the pull request will change the overall test coverage.
 
@@ -42,7 +42,7 @@ The first table reports files with changes in coverage.
 The second table reports coverage for lines added or modified by the pull request.
 ![](../man/figures/comment_line_cov_details.png){fig-alt="A screen capture showing the second table - focused on diff coverage (coverage of lines added or modified) - from the Details section."}
 
-These tables allow reviewers to inspect coverage changes in a bit more depth should they need to. This information is hidden by default to avoid cluttering the pull request discussion.
+These tables allow reviewers to inspect coverage changes in a bit more depth should they need to. They are hidden by default to avoid cluttering the pull request discussion.
 
 Empty tables are not rendered. If both tables are empty, the entire *Details* section is automatically suppressed.
 
