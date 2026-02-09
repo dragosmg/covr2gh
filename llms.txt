@@ -2,10 +2,15 @@
 
 > Test Coverage Summary on ‘GitHub’
 
-On a GitHub pull request, {covr2gh} runs {covr}’s `package_coverage()`
-on both branches involved. It compares the two outputs, prepares a
-summary and posts it as a comment. Coverage information is helpful when
-reviewing a pull request.
+{covr2gh} provides an automated way to summarise the impact of a pull
+request (PR) on test coverage directly within GitHub.
+
+It is designed to be used with GitHub Actions: once configured, coverage
+insight is posted as a comment on the pull request.
+
+The goal is to make test coverage feedback visible, concise, and
+actionable, without requiring reviewers to leave GitHub or inspect full
+coverage reports.
 
 ## Installation
 
@@ -19,14 +24,26 @@ pak::pak("dragosmg/covr2gh")
 
 ## Usage
 
-You use it in a package. It comes with a helper function that generates
-a GitHub action workflow. This also adds a badge to your Readme if it
-can find the {usethis} badge “block” (`<!-- badges: start -->` and
-`<!-- badges: end -->`).
+{covr2gh} includes a helper function that adds a GitHub Actions workflow
+to your package. This workflow runs the necessary checks and posts
+coverage feedback when pull requests are opened or updated.
 
 ``` r
 covr2gh::use_covr2gh_action()
 ```
+
+The helper function also adds a badge to your README, in the {usethis}
+badge “block”, if present.
+
+``` md
+<!-- badges: start -->
+![covr2gh-badge](...)
+<!-- badges: end -->
+```
+
+After this initial setup step, no further manual interaction with the
+package is typically required. Coverage comments are generated
+automatically whenever the workflow is triggered on GitHub.
 
 # Package index
 
@@ -43,3 +60,9 @@ covr2gh::use_covr2gh_action()
 - [`use_covr2gh_badge()`](https://dragosmg.github.io/covr2gh/reference/use_covr2gh_badge.md)
   : Add a coverage README badge
 
+# Articles
+
+### All vignettes
+
+- [The pull request
+  comment](https://dragosmg.github.io/covr2gh/articles/pr-comment.md):
