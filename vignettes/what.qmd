@@ -1,0 +1,41 @@
+---
+title: "What does the {covr2gh} GitHub action do?"
+vignette: >
+  %\VignetteIndexEntry{What does the {covr2gh} GitHub action do?}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+## The workflow
+
+The workflow is triggered by a on a PR (pull request) or a push to main (after a merged PR).
+
+1. Runs `covr::package_coverage()` on the HEAD commit (the most recent commit in the active branch).
+    * captures the output and creates a badge
+2. Uploads the badge to a storage branch, called `covr2gh-storage`.
+    * If the branch does not exist, it creates it.
+    * the badge is added to a subfolder of `badges/` named `<active branch>`.
+3. (PR only) When in a PR it calculates coverage for the target / base branch.
+4. (PR only) It composes and posts a comment.
+    * Either a new comment or it updates an existing one.
+5. (PR only) At the end posts a step summary (identical content with the comment).
+
+The workflow is not set to fail if the coverage falls below a certain threshold.
+
+## The comment
+
+Two summary sentences answering the following questions:
+
+1. Will merging this PR impact overall test coverage?
+2. Are the lines added by this PR covered by tests?
+
+The summary is followed by *Details* (a collapsible section), made up of:
+
+* a table on changes in coverage at file level
+* a table showing the number of lines of runnable code added per file and how many are covered by tests, as well as, the lines which are not covered (missing).
+
+![comment-with-details](../man/figures/comment_with_details.png)
