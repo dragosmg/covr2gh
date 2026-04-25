@@ -1,13 +1,13 @@
 test_that("comm_repo can modify a comment repo", {
     comm <- comment("sample/repo")
 
-    comm_mod <- comm |>
-        comm_repo(
-            "foo/bar"
-        )
+    expect_identical(
+        comm$repo,
+        "sample/repo"
+    )
 
     expect_identical(
-        comm_mod$repo,
+        comm_repo(comm, "foo/bar")[["repo"]],
         "foo/bar"
     )
 })
