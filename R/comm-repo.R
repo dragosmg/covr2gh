@@ -8,5 +8,5 @@ comm_repo <- function(comm, repo) {
 
 comm_get_repo <- function(comm) {
     check_comment(comm)
-    comm$repository
+    comm$repo
 }

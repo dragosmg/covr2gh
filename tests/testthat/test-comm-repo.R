@@ -20,3 +20,12 @@ test_that("comm_repo complains", {
         "`repo` must be a single string, not the number 2."
     )
 })
+
+test_that("comm_get_repo", {
+    comm <- comment("sample/repo")
+
+    expect_identical(
+        comm_get_repo(comm),
+        "sample/repo"
+    )
+})
