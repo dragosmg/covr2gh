@@ -1,5 +1,5 @@
 test_that("comm_footer", {
-    empty_comment <- comment("sample/repo")
+    empty_comment <- comment("owner/repo")
 
     comment <- empty_comment |>
         comm_footer(
@@ -19,22 +19,22 @@ test_that("comm_footer", {
 })
 
 test_that("comm_footer complains with incorrect inputs", {
-    empty_comment <- comment("sample/repo")
+    empty_comment <- comment("owner/repo")
 
     expect_error(
-        comment("sample/repo") |>
+        comment("owner/repo") |>
             comm_footer(covr2gh_ver = 2),
         "`covr2gh_ver` must be a single string, not the number 2."
     )
 
     expect_error(
-        comment("sample/repo") |>
+        comment("owner/repo") |>
             comm_footer(covr2gh_url = 2),
         "`covr2gh_url` must be a single string, not the number 2."
     )
 
     expect_error(
-        comment("sample/repo") |>
+        comment("owner/repo") |>
             comm_footer(date = 2),
         "`date` must be a single Date, not the number 2."
     )
