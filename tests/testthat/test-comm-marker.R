@@ -1,5 +1,5 @@
 test_that("comm_marker can modify a comment marker", {
-    comm <- comment("sample/repo")
+    comm <- comment("owner/repo")
 
     expect_null(comm$marker)
 
@@ -15,7 +15,7 @@ test_that("comm_marker can modify a comment marker", {
 })
 
 test_that("comm_marker complains", {
-    comm <- comment("sample/repo")
+    comm <- comment("owner/repo")
 
     expect_error(
         comm_marker(comm, 2),
@@ -24,7 +24,7 @@ test_that("comm_marker complains", {
 })
 
 test_that("comm_get_marker", {
-    comm <- comment("sample/repo")
+    comm <- comment("owner/repo")
 
     expect_identical(
         comm_get_marker(comm),

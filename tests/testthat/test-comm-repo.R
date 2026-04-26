@@ -1,9 +1,9 @@
 test_that("comm_repo can modify a comment repo", {
-    comm <- comment("sample/repo")
+    comm <- comment("owner/repo")
 
     expect_identical(
         comm$repo,
-        "sample/repo"
+        "owner/repo"
     )
 
     expect_identical(
@@ -13,7 +13,7 @@ test_that("comm_repo can modify a comment repo", {
 })
 
 test_that("comm_repo complains", {
-    comm <- comment("sample/repo")
+    comm <- comment("owner/repo")
 
     expect_error(
         comm_repo(comm, 2),
@@ -22,10 +22,10 @@ test_that("comm_repo complains", {
 })
 
 test_that("comm_get_repo", {
-    comm <- comment("sample/repo")
+    comm <- comment("owner/repo")
 
     expect_identical(
         comm_get_repo(comm),
-        "sample/repo"
+        "owner/repo"
     )
 })

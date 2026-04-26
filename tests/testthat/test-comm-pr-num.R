@@ -1,5 +1,5 @@
 test_that("comm_pr_num", {
-    comm <- comment("sample/repo")
+    comm <- comment("owner/repo")
 
     expect_null(comm$pr_num)
 
@@ -7,7 +7,7 @@ test_that("comm_pr_num", {
 })
 
 test_that("comm_pr_num complains", {
-    comm <- comment("sample/repo")
+    comm <- comment("owner/repo")
 
     expect_error(
         comm_pr_num(comm, "foo"),
@@ -16,7 +16,7 @@ test_that("comm_pr_num complains", {
 })
 
 test_that("comm_get_pr_num", {
-    comm <- comment("sample/repo")
+    comm <- comment("owner/repo")
 
     expect_identical(
         comm_get_pr_num(comm),
