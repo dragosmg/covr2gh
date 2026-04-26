@@ -70,6 +70,17 @@ print.covr2gh_comment <- function(x) {
     cli::cat_line(cli::format_inline("{.strong Repo:} {comm_get_repo(x)}"))
     cli::cat_line(cli::format_inline("{.strong PR:} {comm_get_pr_num(x)}"))
 
+    cli::cat_line(
+        cli::format_inline(
+            "{.strong Head coverage:} {comm_get_head_cov(x)}"
+        )
+    )
+    cli::cat_line(
+        cli::format_inline(
+            "{.strong Base coverage:} {comm_get_base_cov(x)}"
+        )
+    )
+
     cli::cat_line(cli::format_inline("{.strong Marker:} {comm_get_marker(x)}"))
 
     cli::cat_line(
