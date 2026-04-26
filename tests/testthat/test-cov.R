@@ -1,24 +1,31 @@
-test_that("coverage utils work", {
+test_that("is_coverage work", {
     expect_false(
         is_coverage("foo")
     )
 
-    cov <- readRDS(
+    coverage <- readRDS(
         test_path(
             "fixtures",
             "sample_coverage.RDS"
         )
     )
 
-    # cov <- covr::package_coverage()
-
     expect_s3_class(
-        cov,
+        coverage,
         "coverage"
+    )
+})
+
+test_that("check_coverage", {
+    coverage <- readRDS(
+        test_path(
+            "fixtures",
+            "sample_coverage.RDS"
+        )
     )
 
     expect_no_error(
-        check_coverage(cov)
+        check_coverage(coverage)
     )
 
     expect_error(
@@ -29,7 +36,7 @@ test_that("coverage utils work", {
 
     expect_error(
         check_coverage(NULL),
-        '`NULL` must be a covr coverage object, not `NULL`',
+        "`NULL` must be a covr coverage object, not `NULL`",
         fixed = TRUE
     )
 
