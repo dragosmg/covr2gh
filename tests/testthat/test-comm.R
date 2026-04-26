@@ -1,6 +1,6 @@
 test_that("comment works", {
     expect_s3_class(
-        comment("sample/repo"),
+        comment("owner/repo"),
         "covr2gh_comment"
     )
 })
@@ -8,7 +8,7 @@ test_that("comment works", {
 test_that("is_comment", {
     expect_true(
         is_comment(
-            comment("sample/repo")
+            comment("owner/repo")
         )
     )
 
@@ -22,7 +22,7 @@ test_that("is_comment", {
 test_that("check_comment", {
     expect_no_error(
         check_comment(
-            comment("sample/repo")
+            comment("owner/repo")
         )
     )
 
@@ -41,7 +41,30 @@ test_that("check_comment", {
 })
 
 test_that("covr2gh_comment print method", {
+    # empty comment
     expect_snapshot(
-        comment("sample/repo")
+        comment("owner/repo")
+    )
+
+    head_coverage <- readRDS(
+        test_path(
+            "fixtures",
+            "head_coverage.RDS"
+        )
+    )
+    base_coverage <- readRDS(
+        test_path(
+            "fixtures",
+            "base_coverage.RDS"
+        )
+    )
+
+    expect_snapshot(
+        comment("owner/repo") |>
+            comm_pr_num(81) |>
+            comm_base_cov(base_coverage) |>
+            comm_head_cov(head_coverage) |>
+            comm_marker("test") |>
+            comm_footer()
     )
 })
