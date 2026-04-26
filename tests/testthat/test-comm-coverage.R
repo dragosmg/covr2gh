@@ -1,4 +1,5 @@
 test_that("comm_head_cov can modify the head coverage", {
+    # nolint start: nonportable_path_linter
     comm <- comment("owner/repo")
 
     coverage1 <- readRDS(
@@ -100,6 +101,7 @@ test_that("comm_base_cov can modify the base coverage", {
 
 test_that("comm_get_base_cov", {
     comm <- comment("owner/repo")
+    # nolint end
 
     coverage1 <- readRDS(
         test_path(

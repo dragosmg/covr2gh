@@ -1,6 +1,6 @@
 test_that("comment works", {
     expect_s3_class(
-        comment("owner/repo"),
+        comment("owner/repo"), # nolint nonportable_path_linter
         "covr2gh_comment"
     )
 })
@@ -8,7 +8,7 @@ test_that("comment works", {
 test_that("is_comment", {
     expect_true(
         is_comment(
-            comment("owner/repo")
+            comment("owner/repo") # nolint nonportable_path_linter
         )
     )
 
@@ -22,7 +22,7 @@ test_that("is_comment", {
 test_that("check_comment", {
     expect_no_error(
         check_comment(
-            comment("owner/repo")
+            comment("owner/repo") # nolint nonportable_path_linter
         )
     )
 
@@ -43,7 +43,7 @@ test_that("check_comment", {
 test_that("covr2gh_comment print method", {
     # empty comment
     expect_snapshot(
-        comment("owner/repo")
+        comment("owner/repo") # nolint nonportable_path_linter
     )
 
     head_coverage <- readRDS(
@@ -60,7 +60,7 @@ test_that("covr2gh_comment print method", {
     )
 
     expect_snapshot(
-        comment("owner/repo") |>
+        comment("owner/repo") |> # nolint nonportable_path_linter
             comm_pr_num(81) |>
             comm_base_cov(base_coverage) |>
             comm_head_cov(head_coverage) |>

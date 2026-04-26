@@ -1,4 +1,5 @@
 test_that("comm_repo can modify a comment repo", {
+    # nolint start: nonportable_path_linter
     comm <- comment("owner/repo")
 
     expect_identical(
@@ -28,4 +29,5 @@ test_that("comm_get_repo", {
         comm_get_repo(comm),
         "owner/repo"
     )
+    # nolint end
 })

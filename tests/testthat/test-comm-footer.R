@@ -1,4 +1,5 @@
 test_that("comm_footer", {
+    # nolint start: nonportable_path_linter
     empty_comment <- comment("owner/repo")
 
     comment <- empty_comment |>
@@ -38,4 +39,5 @@ test_that("comm_footer complains with incorrect inputs", {
             comm_footer(date = 2),
         "`date` must be a single Date, not the number 2."
     )
+    # nolint end
 })

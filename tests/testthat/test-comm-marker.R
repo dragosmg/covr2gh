@@ -1,4 +1,5 @@
 test_that("comm_marker can modify a comment marker", {
+    # nolint start: nonportable_path_linter
     comm <- comment("owner/repo")
 
     expect_null(comm$marker)
@@ -25,6 +26,7 @@ test_that("comm_marker complains", {
 
 test_that("comm_get_marker", {
     comm <- comment("owner/repo")
+    # nolint end
 
     expect_identical(
         comm_get_marker(comm),
