@@ -15,6 +15,7 @@ new_comment <- function(
     footer = NULL,
     error_call = rlang::caller_env()
 ) {
+    # TODO add check_repo
     # check_string(repo, call = error_call)
 
     structure(
@@ -64,7 +65,7 @@ check_comment <- function(
 }
 
 #' @export
-print.covr2gh_comment <- function(x) {
+print.covr2gh_comment <- function(x, ...) {
     cli::cat_line(cli::format_inline("{.cls {class(x)}}"))
 
     cli::cat_line(cli::format_inline("{.strong Repo:} {comm_get_repo(x)}"))
