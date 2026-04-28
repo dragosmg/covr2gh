@@ -53,24 +53,20 @@ check_cov_delta <- function(
 }
 
 #' @export
-print.covr2gh_cov_delta <- function(x) {
+print.covr2gh_cov_delta <- function(x, ...) {
     cli::cat_line(cli::format_inline("{.cls {class(x)}}"))
 
-    # cli::cat_line(cli::format_inline("{.strong Repo:} {cov_delta_get_repo(x)}"))
-    cli::cat_line(cli::format_inline("{.strong Repo:} {x$repo}"))
-    # cli::cat_line(cli::format_inline("{.strong PR:} {cov_delta_get_pr(x)}"))
-    cli::cat_line(cli::format_inline("{.strong PR:} {x$pr}"))
+    cli::cat_line(cli::format_inline("{.strong Repo:} {cov_delta_get_repo(x)}"))
+    cli::cat_line(cli::format_inline("{.strong PR:} {cov_delta_get_pr(x)}"))
 
     cli::cat_line(
         cli::format_inline(
-            # "{.strong Head coverage:} {cov_delta_get_head_cov(x)}"
-            "{.strong Head coverage:} {x$head_cov}"
+            "{.strong Head coverage:} {cov_delta_get_head_cov(x)}"
         )
     )
     cli::cat_line(
         cli::format_inline(
-            # "{.strong Base coverage:} {cov_delta_get_base_cov(x)}"
-            "{.strong Base coverage:} {x$base_cov}"
+            "{.strong Base coverage:} {cov_delta_get_base_cov(x)}"
         )
     )
 }
