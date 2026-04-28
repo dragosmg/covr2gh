@@ -5,7 +5,7 @@ check_date <- function(
     arg = rlang::caller_arg(x),
     call = rlang::caller_env()
 ) {
-    if (!missing(x) && lubridate::is.Date(x) && length(x) == 1) {
+    if (!missing(x) && inherits(x, "Date") && length(x) == 1) {
         return(invisible())
     }
 
@@ -28,6 +28,7 @@ check_repository <- function(
 ) {
     check_character(x)
 
+    # TODO this is not finished. finish it
     if (!missing(x) && length(x) == 1) {
         return(invisible())
     }
