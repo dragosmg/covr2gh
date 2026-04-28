@@ -1,5 +1,5 @@
 is_coverage <- function(x) {
-    inherits(x, 'coverage')
+    inherits(x, "coverage")
 }
 
 check_coverage <- function(
