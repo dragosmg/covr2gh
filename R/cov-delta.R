@@ -45,7 +45,7 @@ check_cov_delta <- function(
 
     stop_input_type(
         cov_delta,
-        "an covr2gh coverage delta object",
+        "an covr2gh `cov_delta` object",
         allow_null = allow_null,
         arg = arg,
         call = call

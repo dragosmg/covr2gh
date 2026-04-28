@@ -36,7 +36,8 @@ test_that("check_cov_delta", {
     expect_error(
         check_cov_delta(
             "foo"
-        )
+        ),
+        '`"foo"` must be an covr2gh `cov_delta` object, not the string "foo".'
     )
 })
 
@@ -61,9 +62,13 @@ test_that("covr2gh_cov_delta print method", {
     )
 
     expect_snapshot(
-        cov_delta("owner/repo") #|> # nolint nonportable_path_linter
-        # cov_delta_pr_num(81) #|>
-        # cov_delta_base_cov(base_coverage) |>
-        # cov_delta_head_cov(head_coverage)
+        cov_delta("owner/repo") # nolint nonportable_path_linter
+    )
+
+    expect_snapshot(
+        cov_delta("owner/repo") |> # nolint nonportable_path_linter
+            cov_delta_pr(81) |>
+            cov_delta_base_cov(base_coverage) |>
+            cov_delta_head_cov(head_coverage)
     )
 })
