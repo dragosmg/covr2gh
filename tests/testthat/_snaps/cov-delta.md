@@ -5,9 +5,9 @@
     Output
       <covr2gh_cov_delta>
       Repo: owner/repo
-      PR: 
-      Head coverage: 
-      Base coverage: 
+      PR: empty
+      Head coverage: empty
+      Base coverage: empty
 
 ---
 
@@ -16,7 +16,7 @@
     Output
       <covr2gh_cov_delta>
       Repo: owner/repo
-      PR: 
-      Head coverage: 
-      Base coverage: 
+      PR: empty
+      Head coverage: empty
+      Base coverage: empty
 
