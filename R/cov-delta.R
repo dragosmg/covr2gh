@@ -11,9 +11,6 @@ new_cov_delta <- function(
 ) {
     # TODO add a check_repo() function
     check_string(repo, call = call)
-    check_number_whole(pr, call = call, allow_null = TRUE)
-    check_coverage(head_cov, call = call, allow_null = TRUE)
-    check_coverage(base_cov, call = call, allow_null = TRUE)
 
     structure(
         list(
@@ -59,7 +56,8 @@ check_cov_delta <- function(
 print.covr2gh_cov_delta <- function(x) {
     cli::cat_line(cli::format_inline("{.cls {class(x)}}"))
 
-    cli::cat_line(cli::format_inline("{.strong Repo:} {cov_delta_get_repo(x)}"))
+    # cli::cat_line(cli::format_inline("{.strong Repo:} {cov_delta_get_repo(x)}"))
+    cli::cat_line(cli::format_inline("{.strong Repo:} {x$repo}"))
     # cli::cat_line(cli::format_inline("{.strong PR:} {cov_delta_get_pr(x)}"))
     cli::cat_line(cli::format_inline("{.strong PR:} {x$pr}"))
 
