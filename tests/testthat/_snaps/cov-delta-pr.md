@@ -1,4 +1,4 @@
-# errors are forwarded correctly
+# errors are handled correctly
 
     Code
       cov_delta_pr(cov_delta, TRUE)
