@@ -1,4 +1,4 @@
-test_that("is_coverage work", {
+test_that("is_coverage works", {
     expect_false(
         is_coverage("foo")
     )
