@@ -29,7 +29,7 @@ is_cov_delta <- function(x) {
 
 check_cov_delta <- function(
     cov_delta,
-    arg = rlang::caller_arg(comm),
+    arg = rlang::caller_arg(cov_delta),
     call = rlang::caller_env(),
     allow_null = FALSE
 ) {
