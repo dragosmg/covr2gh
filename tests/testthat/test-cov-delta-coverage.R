@@ -1,6 +1,6 @@
-test_that("comm_head_cov can modify the head coverage", {
+test_that("cov_delta_head_cov can modify the head coverage", {
     # nolint start: nonportable_path_linter
-    comm <- comment("owner/repo")
+    cov_delta <- cov_delta("owner/repo")
 
     coverage1 <- readRDS(
         test_path(
@@ -16,24 +16,24 @@ test_that("comm_head_cov can modify the head coverage", {
         )
     )
 
-    expect_null(comm$head_coverage)
+    expect_null(cov_delta$head_coverage)
 
-    comm <- comm_head_cov(comm, coverage1)
+    cov_delta <- cov_delta_head_cov(cov_delta, coverage1)
     expect_identical(
-        comm$head_coverage,
+        cov_delta$head_coverage,
         coverage1
     )
 
-    comm <- comm_head_cov(comm, coverage2)
+    cov_delta <- cov_delta_head_cov(cov_delta, coverage2)
     expect_identical(
-        comm$head_coverage,
+        cov_delta$head_coverage,
         coverage2
     )
 })
 
 
-test_that("comm_get_head_cov", {
-    comm <- comment("owner/repo")
+test_that("cov_delta_get_head_cov", {
+    cov_delta <- cov_delta("owner/repo")
 
     coverage1 <- readRDS(
         test_path(
@@ -50,25 +50,25 @@ test_that("comm_get_head_cov", {
     )
 
     expect_identical(
-        comm_get_head_cov(comm),
+        cov_delta_get_head_cov(cov_delta),
         "empty"
     )
 
-    comm <- comm_head_cov(comm, coverage1)
+    cov_delta <- cov_delta_head_cov(cov_delta, coverage1)
     expect_identical(
-        comm_get_head_cov(comm),
+        cov_delta_get_head_cov(cov_delta),
         "28.6%"
     )
 
-    comm <- comm_head_cov(comm, coverage2)
+    cov_delta <- cov_delta_head_cov(cov_delta, coverage2)
     expect_identical(
-        comm_get_head_cov(comm),
+        cov_delta_get_head_cov(cov_delta),
         "31.6%"
     )
 })
 
-test_that("comm_base_cov can modify the base coverage", {
-    comm <- comment("owner/repo")
+test_that("cov_delta_base_cov can modify the base coverage", {
+    cov_delta <- cov_delta("owner/repo")
 
     coverage1 <- readRDS(
         test_path(
@@ -84,23 +84,23 @@ test_that("comm_base_cov can modify the base coverage", {
         )
     )
 
-    expect_null(comm$base_coverage)
+    expect_null(cov_delta$base_coverage)
 
-    comm <- comm_base_cov(comm, coverage1)
+    cov_delta <- cov_delta_base_cov(cov_delta, coverage1)
     expect_identical(
-        comm$base_coverage,
+        cov_delta$base_coverage,
         coverage1
     )
 
-    comm <- comm_base_cov(comm, coverage2)
+    cov_delta <- cov_delta_base_cov(cov_delta, coverage2)
     expect_identical(
-        comm$base_coverage,
+        cov_delta$base_coverage,
         coverage2
     )
 })
 
-test_that("comm_get_base_cov", {
-    comm <- comment("owner/repo")
+test_that("cov_delta_get_base_cov", {
+    cov_delta <- cov_delta("owner/repo")
     # nolint end
 
     coverage1 <- readRDS(
@@ -118,19 +118,19 @@ test_that("comm_get_base_cov", {
     )
 
     expect_identical(
-        comm_get_base_cov(comm),
+        cov_delta_get_base_cov(cov_delta),
         "empty"
     )
 
-    comm <- comm_base_cov(comm, coverage1)
+    cov_delta <- cov_delta_base_cov(cov_delta, coverage1)
     expect_identical(
-        comm_get_base_cov(comm),
+        cov_delta_get_base_cov(cov_delta),
         "28.6%"
     )
 
-    comm <- comm_base_cov(comm, coverage2)
+    cov_delta <- cov_delta_base_cov(cov_delta, coverage2)
     expect_identical(
-        comm_get_base_cov(comm),
+        cov_delta_get_base_cov(cov_delta),
         "31.6%"
     )
 })
