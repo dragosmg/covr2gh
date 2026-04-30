@@ -1,4 +1,4 @@
-test_that("add_line_num_head works", {
+test_that("add_line_num works", {
     # head_df for the `R/file_coverage.R`
     head_df_pr90_file_cov <- readRDS(
         testthat::test_path(
@@ -8,7 +8,7 @@ test_that("add_line_num_head works", {
     )
 
     expect_snapshot(
-        add_line_num_head(
+        add_line_num(
             head_df_pr90_file_cov
         )
     )
@@ -22,7 +22,7 @@ test_that("add_line_num_head works", {
     )
 
     expect_snapshot(
-        add_line_num_head(
+        add_line_num(
             head_df_pr90_gha
         )
     )
