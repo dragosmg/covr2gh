@@ -68,7 +68,7 @@ test_that("covr2gh_cov_delta print method", {
     expect_snapshot(
         cov_delta("owner/repo") |> # nolint nonportable_path_linter
             cov_delta_pr(81) |>
-            cov_delta_base_cov(base_coverage) |>
-            cov_delta_head_cov(head_coverage)
+            cov_delta_base(base_coverage) |>
+            cov_delta_head(head_coverage)
     )
 })

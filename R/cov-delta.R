@@ -61,12 +61,12 @@ print.covr2gh_cov_delta <- function(x, ...) {
 
     cli::cat_line(
         cli::format_inline(
-            "{.strong Head coverage:} {cov_delta_get_head_cov(x)}"
+            "{.strong Head coverage:} {cov_delta_get_head(x)}"
         )
     )
     cli::cat_line(
         cli::format_inline(
-            "{.strong Base coverage:} {cov_delta_get_base_cov(x)}"
+            "{.strong Base coverage:} {cov_delta_get_base(x)}"
         )
     )
 }
