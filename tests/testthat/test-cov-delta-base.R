@@ -1,4 +1,4 @@
-test_that("cov_delta_base_cov can modify the base coverage", {
+test_that("cov_delta_base can modify the base coverage", {
     cov_delta <- cov_delta("owner/repo")
 
     coverage1 <- readRDS(
@@ -17,20 +17,20 @@ test_that("cov_delta_base_cov can modify the base coverage", {
 
     expect_null(cov_delta$base_coverage)
 
-    cov_delta <- cov_delta_base_cov(cov_delta, coverage1)
+    cov_delta <- cov_delta_base(cov_delta, coverage1)
     expect_identical(
         cov_delta$base_coverage,
         coverage1
     )
 
-    cov_delta <- cov_delta_base_cov(cov_delta, coverage2)
+    cov_delta <- cov_delta_base(cov_delta, coverage2)
     expect_identical(
         cov_delta$base_coverage,
         coverage2
     )
 })
 
-test_that("cov_delta_get_base_cov", {
+test_that("cov_delta_get_base", {
     cov_delta <- cov_delta("owner/repo")
     # nolint end
 
@@ -49,19 +49,19 @@ test_that("cov_delta_get_base_cov", {
     )
 
     expect_identical(
-        cov_delta_get_base_cov(cov_delta),
+        cov_delta_get_base(cov_delta),
         "empty"
     )
 
-    cov_delta <- cov_delta_base_cov(cov_delta, coverage1)
+    cov_delta <- cov_delta_base(cov_delta, coverage1)
     expect_identical(
-        cov_delta_get_base_cov(cov_delta),
+        cov_delta_get_base(cov_delta),
         "28.6%"
     )
 
-    cov_delta <- cov_delta_base_cov(cov_delta, coverage2)
+    cov_delta <- cov_delta_base(cov_delta, coverage2)
     expect_identical(
-        cov_delta_get_base_cov(cov_delta),
+        cov_delta_get_base(cov_delta),
         "31.6%"
     )
 })
