@@ -1,4 +1,4 @@
-test_that("cov_delta_head_cov can modify the head coverage", {
+test_that("cov_delta_head can modify the head coverage", {
     # nolint start: nonportable_path_linter
     cov_delta <- cov_delta("owner/repo")
 
@@ -18,20 +18,20 @@ test_that("cov_delta_head_cov can modify the head coverage", {
 
     expect_null(cov_delta$head_coverage)
 
-    cov_delta <- cov_delta_head_cov(cov_delta, coverage1)
+    cov_delta <- cov_delta_head(cov_delta, coverage1)
     expect_identical(
         cov_delta$head_coverage,
         coverage1
     )
 
-    cov_delta <- cov_delta_head_cov(cov_delta, coverage2)
+    cov_delta <- cov_delta_head(cov_delta, coverage2)
     expect_identical(
         cov_delta$head_coverage,
         coverage2
     )
 })
 
-test_that("cov_delta_get_head_cov", {
+test_that("cov_delta_get_head", {
     cov_delta <- cov_delta("owner/repo")
 
     coverage1 <- readRDS(
@@ -49,19 +49,19 @@ test_that("cov_delta_get_head_cov", {
     )
 
     expect_identical(
-        cov_delta_get_head_cov(cov_delta),
+        cov_delta_get_head(cov_delta),
         "empty"
     )
 
-    cov_delta <- cov_delta_head_cov(cov_delta, coverage1)
+    cov_delta <- cov_delta_head(cov_delta, coverage1)
     expect_identical(
-        cov_delta_get_head_cov(cov_delta),
+        cov_delta_get_head(cov_delta),
         "28.6%"
     )
 
-    cov_delta <- cov_delta_head_cov(cov_delta, coverage2)
+    cov_delta <- cov_delta_head(cov_delta, coverage2)
     expect_identical(
-        cov_delta_get_head_cov(cov_delta),
+        cov_delta_get_head(cov_delta),
         "31.6%"
     )
 })

@@ -1,4 +1,4 @@
-cov_delta_head_cov <- function(cov_delta, head_cov) {
+cov_delta_head <- function(cov_delta, head_cov) {
     check_cov_delta(cov_delta)
     check_coverage(head_cov)
 
@@ -6,7 +6,7 @@ cov_delta_head_cov <- function(cov_delta, head_cov) {
     cov_delta
 }
 
-cov_delta_get_head_cov <- function(cov_delta) {
+cov_delta_get_head <- function(cov_delta) {
     check_cov_delta(cov_delta)
 
     head_cov <- cov_delta$head_coverage
