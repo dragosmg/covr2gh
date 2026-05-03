@@ -1,5 +1,5 @@
 test_that("cov_delta_base can modify the base coverage", {
-    cov_delta <- cov_delta("owner/repo")
+    cov_delta <- cov_delta("owner/repo") # nolint nonportable_path_linter
 
     coverage1 <- readRDS(
         test_path(
@@ -31,8 +31,7 @@ test_that("cov_delta_base can modify the base coverage", {
 })
 
 test_that("cov_delta_get_base", {
-    cov_delta <- cov_delta("owner/repo")
-    # nolint end
+    cov_delta <- cov_delta("owner/repo") # nolint nonportable_path_linter
 
     coverage1 <- readRDS(
         test_path(

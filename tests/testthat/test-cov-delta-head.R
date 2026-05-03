@@ -1,6 +1,5 @@
 test_that("cov_delta_head can modify the head coverage", {
-    # nolint start: nonportable_path_linter
-    cov_delta <- cov_delta("owner/repo")
+    cov_delta <- cov_delta("owner/repo") # nolint nonportable_path_linter
 
     coverage1 <- readRDS(
         test_path(
@@ -32,7 +31,7 @@ test_that("cov_delta_head can modify the head coverage", {
 })
 
 test_that("cov_delta_get_head", {
-    cov_delta <- cov_delta("owner/repo")
+    cov_delta <- cov_delta("owner/repo") # nolint nonportable_path_linter
 
     coverage1 <- readRDS(
         test_path(
