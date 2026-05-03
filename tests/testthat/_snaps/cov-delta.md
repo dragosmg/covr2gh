@@ -23,7 +23,7 @@
 ---
 
     Code
-      cov_delta_head_cov(cov_delta_base_cov(cov_delta_pr(cov_delta("owner/repo"), 81),
+      cov_delta_head(cov_delta_base(cov_delta_pr(cov_delta("owner/repo"), 81),
       base_coverage), head_coverage)
     Output
       <covr2gh_cov_delta>
