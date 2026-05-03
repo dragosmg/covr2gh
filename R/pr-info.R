@@ -1,37 +1,44 @@
 pr_info <- function(repo, pr_number) {
+    # TODO repo check?
     check_character(repo)
     check_number_whole(pr_number)
 
-    pr_info <- gh::gh(
+    pr_response <- gh::gh(
         "GET /repos/{repo}/pulls/{pr_number}", # nolint nonportable_path_linter
         repo = repo,
         pr_number = pr_number
     )
+    # TODO handle API request errors
+
+    # TODO decide how to print the commit hash
+    head_hash <- pr_response$head$sha
+    base_hash <- pr_response$base$sha
 
     output <- structure(
         list(
             repo = repo,
             pr_number = pr_number,
-            is_fork = pr_info$head$repo$fork,
+            is_fork = pr_response$head$repo$fork,
             head = list(
-                label = pr_info$head$label,
-                ref = pr_info$head$ref,
-                sha = pr_info$head$sha
+                label = pr_response$head$label,
+                ref = pr_response$head$ref,
+                hash = head_hash
             ),
             base = list(
-                label = pr_info$base$label,
-                ref = pr_info$base$ref,
-                sha = pr_info$base$sha
-            )
+                label = pr_response$base$label,
+                ref = pr_response$base$ref,
+                hash = base_hash
+            ),
+            pr_html_url = pr_response$html_url
         ),
-        class = "pr_info"
+        class = "covr2gh_pr_info"
     )
 
     output
 }
 
 #' @export
-print.pr_info <- function(x, ...) {
+print.covr2gh_pr_info <- function(x, ...) {
     cli::cat_line(cli::format_inline("{.cls {class(x)}}"))
 
     cli::cat_line(cli::format_inline("{.strong Repo:} {.val {x$repo}}"))
@@ -42,10 +49,14 @@ print.pr_info <- function(x, ...) {
     bullets_with_header("Head:", x$head)
 
     bullets_with_header("Base", x$base)
+
+    cli::cat_line(cli::format_inline(
+        "{.strong PR URL:} {.url {x$pr_html_url}}"
+    ))
 }
 
 is_pr_info <- function(x) {
-    inherits(x, "pr_info")
+    inherits(x, "covr2gh_pr_info")
 }
 
 check_pr_info <- function(
