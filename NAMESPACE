@@ -2,8 +2,8 @@
 
 S3method(print,covr2gh_comment)
 S3method(print,covr2gh_cov_delta)
+S3method(print,covr2gh_diff)
 S3method(print,covr2gh_pr_info)
-S3method(print,patch)
 export(compose_comment)
 export(generate_badge)
 export(post_comment)
