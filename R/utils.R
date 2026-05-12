@@ -38,13 +38,15 @@ bullets <- function(x) {
                 format(x)
             }
         } else {
-            #   if (is_redacted_sentinel(x)) {
+            # if (is_commit_hash(x)) {
             #     format(x)
-            #   } else {
+            # } else {
             paste0("<", class(x)[[1L]], ">")
-            #   }
+            # }
         }
     }
+
+    # nolint start: object_usage_linter
     values <- purrr::map_chr(x, as_simple)
     bullet_names <- format(names(x))
     bullet_names <- gsub(" ", "\u00a0", bullet_names, fixed = TRUE)
@@ -54,4 +56,5 @@ bullets <- function(x) {
             "* {.field {bullet_names[[i]]}}: {values[[i]]}"
         ))
     }
+    # nolint end
 }
