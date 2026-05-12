@@ -16,7 +16,7 @@ new_comment <- function(
     error_call = rlang::caller_env()
 ) {
     # TODO add check_repo
-    # check_string(repo, call = error_call)
+    check_string(repo, call = error_call)
 
     structure(
         list(
