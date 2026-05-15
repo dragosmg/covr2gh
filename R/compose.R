@@ -8,9 +8,11 @@ covr2gh_marker <- "<!-- covr2gh: do not delete/edit this line -->"
 #' @param base_coverage (coverage) base / target branch coverage (coverage for
 #'   the branch merging into). The output of [covr::package_coverage()] on the
 #'   base branch.
+#' @param repo (character) the repository name in the GitHub format
+#'   (`"OWNER/REPO"`).
+#' @param pr_number (integer) the PR number
 #' @param diff_cov_target (numeric) minimum accepted diff coverage. Defaults to
 #'   `NULL` which is then interpreted as overall base branch coverage.
-#' @inheritParams get_pr_details
 #'
 #' @returns a character scalar with the content of the GitHub comment
 #'
