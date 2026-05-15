@@ -10,7 +10,7 @@ diff <- function(pr_info) {
         head_ref = pr_info$head$ref
     )
     # nolint end
-    browser()
+    # browser()
     # get the patch element and use filename as name
     pluck_filename_patch <- function(x) {
         output <- list(
@@ -29,7 +29,7 @@ diff <- function(pr_info) {
         purrr::map(pluck_filename_patch) |>
         purrr::list_flatten()
 
-    output
+    new_diffs(output)
 }
 
 #' @export
@@ -77,6 +77,12 @@ diff_get_file <- function(diff) {
     diff$file
 }
 
+
+#' Create a list of diffs
+#'
+#' @param x a list of diffs
+#'
+#' @export
 new_diffs <- function(x) {
     if (!is_list(x) || !purrr::every(x, is_diff)) {
         rlang::abort("Expected a list of covr2gh diffs")
@@ -89,8 +95,9 @@ new_diffs <- function(x) {
     )
 }
 
+#' @export
 print.covr2gh_diffs <- function(x, ...) {
-    cli::cat_line("<list_of<covr2gh diffs>>\n")
+    cli::cat_line("<list_of<covr2gh_diff>>\n")
     print(unclass(x), ...)
 }
 
@@ -121,8 +128,4 @@ check_diffs <- function(
         arg = arg,
         call = call
     )
-}
-
-diffs_get_files <- function(diffs) {
-    check_diffs()
 }

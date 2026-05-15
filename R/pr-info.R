@@ -9,6 +9,7 @@ pr_info <- function(repo, pr_number) {
         pr_number = pr_number
     )
     # TODO handle API request errors
+    # TODO mock for testing
 
     # TODO decide how to print the commit hash
     head_hash <- pr_response$head$sha
