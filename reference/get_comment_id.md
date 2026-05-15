@@ -1,14 +1,19 @@
 # Identify the covr2gh comment
 
 Comments posted by covr2gh are identified by the presence of the
-`"<!-- covr2gh-do-not-delete -->"` comment. `get_comment_id()` looks for
+`"<!-- covr2gh-do-not-delete -->"` marker. `get_comment_id()` looks for
 it. If it can find it, it returns the comment ID, otherwise it returns
 `NULL`.
 
 ## Usage
 
 ``` r
-get_comment_id(repo, pr_number, call = rlang::caller_env())
+get_comment_id(
+  repo,
+  pr_number,
+  marker = covr2gh_marker,
+  call = rlang::caller_env()
+)
 ```
 
 ## Arguments

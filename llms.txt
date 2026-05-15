@@ -18,6 +18,7 @@ You can install the development version of {covr2gh} from
 [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("dragosmg/covr2gh")
 ```
@@ -29,6 +30,7 @@ to your package. This workflow calculates coverage and posts feedback
 when pull requests are opened or updated.
 
 ``` r
+
 covr2gh::use_covr2gh_action()
 ```
 

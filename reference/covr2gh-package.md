@@ -16,3 +16,7 @@ Useful links:
 ## Author
 
 **Maintainer**: Dragoș Moldovan-Grünfeld <dragos.mold@gmail.com>
+
+Authors:
+
+- Dragoș Moldovan-Grünfeld <dragos.mold@gmail.com>
