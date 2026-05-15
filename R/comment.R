@@ -1,7 +1,7 @@
 #' Identify the covr2gh comment
 #'
 #' Comments posted by covr2gh are identified by the presence of the
-#' `"<!-- covr2gh-do-not-delete -->"` comment. `get_comment_id()` looks for it.
+#' `"<!-- covr2gh-do-not-delete -->"` marker. `get_comment_id()` looks for it.
 #' If it can find it, it returns the comment ID, otherwise it returns `NULL`.
 #'
 #' The output of `get_comment_id()` is then used `post_comment()` post a new
@@ -20,6 +20,7 @@
 get_comment_id <- function(
     repo,
     pr_number,
+    marker = covr2gh_marker,
     call = rlang::caller_env()
 ) {
     if (!rlang::is_scalar_character(repo)) {
@@ -51,13 +52,13 @@ get_comment_id <- function(
         return(NULL)
     }
 
-    # identify the comment containing the covr2gh_comment
+    # identify the comment containing the marker
     comment_index <- comments_info |>
         # look in the comment body
         purrr::map("body") |>
         # detect_index identifies the position of the first match
         purrr::detect_index(
-            \(x) stringr::str_detect(x, pattern = covr2gh_comment)
+            \(x) stringr::str_detect(x, pattern = marker)
         )
 
     if (comment_index == 0) {

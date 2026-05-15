@@ -20,5 +20,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Dragoș Moldovan-Grünfeld \email{dragos.mold@gmail.com}
 
+Authors:
+\itemize{
+  \item Dragoș Moldovan-Grünfeld \email{dragos.mold@gmail.com}
+}
+
 }
 \keyword{internal}

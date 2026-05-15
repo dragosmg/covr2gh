@@ -4,7 +4,12 @@
 \alias{get_comment_id}
 \title{Identify the covr2gh comment}
 \usage{
-get_comment_id(repo, pr_number, call = rlang::caller_env())
+get_comment_id(
+  repo,
+  pr_number,
+  marker = covr2gh_marker,
+  call = rlang::caller_env()
+)
 }
 \arguments{
 \item{repo}{(character) the repository name in the GitHub format
@@ -13,14 +18,14 @@ get_comment_id(repo, pr_number, call = rlang::caller_env())
 \item{pr_number}{(integer) the PR number}
 
 \item{call}{the execution environment to surface the error message from.
-Defaults to \code{\link[rlang:stack]{rlang::caller_env()}}.}
+Defaults to \code{\link[rlang:caller_env]{rlang::caller_env()}}.}
 }
 \value{
 a numeric scalar representing the comment id or \code{NULL}
 }
 \description{
 Comments posted by covr2gh are identified by the presence of the
-\code{"<!-- covr2gh-do-not-delete -->"} comment. \code{get_comment_id()} looks for it.
+\code{"<!-- covr2gh-do-not-delete -->"} marker. \code{get_comment_id()} looks for it.
 If it can find it, it returns the comment ID, otherwise it returns \code{NULL}.
 }
 \details{

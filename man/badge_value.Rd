@@ -12,7 +12,7 @@ badge_value(value, verbose = FALSE, call = rlang::caller_env())
 \item{verbose}{(logical) if we want messages around the clamping. Default is
 \code{FALSE}.}
 
-\item{call}{(call) defaults to \code{\link[rlang:stack]{rlang::caller_env()}}}
+\item{call}{(call) defaults to \code{\link[rlang:caller_env]{rlang::caller_env()}}}
 }
 \value{
 a list with 2 element:
