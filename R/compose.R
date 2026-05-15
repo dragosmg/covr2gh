@@ -1,5 +1,5 @@
 # used to identify a comment posted with covr2gh
-covr2gh_comment <- "<!-- covr2gh-do-not-delete -->"
+covr2gh_marker <- "`<!-- covr2gh: do not delete/edit this line -->`"
 
 #' Compose a coverage comment
 #'
@@ -98,7 +98,7 @@ compose_comment <- function(
 
     glue::glue_data(
         list(
-            comment = covr2gh_comment,
+            comment = covr2gh_marker,
             badge_url = build_badge_url(total_head_coverage),
             coverage_summary = coverage_summary,
             line_coverage_summary = line_coverage_summary,

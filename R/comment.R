@@ -51,13 +51,13 @@ get_comment_id <- function(
         return(NULL)
     }
 
-    # identify the comment containing the covr2gh_comment
+    # identify the comment containing the covr2gh marker
     comment_index <- comments_info |>
         # look in the comment body
         purrr::map("body") |>
         # detect_index identifies the position of the first match
         purrr::detect_index(
-            \(x) stringr::str_detect(x, pattern = covr2gh_comment)
+            \(x) stringr::str_detect(x, pattern = covr2gh_marker)
         )
 
     if (comment_index == 0) {
