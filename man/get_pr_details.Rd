@@ -13,7 +13,7 @@ get_pr_details(repo, pr_number, call = rlang::caller_env())
 \item{pr_number}{(integer) the PR number}
 
 \item{call}{the execution environment to surface the error message from.
-Defaults to \code{\link[rlang:stack]{rlang::caller_env()}}.}
+Defaults to \code{\link[rlang:caller_env]{rlang::caller_env()}}.}
 }
 \value{
 an object of class \code{pr_details} - a list with the following

@@ -13,7 +13,7 @@ get_comment_id(repo, pr_number, call = rlang::caller_env())
 \item{pr_number}{(integer) the PR number}
 
 \item{call}{the execution environment to surface the error message from.
-Defaults to \code{\link[rlang:stack]{rlang::caller_env()}}.}
+Defaults to \code{\link[rlang:caller_env]{rlang::caller_env()}}.}
 }
 \value{
 a numeric scalar representing the comment id or \code{NULL}
