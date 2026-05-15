@@ -4,7 +4,7 @@
       compose_comment(head_coverage, base_coverage, repo = "dragosmg/covr2ghdemo",
         pr_number = 3)
     Output
-      `<!-- covr2gh: do not delete/edit this line -->`
+      <!-- covr2gh: do not delete/edit this line -->
       
       ## :safety_vest: Coverage summary
       
@@ -43,7 +43,7 @@
       compose_comment(head_coverage, base_coverage, repo = "dragosmg/covr2ghdemo",
         pr_number = 3, diff_cov_target = 40)
     Output
-      `<!-- covr2gh: do not delete/edit this line -->`
+      <!-- covr2gh: do not delete/edit this line -->
       
       ## :safety_vest: Coverage summary
       
