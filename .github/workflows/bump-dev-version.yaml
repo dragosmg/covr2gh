@@ -28,8 +28,6 @@ jobs:
       - name: Checkout repo 📥
         uses: actions/checkout@v6
         with:
-          token: ${{ secrets.BUMP || secrets.GITHUB_TOKEN }}
-          ref: ${{ github.head_ref }}
           # Value already defaults to true, but `persist-credentials` is
           # required to push new commits to the repository.
           persist-credentials: true
