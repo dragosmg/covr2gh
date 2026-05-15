@@ -3,9 +3,7 @@
 #' Sends a GET request to the GitHub API and fetches the PR details. The output
 #' contains a subset of these, needed for downstream use.
 #'
-#' @param repo (character) the repository name in the GitHub format
-#'   (`"OWNER/REPO"`).
-#' @param pr_number (integer) the PR number
+#' @inheritParams compose_comment repo pr_number
 #' @param call the execution environment to surface the error message from.
 #'   Defaults to [rlang::caller_env()].
 #'
