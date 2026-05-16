@@ -16,8 +16,8 @@ element is the patch for the specific file.
 \description{
 Sends a GET request to the GitHub API and retrieves the full PR diff, which
 is a (comparison) between base (the starting point for the comparison) and
-head (the endpoint). The diff is then filtered to only include the "relevant
-files".
+head (the endpoint). The diff is then filtered to only include the files in
+\verb{R/} or \verb{src/} (aka the "relevant files").
 }
 \examples{
 \dontrun{

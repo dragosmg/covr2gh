@@ -75,8 +75,8 @@ get_pr_details <- function(
 #'
 #' Sends a GET request to the GitHub API and retrieves the full PR diff, which
 #' is a (comparison) between base (the starting point for the comparison) and
-#' head (the endpoint). The diff is then filtered to only include the "relevant
-#' files".
+#' head (the endpoint). The diff is then filtered to only include the files in
+#' `R/` or `src/` (aka the "relevant files").
 #'
 #' @param pr_details a `pr_details` object.
 #'
@@ -107,7 +107,7 @@ get_diff_text <- function(pr_details) {
         "https://api.github.com/repos/{repo}/compare/{base}...{head}"
     )
 
-    # TODO tryCatch
+    # TODO tryCatch & handle errors
     reply <- glue::glue("GET {req_url}") |>
         gh::gh()
 

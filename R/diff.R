@@ -42,7 +42,7 @@ diff_split <- function(diff_text) {
         )
 
     head_lines <- head_df |>
-        add_line_num_head() |>
+        add_line_num() |>
         dplyr::filter(
             !.data$hunk,
             .data$head
@@ -159,12 +159,10 @@ classify_lines <- function(raw_diff_df) {
 #'   the line number in "head"
 #'
 #' @dev
-add_line_num_head <- function(head_df) {
+add_line_num <- function(head_df) {
     output <- head_df |>
         dplyr::mutate(
-            add = as.numeric(
-                !.data$hunk
-            ),
+            add = as.numeric(!.data$hunk),
             head_start = dplyr::if_else(
                 .data$hunk,
                 stringr::str_extract(
@@ -177,9 +175,7 @@ add_line_num_head <- function(head_df) {
                 .data$head_start,
                 stringr::fixed("+")
             ),
-            head_start = as.numeric(
-                .data$head_start
-            )
+            head_start = as.numeric(.data$head_start)
         ) |>
         tidyr::fill(
             "head_start",
@@ -193,9 +189,7 @@ add_line_num_head <- function(head_df) {
         ) |>
         dplyr::ungroup() |>
         dplyr::mutate(
-            line = as.integer(
-                .data$line
-            )
+            line = as.integer(.data$line)
         ) |>
         dplyr::select(
             "line",

@@ -1,7 +1,7 @@
-# add_line_num_head works
+# add_line_num works
 
     Code
-      add_line_num_head(head_df_pr90_file_cov)
+      add_line_num(head_df_pr90_file_cov)
     Output
       # A tibble: 15 x 5
           line raw                                                 hunk  head  context
@@ -25,7 +25,7 @@
 ---
 
     Code
-      add_line_num_head(head_df_pr90_gha)
+      add_line_num(head_df_pr90_gha)
     Output
       # A tibble: 50 x 5
           line raw                                                 hunk  head  context
