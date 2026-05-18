@@ -18,7 +18,7 @@ get_comment_id(
 \item{pr_number}{(integer) the PR number}
 }
 \value{
-the ID of the comment or \code{NULL}
+the comment ID (scalar numeric) or \code{NULL}
 }
 \description{
 Comments posted by covr2gh are identified by the presence of the

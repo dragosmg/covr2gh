@@ -9,7 +9,7 @@
 #'
 #' @inheritParams compose_comment repo pr_number
 #'
-#' @returns the ID of the comment or `NULL`
+#' @returns the comment ID (scalar numeric) or `NULL`
 #'
 #' @dev
 #' @examples
