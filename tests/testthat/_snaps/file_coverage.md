@@ -18,8 +18,8 @@
     Code
       file_coverage(mtcars)
     Condition
-      Error in `file_coverage()`:
-      ! `x` must be a `coverage` object
+      Error:
+      ! `coverage` must be a coverage object, not a <data.frame> object.
 
 # combine_file_coverage works
 

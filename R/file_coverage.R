@@ -1,10 +1,13 @@
 #' Digest file coverage
 #'
 #' Takes a `coverage` object (the output of [covr::package_coverage()], extracts
-#' the `"filecoverage"` component and transforms it into a `tibble`. It also
-#' extracts the `"totalcoverage"` and adds it as the `"Overall"` row.
+#' the `"filecoverage"` component and transforms it into a `tibble`.
+#' Additionally, it extracts the `"totalcoverage"` element and adds it as the
+#' `"Overall"` row.
 #'
-#' @param x `<coverage>` object, defaults to [covr::package_coverage()].
+#' @param coverage a `<coverage>` object, the output of a call to
+#'   [covr::package_coverage()].
+#' @inheritParams rlang::check_bool call
 #'
 #' @returns a `tibble` with 2 columns (`File` and `Coverage`) summarising
 #'   testing coverage at file level.
@@ -17,14 +20,13 @@
 #' covr::package_coverage("myawesomepkg") |>
 #'   file_coverage()
 #' }
-file_coverage <- function(x) {
-    if (!inherits(x, "coverage")) {
-        cli::cli_abort(
-            "`x` must be a `coverage` object"
-        )
-    }
+file_coverage <- function(
+    coverage,
+    call = rlang::caller_env()
+) {
+    check_coverage(coverage, call = call)
 
-    x |>
+    coverage |>
         covr::coverage_to_list() |>
         purrr::list_c() |>
         tibble::enframe(
@@ -55,10 +57,14 @@ file_coverage <- function(x) {
 #' @dev
 combine_file_coverage <- function(
     head_coverage,
-    base_coverage
+    base_coverage,
+    call = rlang::caller_env()
 ) {
-    head_coverage_digest <- file_coverage(head_coverage)
-    base_coverage_digest <- file_coverage(base_coverage)
+    check_coverage(head_coverage, call = call)
+    check_coverage(base_coverage, call = call)
+
+    head_coverage_digest <- file_coverage(head_coverage, call = call)
+    base_coverage_digest <- file_coverage(base_coverage, call = call)
 
     diff_df <- head_coverage_digest |>
         dplyr::left_join(
@@ -95,17 +101,17 @@ combine_file_coverage <- function(
 #' the section is made up of a subtitle (heading 3) and a table. if the input is
 #' `NULL`, the output is an empty string.
 #'
-#' @param file_cov_df a `tibble`, the output of [combine_file_coverage()]
+#' @param file_cov_delta a `tibble`, the output of [combine_file_coverage()]
 #'
 #' @returns a glue object, a string with the section content.
 #'
 #' @dev
-compose_file_coverage_details <- function(file_cov_df) {
-    if (is.null(file_cov_df)) {
+compose_file_coverage_details <- function(file_cov_delta) {
+    if (is.null(file_cov_delta)) {
         return(glue::as_glue(""))
     }
 
-    file_cov_md_table <- file_cov_to_md(file_cov_df)
+    file_cov_md_table <- file_cov_to_md(file_cov_delta)
 
     subtitle <- "### Files with changes in coverage"
 
