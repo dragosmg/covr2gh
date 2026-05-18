@@ -63,7 +63,7 @@ get_comment_id <- function(
 #' target pull request. If it does, then it updates it, if it doesn't, then a
 #' a new comment is posted.
 #'
-#' @inheritParams get_pr_details
+#' @inheritParams compose_comment repo pr_number
 #' @param body (character scalar) the content of the body of the message.
 #' @param new (logical) post a new comment or update existing one. Defaults to
 #'   `FALSE`.
@@ -89,6 +89,11 @@ post_comment <- function(
     new = FALSE,
     delete = new
 ) {
+    # TODO add `check_repo()`
+    rlang::check_string(body)
+    rlang::check_string(repo)
+    rlang::check_number_whole(pr_number)
+
     comment_id <- get_comment_id(
         repo = repo,
         pr_number = pr_number
@@ -101,11 +106,6 @@ post_comment <- function(
     if (rlang::is_null(comment_id)) {
         new <- TRUE
     }
-
-    # TODO add checks for
-    #  * body
-    #  * repo
-    #  * pr_number
 
     # posting a new comment vs updating an existing one is accomplished by
     # using different endpoints
