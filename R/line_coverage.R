@@ -2,7 +2,7 @@
 #'
 #' Builds the high-level sentence summarising the line coverage of the patch.
 #'
-#' @param diff_line_coverage a `tibble` the output of [get_diff_line_coverage()]
+#' @param line_cov_delta a `tibble` the output of [get_diff_line_coverage()]
 #' @param target (numeric) the target coverage for the diff. Defaults to 80, but
 #' `compose_comment()` uses the total coverage for base.
 #'
@@ -10,19 +10,19 @@
 #'
 #' @dev
 compose_line_coverage_summary <- function(
-    diff_line_coverage,
+    line_cov_delta,
     target = 80,
     our_target = FALSE
 ) {
     target <- round(target, 1)
 
-    if (is.null(diff_line_coverage)) {
+    if (is.null(line_cov_delta)) {
         return(
             ":heavy_equals_sign: Diff coverage: No lines added or modified in source files." # nolint
         )
     }
 
-    diff_coverage <- diff_line_coverage |>
+    diff_coverage <- line_cov_delta |>
         dplyr::summarise(
             total_lines_added = sum(.data$lines_added),
             total_lines_covered = sum(.data$lines_covered)
@@ -85,12 +85,12 @@ compose_line_coverage_summary <- function(
 #' @returns a `glue` string
 #'
 #' @dev
-compose_line_coverage_details <- function(diff_line_coverage) {
-    diff_line_md_table <- line_cov_to_md(diff_line_coverage)
+compose_line_coverage_details <- function(line_cov_delta) {
+    diff_line_md_table <- line_cov_to_md(line_cov_delta)
 
     subtitle <- ""
 
-    if (!is.null(diff_line_coverage)) {
+    if (!is.null(line_cov_delta)) {
         subtitle <- "### Coverage for added lines"
     }
 

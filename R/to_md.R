@@ -4,19 +4,19 @@
 #' interpretation column. The transforms the output to markdown and collapses
 #' into a single string.
 #'
-#' @param file_cov_df a `tibble`, the output of [combine_file_coverage()].
+#' @param file_cov_delta a `tibble`, the output of [combine_file_coverage()].
 #' @inheritParams knitr::kable
 #'
 #' @returns a character scalar containing markdown version of the diff df
 #'   collapsed into a single string.
 #'
 #' @dev
-file_cov_to_md <- function(file_cov_df, align = "lrrcc") {
-    if (is.null(file_cov_df)) {
+file_cov_to_md <- function(file_cov_delta, align = "lrrcc") {
+    if (is.null(file_cov_delta)) {
         return("")
     }
 
-    file_cov_df_prep <- file_cov_df |>
+    file_cov_delta_prep <- file_cov_delta |>
         dplyr::mutate(
             # add a brief visual interpretation of the delta with arrows or
             # equal sign
@@ -37,7 +37,7 @@ file_cov_to_md <- function(file_cov_df, align = "lrrcc") {
         )
 
     # rename to something more human readable
-    file_cov_df_prep_names <- file_cov_df_prep |>
+    file_cov_delta_prep_names <- file_cov_delta_prep |>
         names() |>
         stringr::str_to_sentence() |>
         stringr::str_replace_all(
@@ -53,9 +53,9 @@ file_cov_to_md <- function(file_cov_df, align = "lrrcc") {
             ""
         )
 
-    names(file_cov_df_prep) <- file_cov_df_prep_names
+    names(file_cov_delta_prep) <- file_cov_delta_prep_names
 
-    file_cov_df_prep |>
+    file_cov_delta_prep |>
         knitr::kable(
             align = align
         ) |>
@@ -73,22 +73,22 @@ file_cov_to_md <- function(file_cov_df, align = "lrrcc") {
 #' Adds a total row, make column names more readable. Then transforms it to
 #' markdown which gets collapsed into a single string.
 #'
-#' @param diff_line_coverage (`tibble`) diff line coverage data. The output of
-#'   [combine_file_coverage()]
+#' @param line_cov_delta (`tibble`) diff line coverage data. The output of
+#'   [get_diff_line_coverage()]
 #' @inheritParams knitr::kable
 #'
 #' @returns a markdown table as a string
 #'
 #' @dev
 line_cov_to_md <- function(
-    diff_line_coverage,
+    line_cov_delta,
     align = "lrrrl"
 ) {
-    if (is.null(diff_line_coverage)) {
+    if (is.null(line_cov_delta)) {
         return("")
     }
 
-    total_row <- diff_line_coverage |>
+    total_row <- line_cov_delta |>
         dplyr::summarise(
             lines_added = sum(.data$lines_added),
             lines_covered = sum(.data$lines_covered)
@@ -99,7 +99,7 @@ line_cov_to_md <- function(
         )
 
     output <- dplyr::bind_rows(
-        diff_line_coverage,
+        line_cov_delta,
         total_row
     ) |>
         dplyr::mutate(
