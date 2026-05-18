@@ -20,7 +20,7 @@ Imports:
     glue,
     knitr,
     purrr,
-    rlang (>= 1.1.0),
+    rlang (>= 1.2.0),
     rprojroot,
     stringr,
     tibble,

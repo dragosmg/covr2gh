@@ -64,47 +64,33 @@ compose_comment <- function(
         delta_total_coverage
     )
 
-    file_cov_df <- combine_file_coverage(
+    file_cov_delta <- combine_file_coverage(
         head_coverage = head_coverage,
         base_coverage = base_coverage
     )
 
-    diff_line_coverage <- get_diff_line_coverage(
+    line_cov_delta <- get_diff_line_coverage(
         pr_details = pr_details,
         head_coverage = head_coverage
     )
 
-    line_coverage_summary <- compose_line_coverage_summary(
-        diff_line_coverage,
+    line_cov_summary <- compose_line_coverage_summary(
+        line_cov_delta,
         target = diff_cov_target,
         our_target = our_target
     )
 
-    details_section <- ""
-
-    files <- setdiff(file_cov_df$file_name, "Overall")
-
-    if (!rlang::is_empty(files)) {
-        file_coverage_details <- compose_file_coverage_details(
-            file_cov_df
-        )
-
-        line_coverage_details <- compose_line_coverage_details(
-            diff_line_coverage
-        )
-
-        details_section <- compose_details_section(
-            file_coverage_details = file_coverage_details,
-            line_coverage_details = line_coverage_details
-        )
-    }
+    details_section <- compose_details_section(
+        file_cov_delta = file_cov_delta,
+        line_cov_delta = line_cov_delta
+    )
 
     glue::glue_data(
         list(
             comment = covr2gh_marker,
             badge_url = build_badge_url(total_head_coverage),
             coverage_summary = coverage_summary,
-            line_coverage_summary = line_coverage_summary,
+            line_cov_summary = line_cov_summary,
             details_section = details_section,
             footer = compose_footer()
         ),
@@ -115,7 +101,7 @@ compose_comment <- function(
         ![badge]({badge_url})
 
         {coverage_summary}
-        {line_coverage_summary}
+        {line_cov_summary}
 
         {details_section}
 
@@ -167,10 +153,10 @@ compose_coverage_summary <- function(pr_details, delta) {
         by_delta
     )
 
-    emoji <- dplyr::if_else(
-        delta >= 0,
-        ":white_check_mark: ",
-        ":x: "
+    emoji <- dplyr::case_when(
+        delta >= 0 ~ ":green_circle:",
+        delta >= -5 ~ ":yellow_circle:",
+        .default = ":red_circle: "
     )
 
     head_sha_url <- glue::glue_data(

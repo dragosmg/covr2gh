@@ -17,16 +17,19 @@ The output of \code{\link[covr:package_coverage]{covr::package_coverage()}} on t
 a \code{tibble} with 3 columns:
 \itemize{
 \item file: file name
-\item lines_added: total number of lines that would be added by merging the PR
-\item lines_covered: number of added lines covered by unit tests
+\item lines_modified (lines_added?): total number of lines that would be added
+by merging the PR
+\item lines_covered: number of added (?) - maybe modified - lines covered by
+unit tests
 }
 }
 \description{
-Are the added lines covered by unit tests?
+Are the modified lines covered by unit tests?
 Does this in several steps:
 \itemize{
 \item get the text of the git diff (the combined diff format)
-\item extracts the added lines and calculates the new line numbers
+\item extracts the added (?) - maybe modified - lines and calculates the new
+line numbers
 \item does a bit of shuffling of the head coverage data to summarise at
 line level
 \item summarises the number of lines added and number of lines covered by

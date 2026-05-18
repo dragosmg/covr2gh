@@ -127,8 +127,8 @@ get_diff_text <- function(pr_details) {
 }
 
 # input is the output of get_diff_text
-# returns a data.frame with the position (line number) of the added lines (in
-# the output file) and their contents
+# returns a data.frame with the position (line number) of the added (?) - maybe
+# modified - lines (in the output file) and their contents
 extract_added_lines <- function(diff_text) {
     split_diff <- diff_split(diff_text)
 
@@ -139,10 +139,11 @@ extract_added_lines <- function(diff_text) {
 
 #' Get the line coverage for the diff
 #'
-#' Are the added lines covered by unit tests?
+#' Are the modified lines covered by unit tests?
 #' Does this in several steps:
 #'   * get the text of the git diff (the combined diff format)
-#'   * extracts the added lines and calculates the new line numbers
+#'   * extracts the added (?) - maybe modified - lines and calculates the new
+#'   line numbers
 #'   * does a bit of shuffling of the head coverage data to summarise at
 #'   line level
 #'   * summarises the number of lines added and number of lines covered by
@@ -155,8 +156,10 @@ extract_added_lines <- function(diff_text) {
 #'
 #' @returns a `tibble` with 3 columns:
 #'   * file: file name
-#'   * lines_added: total number of lines that would be added by merging the PR
-#'   * lines_covered: number of added lines covered by unit tests
+#'   * lines_modified (lines_added?): total number of lines that would be added
+#'   by merging the PR
+#'   * lines_covered: number of added (?) - maybe modified - lines covered by
+#'   unit tests
 #'
 #' @dev
 get_diff_line_coverage <- function(
@@ -222,7 +225,8 @@ get_diff_line_coverage <- function(
             .data$file_name
         ) |>
         dplyr::summarise(
-            lines_added = dplyr::n(),
+            # lines_added = dplyr::n(), # nolint
+            lines_modified = dplyr::n(),
             lines_covered = sum(.data$covered)
         ) |>
         dplyr::ungroup()

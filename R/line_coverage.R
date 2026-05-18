@@ -2,7 +2,7 @@
 #'
 #' Builds the high-level sentence summarising the line coverage of the patch.
 #'
-#' @param diff_line_coverage a `tibble` the output of [get_diff_line_coverage()]
+#' @param line_cov_delta a `tibble` the output of [get_diff_line_coverage()]
 #' @param target (numeric) the target coverage for the diff. Defaults to 80, but
 #' `compose_comment()` uses the total coverage for base.
 #'
@@ -10,36 +10,36 @@
 #'
 #' @dev
 compose_line_coverage_summary <- function(
-    diff_line_coverage,
+    line_cov_delta,
     target = 80,
     our_target = FALSE
 ) {
     target <- round(target, 1)
 
-    if (is.null(diff_line_coverage)) {
+    if (is.null(line_cov_delta)) {
         return(
             ":heavy_equals_sign: Diff coverage: No lines added or modified in source files." # nolint
         )
     }
 
-    diff_coverage <- diff_line_coverage |>
+    diff_coverage <- line_cov_delta |>
         dplyr::summarise(
-            total_lines_added = sum(.data$lines_added),
+            total_lines_modified = sum(.data$lines_modified),
             total_lines_covered = sum(.data$lines_covered)
         )
 
     line_coverage <- round(
         diff_coverage$total_lines_covered /
-            diff_coverage$total_lines_added *
+            diff_coverage$total_lines_modified *
             100,
         1
     )
 
     # TODO diff coverage is 100%
-    emoji <- dplyr::if_else(
-        line_coverage >= target,
-        ":white_check_mark: ",
-        ":x: "
+    emoji <- dplyr::case_when(
+        line_coverage >= target ~ ":green_circle: ",
+        line_coverage >= 0.95 * target ~ ":yellow_circle:",
+        .default = ":red_circle: "
     )
 
     advice <- dplyr::if_else(
@@ -64,11 +64,11 @@ compose_line_coverage_summary <- function(
             emoji = emoji,
             line_coverage = line_coverage,
             lines_covered = diff_coverage$total_lines_covered,
-            lines_added = diff_coverage$total_lines_added,
+            lines_modified = diff_coverage$total_lines_modified,
             advice = advice
         ),
         "{emoji} Diff coverage is `{line_coverage}%` (`{lines_covered}` out \\
-        of `{lines_added}` added lines are covered by tests). {advice}"
+        of `{lines_modified}` modified lines are covered by tests). {advice}"
     )
 }
 
@@ -85,13 +85,13 @@ compose_line_coverage_summary <- function(
 #' @returns a `glue` string
 #'
 #' @dev
-compose_line_coverage_details <- function(diff_line_coverage) {
-    diff_line_md_table <- line_cov_to_md(diff_line_coverage)
+compose_line_coverage_details <- function(line_cov_delta) {
+    diff_line_md_table <- line_cov_to_md(line_cov_delta)
 
     subtitle <- ""
 
-    if (!is.null(diff_line_coverage)) {
-        subtitle <- "### Coverage for added lines"
+    if (!is.null(line_cov_delta)) {
+        subtitle <- "### Coverage for modified lines"
     }
 
     diff_cov_details <- glue::glue_data(

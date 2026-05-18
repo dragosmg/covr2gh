@@ -26,7 +26,7 @@
 ^man/diff_split\.Rd$
 ^man/classify_lines\.Rd$
 ^man/add_line_num_head\.Rd$
-^man/file_coverage\.Rd$
+^man/file_coverage_digest\.Rd$
 ^man/combine_file_coverage\.Rd$
 ^man/compose_file_coverage_details\.Rd$
 ^man/compose_line_coverage_summary\.Rd$

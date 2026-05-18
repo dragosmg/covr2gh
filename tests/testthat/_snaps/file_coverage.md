@@ -1,7 +1,7 @@
-# file_coverage() works
+# file_coverage_digest() works
 
     Code
-      file_coverage(cov)
+      file_coverage_digest(cov)
     Output
       # A tibble: 6 x 2
         file_name         coverage
@@ -13,13 +13,13 @@
       5 R/validate_cnp.R      92.3
       6 Overall               91.9
 
-# file_coverage() complains
+# file_coverage_digest() complains
 
     Code
-      file_coverage(mtcars)
+      file_coverage_digest(mtcars)
     Condition
-      Error in `file_coverage()`:
-      ! `x` must be a `coverage` object
+      Error:
+      ! `coverage` must be a coverage object, not a <data.frame> object.
 
 # combine_file_coverage works
 

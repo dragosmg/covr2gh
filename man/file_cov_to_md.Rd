@@ -4,10 +4,10 @@
 \alias{file_cov_to_md}
 \title{Transform the file coverage tibble into markdown}
 \usage{
-file_cov_to_md(file_cov_df, align = "lrrcc")
+file_cov_to_md(file_cov_delta, align = "lrrcc")
 }
 \arguments{
-\item{file_cov_df}{a \code{tibble}, the output of \code{\link[=combine_file_coverage]{combine_file_coverage()}}.}
+\item{file_cov_delta}{a \code{tibble}, the output of \code{\link[=combine_file_coverage]{combine_file_coverage()}}.}
 
 \item{align}{Column alignment: a character vector consisting of \code{'l'}
 (left), \code{'c'} (center) and/or \code{'r'} (right). By default or if

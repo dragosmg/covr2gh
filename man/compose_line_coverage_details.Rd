@@ -4,10 +4,10 @@
 \alias{compose_line_coverage_details}
 \title{Compose the line coverage details section}
 \usage{
-compose_line_coverage_details(diff_line_coverage)
+compose_line_coverage_details(line_cov_delta)
 }
 \arguments{
-\item{diff_line_coverage}{a \code{tibble} the output of \code{\link[=get_diff_line_coverage]{get_diff_line_coverage()}}}
+\item{line_cov_delta}{a \code{tibble} the output of \code{\link[=get_diff_line_coverage]{get_diff_line_coverage()}}}
 }
 \value{
 a \code{glue} string
