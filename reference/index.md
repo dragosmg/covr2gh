@@ -5,7 +5,7 @@
 - [`compose_comment()`](https://dragosmg.github.io/covr2gh/reference/compose_comment.md)
   : Compose a coverage comment
 - [`post_comment()`](https://dragosmg.github.io/covr2gh/reference/post_comment.md)
-  : Post or update comment
+  : Post comment
 
 ## Badge
 

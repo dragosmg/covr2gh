@@ -1,4 +1,4 @@
-# Post or update comment
+# Post comment
 
 `post_comment()` first checks if a "known" `covr2gh` comment exists on
 the target pull request. If it does, then it updates it, if it doesn't,
@@ -7,7 +7,7 @@ then a a new comment is posted.
 ## Usage
 
 ``` r
-post_comment(body, repo, pr_number, new = FALSE, delete = new)
+post_comment(body, repo, pr_number, update = TRUE)
 ```
 
 ## Arguments
@@ -24,19 +24,19 @@ post_comment(body, repo, pr_number, new = FALSE, delete = new)
 
   (integer) the PR number
 
-- new:
+- update:
 
-  (logical) post a new comment or update existing one. Defaults to
-  `FALSE`.
-
-- delete:
-
-  (logical) whether to delete a comment. Useful when posting new
-  comments (delete old ones).
+  (logical) update an existing comment or post a new one. Defaults to
+  `TRUE`.
 
 ## Value
 
 a `gh_response` object containing the API response
+
+## Details
+
+Users can also choose to always post a new comment (this always deletes
+the previous one).
 
 ## Examples
 

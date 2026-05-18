@@ -26,15 +26,9 @@ get_comment_id(
 
   (integer) the PR number
 
-- call:
-
-  the execution environment to surface the error message from. Defaults
-  to
-  [`rlang::caller_env()`](https://rlang.r-lib.org/reference/stack.html).
-
 ## Value
 
-a numeric scalar representing the comment id or `NULL`
+the comment ID (scalar numeric) or `NULL`
 
 ## Details
 
