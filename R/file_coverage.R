@@ -17,10 +17,10 @@
 #' \dontrun{
 #' library(covr)
 #'
-#' covr::package_coverage("myawesomepkg") |>
-#'   file_coverage()
+#' coverage <- covr::package_coverage("myawesomepkg")
+#' file_coverage_digest(coverage)
 #' }
-file_coverage <- function(
+file_coverage_digest <- function(
     coverage,
     call = rlang::caller_env()
 ) {
@@ -63,8 +63,8 @@ combine_file_coverage <- function(
     check_coverage(head_coverage, call = call)
     check_coverage(base_coverage, call = call)
 
-    head_coverage_digest <- file_coverage(head_coverage, call = call)
-    base_coverage_digest <- file_coverage(base_coverage, call = call)
+    head_coverage_digest <- file_coverage_digest(head_coverage, call = call)
+    base_coverage_digest <- file_coverage_digest(base_coverage, call = call)
 
     diff_df <- head_coverage_digest |>
         dplyr::left_join(

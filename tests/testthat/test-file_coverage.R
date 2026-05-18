@@ -1,4 +1,4 @@
-test_that("file_coverage() works", {
+test_that("file_coverage_digest() works", {
     cov <- readRDS(
         test_path(
             "fixtures",
@@ -7,12 +7,12 @@ test_that("file_coverage() works", {
     )
 
     expect_snapshot(
-        file_coverage(cov)
+        file_coverage_digest(cov)
     )
 
     # nolint start: nonportable_file_linter
     expect_identical(
-        file_coverage(cov)[["file_name"]],
+        file_coverage_digest(cov)[["file_name"]],
         c(
             "R/augment_cnp.R",
             "R/cnp.R",
@@ -25,15 +25,15 @@ test_that("file_coverage() works", {
     # nolint end
 
     expect_s3_class(
-        file_coverage(cov),
+        file_coverage_digest(cov),
         "tbl_df"
     )
 })
 
-test_that("file_coverage() complains", {
+test_that("file_coverage_digest() complains", {
     expect_snapshot(
         error = TRUE,
-        file_coverage(mtcars)
+        file_coverage_digest(mtcars)
     )
 })
 
