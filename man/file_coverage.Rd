@@ -4,10 +4,10 @@
 \alias{file_coverage}
 \title{Digest file coverage}
 \usage{
-file_coverage(x)
+file_coverage(coverage, call = rlang::caller_env())
 }
 \arguments{
-\item{x}{\verb{<coverage>} object, defaults to \code{\link[covr:package_coverage]{covr::package_coverage()}}.}
+\item{coverage}{\verb{<coverage>} object, defaults to \code{\link[covr:package_coverage]{covr::package_coverage()}}.}
 }
 \value{
 a \code{tibble} with 2 columns (\code{File} and \code{Coverage}) summarising

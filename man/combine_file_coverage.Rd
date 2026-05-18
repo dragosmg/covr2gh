@@ -4,7 +4,7 @@
 \alias{combine_file_coverage}
 \title{Combine head and base file-level coverage}
 \usage{
-combine_file_coverage(head_coverage, base_coverage)
+combine_file_coverage(head_coverage, base_coverage, call = rlang::caller_env())
 }
 \arguments{
 \item{head_coverage}{(coverage) active / current branch (\code{HEAD}) coverage.

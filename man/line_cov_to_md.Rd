@@ -4,11 +4,11 @@
 \alias{line_cov_to_md}
 \title{Transform a line coverage tibble to markdown}
 \usage{
-line_cov_to_md(diff_line_coverage, align = "lrrrl")
+line_cov_to_md(line_cov_delta, align = "lrrrl")
 }
 \arguments{
-\item{diff_line_coverage}{(\code{tibble}) diff line coverage data. The output of
-\code{\link[=combine_file_coverage]{combine_file_coverage()}}}
+\item{line_cov_delta}{(\code{tibble}) diff line coverage data. The output of
+\code{\link[=get_diff_line_coverage]{get_diff_line_coverage()}}}
 
 \item{align}{Column alignment: a character vector consisting of \code{'l'}
 (left), \code{'c'} (center) and/or \code{'r'} (right). By default or if

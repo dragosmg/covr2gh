@@ -4,10 +4,10 @@
 \alias{compose_file_coverage_details}
 \title{Compose the file coverage details section}
 \usage{
-compose_file_coverage_details(file_cov_df)
+compose_file_coverage_details(file_cov_delta)
 }
 \arguments{
-\item{file_cov_df}{a \code{tibble}, the output of \code{\link[=combine_file_coverage]{combine_file_coverage()}}}
+\item{file_cov_delta}{a \code{tibble}, the output of \code{\link[=combine_file_coverage]{combine_file_coverage()}}}
 }
 \value{
 a glue object, a string with the section content.
