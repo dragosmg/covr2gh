@@ -24,19 +24,19 @@
     Code
       compose_line_coverage_summary(line_cov)
     Output
-      :x:  Diff coverage is `63.2%` (`12` out of `19` modified lines are covered by tests). The minimum accepted coverage is `80%`.
+      :red_circle:  Diff coverage is `63.2%` (`12` out of `19` modified lines are covered by tests). The minimum accepted coverage is `80%`.
 
 ---
 
     Code
       compose_line_coverage_summary(line_cov, target = 40)
     Output
-      :white_check_mark:  Diff coverage is `63.2%` (`12` out of `19` modified lines are covered by tests). 
+      :green_circle:  Diff coverage is `63.2%` (`12` out of `19` modified lines are covered by tests). 
 
 ---
 
     Code
       compose_line_coverage_summary(line_cov, our_target = TRUE)
     Output
-      :x:  Diff coverage is `63.2%` (`12` out of `19` modified lines are covered by tests). It's good practice to aim for at least `80%` (the base branch test coverage).
+      :red_circle:  Diff coverage is `63.2%` (`12` out of `19` modified lines are covered by tests). It's good practice to aim for at least `80%` (the base branch test coverage).
 

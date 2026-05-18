@@ -36,10 +36,10 @@ compose_line_coverage_summary <- function(
     )
 
     # TODO diff coverage is 100%
-    emoji <- dplyr::if_else(
-        line_coverage >= target,
-        ":white_check_mark: ",
-        ":x: "
+    emoji <- dplyr::case_when(
+        line_coverage >= target ~ ":green_circle: ",
+        line_coverage >= 0.95 * target ~ ":yellow_circle:",
+        .default = ":red_circle: "
     )
 
     advice <- dplyr::if_else(

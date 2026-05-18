@@ -153,10 +153,10 @@ compose_coverage_summary <- function(pr_details, delta) {
         by_delta
     )
 
-    emoji <- dplyr::if_else(
-        delta >= 0,
-        ":white_check_mark: ",
-        ":x: "
+    emoji <- dplyr::case_when(
+        delta >= 0 ~ ":green_circle:",
+        delta >= -5 ~ ":yellow_circle:",
+        .default = ":red_circle: "
     )
 
     head_sha_url <- glue::glue_data(
