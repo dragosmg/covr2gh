@@ -1,5 +1,6 @@
 # used to identify a comment posted with covr2gh
 covr2gh_marker <- "<!-- covr2gh: do not delete/edit this line -->"
+test_marker <- "<!-- covr2gh-test -->"
 
 #' Compose a coverage comment
 #'

@@ -20,7 +20,7 @@
 ^man/badge_params\.Rd$
 ^man/derive_badge_colour\.Rd$
 ^man/get_comment_id\.Rd$
-^man/delete_comment\.Rd$
+^man/comm_delete\.Rd$
 ^man/compose_coverage_summary\.Rd$
 ^man/diff_split\.Rd$
 ^man/classify_lines\.Rd$

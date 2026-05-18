@@ -7,10 +7,9 @@
 #' The output of `get_comment_id()` is then used `post_comment()` post a new
 #' comment or update an existing one.
 #'
-#' @inheritParams get_pr_details
-#' @inheritParams compose_comment
+#' @inheritParams compose_comment repo pr_number
 #'
-#' @returns a numeric scalar representing the comment id or `NULL`
+#' @returns the comment ID (scalar numeric) or `NULL`
 #'
 #' @dev
 #' @examples
@@ -23,19 +22,8 @@ get_comment_id <- function(
     marker = covr2gh_marker,
     call = rlang::caller_env()
 ) {
-    if (!rlang::is_scalar_character(repo)) {
-        cli::cli_abort(
-            "`repo` must be a character scalar.",
-            call = call
-        )
-    }
-
-    if (!rlang::is_scalar_integerish(pr_number)) {
-        cli::cli_abort(
-            "`pr_number` must be an integer-like scalar.",
-            call = call
-        )
-    }
+    rlang::check_string(repo, call = call)
+    rlang::check_number_whole(pr_number, call = call)
 
     api_url <- glue::glue(
         "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
@@ -69,19 +57,20 @@ get_comment_id <- function(
 }
 
 
-#' Post or update comment
+#' Post comment
 #'
 #' `post_comment()` first checks if a "known" `covr2gh` comment exists on the
 #' target pull request. If it does, then it updates it, if it doesn't, then a
 #' a new comment is posted.
 #'
-#' @inheritParams get_pr_details
+#' @details
+#' Users can also choose to always post a new comment (this always deletes the
+#' previous one).
+#'
 #' @param body (character scalar) the content of the body of the message.
-#' @param new (logical) post a new comment or update existing one. Defaults to
-#'   `FALSE`.
-#' @param delete (logical) whether to delete a comment. Useful when posting new
-#'   comments (delete old ones).
-#' @inheritParams compose_comment
+#' @inheritParams compose_comment repo pr_number
+#' @param update (logical) update an existing comment or post a new one.
+#'   Defaults to `TRUE`.
 #'
 #' @returns a `gh_response` object containing the API response
 #'
@@ -98,39 +87,39 @@ post_comment <- function(
     body,
     repo,
     pr_number,
-    new = FALSE,
-    delete = new
+    update = TRUE
 ) {
+    # TODO add `check_repo()`
+    rlang::check_string(body)
+    rlang::check_string(repo)
+    rlang::check_number_whole(pr_number)
+    check_logical(update)
+
     comment_id <- get_comment_id(
         repo = repo,
         pr_number = pr_number
     )
 
-    if (isTRUE(new) && isTRUE(delete) && !rlang::is_null(comment_id)) {
-        delete_comment(repo, comment_id)
+    if (isFALSE(update) && !rlang::is_null(comment_id)) {
+        comm_delete(repo, comment_id)
     }
 
     if (rlang::is_null(comment_id)) {
-        new <- TRUE
+        update <- FALSE
     }
-
-    # TODO add checks for
-    #  * body
-    #  * repo
-    #  * pr_number
 
     # posting a new comment vs updating an existing one is accomplished by
     # using different endpoints
 
-    if (isTRUE(new)) {
-        # endpoint for posting a new issue comment
-        api_url <- glue::glue(
-            "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
-        )
-    } else {
+    if (update) {
         # endpoint for updating an existing one
         api_url <- glue::glue(
             "https://api.github.com/repos/{repo}/issues/comments/{comment_id}"
+        )
+    } else {
+        # endpoint for posting a new issue comment
+        api_url <- glue::glue(
+            "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
         )
     }
 
@@ -145,7 +134,7 @@ post_comment <- function(
 #' Thin wrapper for making a `DELETE` request to the issue comments endpoint
 #' of the GitHub API.
 #'
-#' @inheritParams get_pr_details
+#' @inheritParams compose_comment repo
 #' @param comment_id (numeric) the ID of the issue comment to delete.
 #'
 #' @returns a `gh_response` object
@@ -153,9 +142,9 @@ post_comment <- function(
 #' @dev
 #' @examples
 #' \dontrun{
-#' delete_comment("<owner>/<repo>", 4553)
+#' comm_delete("<owner>/<repo>", 4553)
 #' }
-delete_comment <- function(
+comm_delete <- function(
     repo,
     comment_id
 ) {
