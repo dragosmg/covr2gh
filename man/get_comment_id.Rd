@@ -16,12 +16,9 @@ get_comment_id(
 (\code{"OWNER/REPO"}).}
 
 \item{pr_number}{(integer) the PR number}
-
-\item{call}{the execution environment to surface the error message from.
-Defaults to \code{\link[rlang:caller_env]{rlang::caller_env()}}.}
 }
 \value{
-a numeric scalar representing the comment id or \code{NULL}
+the ID of the comment or \code{NULL}
 }
 \description{
 Comments posted by covr2gh are identified by the presence of the

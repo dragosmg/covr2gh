@@ -7,10 +7,9 @@
 #' The output of `get_comment_id()` is then used `post_comment()` post a new
 #' comment or update an existing one.
 #'
-#' @inheritParams get_pr_details
-#' @inheritParams compose_comment
+#' @inheritParams compose_comment repo pr_number
 #'
-#' @returns a numeric scalar representing the comment id or `NULL`
+#' @returns the ID of the comment or `NULL`
 #'
 #' @dev
 #' @examples
@@ -23,19 +22,8 @@ get_comment_id <- function(
     marker = covr2gh_marker,
     call = rlang::caller_env()
 ) {
-    if (!rlang::is_scalar_character(repo)) {
-        cli::cli_abort(
-            "`repo` must be a character scalar.",
-            call = call
-        )
-    }
-
-    if (!rlang::is_scalar_integerish(pr_number)) {
-        cli::cli_abort(
-            "`pr_number` must be an integer-like scalar.",
-            call = call
-        )
-    }
+    rlang::check_string(repo, call = call)
+    rlang::check_number_whole(pr_number, call = call)
 
     api_url <- glue::glue(
         "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
@@ -145,7 +133,7 @@ post_comment <- function(
 #' Thin wrapper for making a `DELETE` request to the issue comments endpoint
 #' of the GitHub API.
 #'
-#' @inheritParams get_pr_details
+#' @inheritParams compose_comment repo
 #' @param comment_id (numeric) the ID of the issue comment to delete.
 #'
 #' @returns a `gh_response` object
