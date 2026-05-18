@@ -6,12 +6,12 @@ If the input object is `NULL` an empty string is returned.
 ## Usage
 
 ``` r
-compose_line_coverage_details(diff_line_coverage)
+compose_line_coverage_details(line_cov_delta)
 ```
 
 ## Arguments
 
-- diff_line_coverage:
+- line_cov_delta:
 
   a `tibble` the output of
   [`get_diff_line_coverage()`](https://dragosmg.github.io/covr2gh/reference/get_diff_line_coverage.md)

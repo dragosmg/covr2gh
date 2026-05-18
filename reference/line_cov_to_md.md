@@ -6,15 +6,15 @@ markdown which gets collapsed into a single string.
 ## Usage
 
 ``` r
-line_cov_to_md(diff_line_coverage, align = "lrrrl")
+line_cov_to_md(line_cov_delta, align = "lrrrl")
 ```
 
 ## Arguments
 
-- diff_line_coverage:
+- line_cov_delta:
 
   (`tibble`) diff line coverage data. The output of
-  [`combine_file_coverage()`](https://dragosmg.github.io/covr2gh/reference/combine_file_coverage.md)
+  [`get_diff_line_coverage()`](https://dragosmg.github.io/covr2gh/reference/get_diff_line_coverage.md)
 
 - align:
 

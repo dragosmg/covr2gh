@@ -7,12 +7,12 @@ collapses into a single string.
 ## Usage
 
 ``` r
-file_cov_to_md(file_cov_df, align = "lrrcc")
+file_cov_to_md(file_cov_delta, align = "lrrcc")
 ```
 
 ## Arguments
 
-- file_cov_df:
+- file_cov_delta:
 
   a `tibble`, the output of
   [`combine_file_coverage()`](https://dragosmg.github.io/covr2gh/reference/combine_file_coverage.md).

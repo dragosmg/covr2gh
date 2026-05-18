@@ -6,16 +6,12 @@ patch.
 ## Usage
 
 ``` r
-compose_line_coverage_summary(
-  diff_line_coverage,
-  target = 80,
-  our_target = FALSE
-)
+compose_line_coverage_summary(line_cov_delta, target = 80, our_target = FALSE)
 ```
 
 ## Arguments
 
-- diff_line_coverage:
+- line_cov_delta:
 
   a `tibble` the output of
   [`get_diff_line_coverage()`](https://dragosmg.github.io/covr2gh/reference/get_diff_line_coverage.md)

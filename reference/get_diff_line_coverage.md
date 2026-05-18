@@ -1,10 +1,12 @@
 # Get the line coverage for the diff
 
-Are the added lines covered by unit tests? Does this in several steps:
+Are the modified lines covered by unit tests? Does this in several
+steps:
 
 - get the text of the git diff (the combined diff format)
 
-- extracts the added lines and calculates the new line numbers
+- extracts the added (?) - maybe modified - lines and calculates the new
+  line numbers
 
 - does a bit of shuffling of the head coverage data to summarise at line
   level
@@ -38,7 +40,8 @@ a `tibble` with 3 columns:
 
 - file: file name
 
-- lines_added: total number of lines that would be added by merging the
-  PR
+- lines_modified (lines_added?): total number of lines that would be
+  added by merging the PR
 
-- lines_covered: number of added lines covered by unit tests
+- lines_covered: number of added (?) - maybe modified - lines covered by
+  unit tests

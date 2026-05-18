@@ -6,12 +6,12 @@ input is `NULL`, the output is an empty string.
 ## Usage
 
 ``` r
-compose_file_coverage_details(file_cov_df)
+compose_file_coverage_details(file_cov_delta)
 ```
 
 ## Arguments
 
-- file_cov_df:
+- file_cov_delta:
 
   a `tibble`, the output of
   [`combine_file_coverage()`](https://dragosmg.github.io/covr2gh/reference/combine_file_coverage.md)
