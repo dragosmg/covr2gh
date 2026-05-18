@@ -11,7 +11,7 @@
       ![badge](https://img.shields.io/badge/coverage-29%25-E4804E.svg)
       
       :x:  Merging PR [#3](https://github.com/dragosmg/covr2ghdemo/pull/3) ([`<removed-commit-sha>`](head_sha_url)) into _main_ ([`<removed-commit-sha>`](base_sha_url)) will **decrease** overall coverage by `3` percentage points.
-      :x:  Diff coverage is `20%` (`3` out of `15` added lines are covered by tests). It's good practice to aim for at least `31.6%` (the base branch test coverage).
+      :x:  Diff coverage is `20%` (`3` out of `15` modified lines are covered by tests). It's good practice to aim for at least `31.6%` (the base branch test coverage).
       
       <details>
       <summary>Details</summary>
@@ -23,14 +23,14 @@
       |R/add_one.R |         33.3%|           40%|  -6.7   | :arrow_down: |
       |Overall     |         28.6%|         31.6%|  -3.0   | :arrow_down: |
       
-      ### Coverage for added lines
+      ### Coverage for modified lines
       
-      |File name     | Lines added| Lines tested| Coverage|Missing      |
-      |:-------------|-----------:|------------:|--------:|:------------|
-      |R/add_one.R   |           6|            2|    33.3%|13-16        |
-      |R/add_three.R |           8|            0|       0%|12-15, 18-21 |
-      |R/add_two.R   |           1|            1|     100%|             |
-      |Total         |          15|            3|      20%|             |
+      |File name     | Lines modified| Lines tested| Coverage|Missing      |
+      |:-------------|--------------:|------------:|--------:|:------------|
+      |R/add_one.R   |              6|            2|    33.3%|13-16        |
+      |R/add_three.R |              8|            0|       0%|12-15, 18-21 |
+      |R/add_two.R   |              1|            1|     100%|             |
+      |Total         |             15|            3|      20%|             |
       </details>
       
       :recycle: Comment updated with the latest results.
@@ -50,7 +50,7 @@
       ![badge](https://img.shields.io/badge/coverage-29%25-E4804E.svg)
       
       :x:  Merging PR [#3](https://github.com/dragosmg/covr2ghdemo/pull/3) ([`<removed-commit-sha>`](head_sha_url)) into _main_ ([`<removed-commit-sha>`](base_sha_url)) will **decrease** overall coverage by `3` percentage points.
-      :x:  Diff coverage is `20%` (`3` out of `15` added lines are covered by tests). The minimum accepted coverage is `40%`.
+      :x:  Diff coverage is `20%` (`3` out of `15` modified lines are covered by tests). The minimum accepted coverage is `40%`.
       
       <details>
       <summary>Details</summary>
@@ -62,14 +62,14 @@
       |R/add_one.R |         33.3%|           40%|  -6.7   | :arrow_down: |
       |Overall     |         28.6%|         31.6%|  -3.0   | :arrow_down: |
       
-      ### Coverage for added lines
+      ### Coverage for modified lines
       
-      |File name     | Lines added| Lines tested| Coverage|Missing      |
-      |:-------------|-----------:|------------:|--------:|:------------|
-      |R/add_one.R   |           6|            2|    33.3%|13-16        |
-      |R/add_three.R |           8|            0|       0%|12-15, 18-21 |
-      |R/add_two.R   |           1|            1|     100%|             |
-      |Total         |          15|            3|      20%|             |
+      |File name     | Lines modified| Lines tested| Coverage|Missing      |
+      |:-------------|--------------:|------------:|--------:|:------------|
+      |R/add_one.R   |              6|            2|    33.3%|13-16        |
+      |R/add_three.R |              8|            0|       0%|12-15, 18-21 |
+      |R/add_two.R   |              1|            1|     100%|             |
+      |Total         |             15|            3|      20%|             |
       </details>
       
       :recycle: Comment updated with the latest results.

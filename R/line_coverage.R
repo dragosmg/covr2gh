@@ -24,13 +24,13 @@ compose_line_coverage_summary <- function(
 
     diff_coverage <- line_cov_delta |>
         dplyr::summarise(
-            total_lines_added = sum(.data$lines_added),
+            total_lines_modified = sum(.data$lines_modified),
             total_lines_covered = sum(.data$lines_covered)
         )
 
     line_coverage <- round(
         diff_coverage$total_lines_covered /
-            diff_coverage$total_lines_added *
+            diff_coverage$total_lines_modified *
             100,
         1
     )
@@ -64,11 +64,11 @@ compose_line_coverage_summary <- function(
             emoji = emoji,
             line_coverage = line_coverage,
             lines_covered = diff_coverage$total_lines_covered,
-            lines_added = diff_coverage$total_lines_added,
+            lines_modified = diff_coverage$total_lines_modified,
             advice = advice
         ),
         "{emoji} Diff coverage is `{line_coverage}%` (`{lines_covered}` out \\
-        of `{lines_added}` added lines are covered by tests). {advice}"
+        of `{lines_modified}` modified lines are covered by tests). {advice}"
     )
 }
 
@@ -91,7 +91,7 @@ compose_line_coverage_details <- function(line_cov_delta) {
     subtitle <- ""
 
     if (!is.null(line_cov_delta)) {
-        subtitle <- "### Coverage for added lines"
+        subtitle <- "### Coverage for modified lines"
     }
 
     diff_cov_details <- glue::glue_data(

@@ -90,12 +90,12 @@ line_cov_to_md <- function(
 
     total_row <- line_cov_delta |>
         dplyr::summarise(
-            lines_added = sum(.data$lines_added),
+            lines_modified = sum(.data$lines_modified),
             lines_covered = sum(.data$lines_covered)
         ) |>
         dplyr::mutate(
             file_name = "Total",
-            .before = "lines_added"
+            .before = "lines_modified"
         )
 
     output <- dplyr::bind_rows(
@@ -104,7 +104,7 @@ line_cov_to_md <- function(
     ) |>
         dplyr::mutate(
             coverage = round(
-                (.data$lines_covered / .data$lines_added) * 100,
+                (.data$lines_covered / .data$lines_modified) * 100,
                 1
             ),
             coverage = paste0(
@@ -119,7 +119,7 @@ line_cov_to_md <- function(
         ) |>
         dplyr::select(
             `File name` = "file_name",
-            `Lines added` = "lines_added",
+            `Lines modified` = "lines_modified",
             `Lines tested` = "lines_covered",
             Coverage = "coverage",
             Missing = "missing"

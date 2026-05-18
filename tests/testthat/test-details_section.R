@@ -8,7 +8,7 @@ test_that("compose_details_section works", {
 
     line_coverage_delta <- tibble::tibble(
         file_name = c("R/add_one.R", "R/add_three.R", "R/add_two.R"),
-        lines_added = c(6L, 8L, 1L),
+        lines_modified = c(6L, 8L, 1L),
         lines_covered = c(2L, 0L, 1L),
         missing = c("13-16", "12-15, 18-21", NA)
     )
