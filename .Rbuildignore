@@ -11,6 +11,7 @@
 ^pkgdown$
 ^vignettes/\.quarto$
 ^vignettes/*_files$
+^dev$
 ^doc$
 ^Meta$
 ^man/build_badge_url\.Rd$
