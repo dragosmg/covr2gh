@@ -2,9 +2,9 @@
 % Please edit documentation in R/comment.R
 \name{post_comment}
 \alias{post_comment}
-\title{Post or update comment}
+\title{Post comment}
 \usage{
-post_comment(body, repo, pr_number, new = FALSE, delete = new)
+post_comment(body, repo, pr_number, update = TRUE)
 }
 \arguments{
 \item{body}{(character scalar) the content of the body of the message.}
@@ -14,11 +14,8 @@ post_comment(body, repo, pr_number, new = FALSE, delete = new)
 
 \item{pr_number}{(integer) the PR number}
 
-\item{new}{(logical) post a new comment or update existing one. Defaults to
-\code{FALSE}.}
-
-\item{delete}{(logical) whether to delete a comment. Useful when posting new
-comments (delete old ones).}
+\item{update}{(logical) update an existing comment or post a new one.
+Defaults to \code{TRUE}.}
 }
 \value{
 a \code{gh_response} object containing the API response
@@ -27,6 +24,10 @@ a \code{gh_response} object containing the API response
 \code{post_comment()} first checks if a "known" \code{covr2gh} comment exists on the
 target pull request. If it does, then it updates it, if it doesn't, then a
 a new comment is posted.
+}
+\details{
+Users can also choose to always post a new comment (this always deletes the
+previous one).
 }
 \examples{
 \dontrun{
