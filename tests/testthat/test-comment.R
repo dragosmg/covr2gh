@@ -1,4 +1,4 @@
-test_that("post_comment, get_comment_id & delete_comment work", {
+test_that("post_comment, get_comment_id & comm_delete work", {
     skip_if_offline()
     skip_on_ci()
     expect_no_error(
@@ -22,7 +22,7 @@ test_that("post_comment, get_comment_id & delete_comment work", {
     )
 
     expect_no_error(
-        d <- delete_comment(
+        d <- comm_delete(
             repo = "dragosmg/covr2ghdemo", # nolint
             comment_id = a$id
         )

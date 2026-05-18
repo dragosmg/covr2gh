@@ -95,7 +95,7 @@ post_comment <- function(
     )
 
     if (isTRUE(new) && isTRUE(delete) && !rlang::is_null(comment_id)) {
-        delete_comment(repo, comment_id)
+        comm_delete(repo, comment_id)
     }
 
     if (rlang::is_null(comment_id)) {
@@ -141,9 +141,9 @@ post_comment <- function(
 #' @dev
 #' @examples
 #' \dontrun{
-#' delete_comment("<owner>/<repo>", 4553)
+#' comm_delete("<owner>/<repo>", 4553)
 #' }
-delete_comment <- function(
+comm_delete <- function(
     repo,
     comment_id
 ) {
