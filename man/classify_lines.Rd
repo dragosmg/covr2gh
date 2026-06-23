@@ -23,7 +23,7 @@ rows into:
 }
 \description{
 \code{-}: line appears in base, but not in head (was deleted)
-\code{+}: line appears in head, but not in base (was added)
+\code{+}: line appears in head, but not in base (was added / modified)
 \verb{++}: line was added, but does not appear in either head or base
 it indicates a line that did not exist in either parent and was
 introduced by the merge resolution itself

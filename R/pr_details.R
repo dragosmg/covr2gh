@@ -4,8 +4,7 @@
 #' contains a subset of these, needed for downstream use.
 #'
 #' @inheritParams compose_comment repo pr_number
-#' @param call the execution environment to surface the error message from.
-#'   Defaults to [rlang::caller_env()].
+#' @inheritParams rlang::check_bool call
 #'
 #' @returns an object of class `pr_details` - a list with the following
 #' elements:
@@ -31,19 +30,8 @@ get_pr_details <- function(
     call = rlang::caller_env()
 ) {
     # TODO check for GitHub format (`OWNER/REPO`)
-    if (!rlang::is_scalar_character(repo)) {
-        cli::cli_abort(
-            "`repo` must be a character scalar.",
-            call = call
-        )
-    }
-
-    if (!rlang::is_scalar_integerish(pr_number)) {
-        cli::cli_abort(
-            "`pr_number` must be an integer-like scalar.",
-            call = call
-        )
-    }
+    rlang::check_string(repo, call = call)
+    rlang::check_number_whole(pr_number, call = call)
 
     pr_api_url <- glue::glue(
         "https://api.github.com/repos/{repo}/pulls/{pr_number}"

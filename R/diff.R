@@ -98,7 +98,7 @@ diff_split <- function(diff_text) {
 #' Classify lines
 #'
 #' `-`: line appears in base, but not in head (was deleted)
-#' `+`: line appears in head, but not in base (was added)
+#' `+`: line appears in head, but not in base (was added / modified)
 #' `++`: line was added, but does not appear in either head or base
 #'       it indicates a line that did not exist in either parent and was
 #'       introduced by the merge resolution itself

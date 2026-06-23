@@ -61,13 +61,10 @@ get_comment_id <- function(
 #'
 #' `post_comment()` first checks if a "known" `covr2gh` comment exists on the
 #' target pull request. If it does, then it updates it, if it doesn't, then a
-#' a new comment is posted.
+#' a new comment is posted. Users can also choose to post a new comment
+#' (this always deletes the previous one).
 #'
-#' @details
-#' Users can also choose to always post a new comment (this always deletes the
-#' previous one).
-#'
-#' @param body (character scalar) the content of the body of the message.
+#' @param body (string) the content of the body of the message.
 #' @inheritParams compose_comment repo pr_number
 #' @param update (logical) update an existing comment or post a new one.
 #'   Defaults to `TRUE`.

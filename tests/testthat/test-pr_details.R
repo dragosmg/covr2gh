@@ -1,5 +1,6 @@
 test_that("get_pr_details() works", {
-    skip_if_offline()
+    # skip_if_offline()
+    vcr::local_cassette("pr_details")
     expect_snapshot(
         get_pr_details(
             repo = "dragosmg/covr2ghdemo", # nolint
@@ -14,7 +15,7 @@ test_that("get_pr_details() complains with incorrect inputs", {
         get_pr_details(
             repo = c("foo", "bar")
         ),
-        "`repo` must be a character scalar.",
+        "`repo` must be a single string, not a character vector.",
         fixed = TRUE
     )
 
@@ -23,7 +24,7 @@ test_that("get_pr_details() complains with incorrect inputs", {
         get_pr_details(
             repo = 1
         ),
-        "`repo` must be a character scalar.",
+        "`repo` must be a single string, not the number 1.",
         fixed = TRUE
     )
 
@@ -31,7 +32,7 @@ test_that("get_pr_details() complains with incorrect inputs", {
         get_pr_details(
             repo = FALSE
         ),
-        "`repo` must be a character scalar.",
+        "`repo` must be a single string, not `FALSE`.",
         fixed = TRUE
     )
 
@@ -41,7 +42,7 @@ test_that("get_pr_details() complains with incorrect inputs", {
             repo = "dragosmg/covr2ghdemo", # nolint
             pr_number = c(2, 3)
         ),
-        "`pr_number` must be an integer-like scalar.",
+        "`pr_number` must be a whole number, not a double vector.",
         fixed = TRUE
     )
 
@@ -51,7 +52,7 @@ test_that("get_pr_details() complains with incorrect inputs", {
             repo = "dragosmg/covr2ghdemo", # nolint
             pr_number = "foo"
         ),
-        "`pr_number` must be an integer-like scalar.",
+        '`pr_number` must be a whole number, not the string "foo".',
         fixed = TRUE
     )
 
@@ -60,7 +61,7 @@ test_that("get_pr_details() complains with incorrect inputs", {
             repo = "dragosmg/covr2ghdemo", # nolint
             pr_number = FALSE
         ),
-        "`pr_number` must be an integer-like scalar.",
+        "`pr_number` must be a whole number, not `FALSE`.",
         fixed = TRUE
     )
 })
