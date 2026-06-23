@@ -120,6 +120,7 @@ get_diff_text <- function(pr_details) {
 
     output <- reply$files |>
         purrr::keep(\(x) stringr::str_starts(x$filename, "R/|src/")) |>
+        purrr::discard(\(x) stringr::str_ends(x$filename, ".rda")) |>
         purrr::map(pull_patch) |>
         purrr::list_flatten()
 
