@@ -10,7 +10,7 @@
 #' @returns a character scalar containing markdown version of the diff df
 #'   collapsed into a single string.
 #'
-#' @keywords internal
+#' @noRd
 file_cov_to_md <- function(file_cov_delta, align = "lrrcc") {
     if (is.null(file_cov_delta)) {
         return("")
@@ -79,7 +79,7 @@ file_cov_to_md <- function(file_cov_delta, align = "lrrcc") {
 #'
 #' @returns a markdown table as a string
 #'
-#' @keywords internal
+#' @noRd
 line_cov_to_md <- function(
     line_cov_delta,
     align = "lrrrl"
