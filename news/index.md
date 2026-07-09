@@ -9,4 +9,5 @@
   and
   [`post_comment()`](https://dragosmg.github.io/covr2gh/reference/post_comment.md)
   produce and post the comment.
-- `generate_badge` makes the badge.
+- [`generate_badge()`](https://dragosmg.github.io/covr2gh/reference/generate_badge.md)
+  makes the badge.
