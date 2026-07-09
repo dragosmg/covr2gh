@@ -12,7 +12,7 @@
 #' @returns a `tibble` with 2 columns (`File` and `Coverage`) summarising
 #'   testing coverage at file level.
 #'
-#' @dev
+#' @noRd
 #' @examples
 #' \dontrun{
 #' library(covr)
@@ -54,7 +54,7 @@ file_coverage_digest <- function(
 #'   * `coverage_base` coverage for the base branch, and
 #'   * `delta`: difference in coverage between head and base.
 #'
-#' @dev
+#' @noRd
 combine_file_coverage <- function(
     head_coverage,
     base_coverage,
@@ -105,7 +105,7 @@ combine_file_coverage <- function(
 #'
 #' @returns a glue object, a string with the section content.
 #'
-#' @dev
+#' @noRd
 compose_file_coverage_details <- function(file_cov_delta) {
     if (is.null(file_cov_delta)) {
         return(glue::as_glue(""))

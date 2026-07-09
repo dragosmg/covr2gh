@@ -19,7 +19,7 @@
 #'   * `pr_html_url`: the URL to the PR HTML branch
 #'   * `diff_url`: the diff URL
 #'
-#' @dev
+#' @noRd
 #'
 #' @examples
 #' \dontrun{
@@ -83,7 +83,7 @@ get_pr_details <- function(
 #' @returns a named list where the names are file names and the content of each
 #' element is the patch for the specific file.
 #'
-#' @dev
+#' @noRd
 #' @examples
 #' \dontrun{
 #' pr_details <- get_pr_details("<owner>/<repo>", 2)
@@ -162,7 +162,7 @@ extract_added_lines <- function(diff_text) {
 #'   * lines_covered: number of added (?) - maybe modified - lines covered by
 #'   unit tests
 #'
-#' @dev
+#' @noRd
 get_diff_line_coverage <- function(
     pr_details,
     head_coverage
@@ -186,6 +186,12 @@ get_diff_line_coverage <- function(
     line_coverage <- head_coverage |>
         covr::tally_coverage(by = "line") |>
         tibble::as_tibble()
+
+    # this prevents errors when there are no added / modified lines, but the
+    # diff_text is not empty
+    if (rlang::is_empty(added_lines)) {
+        return(NULL)
+    }
 
     diff_line_coverage <- added_lines |>
         dplyr::left_join(

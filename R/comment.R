@@ -11,7 +11,7 @@
 #'
 #' @returns the comment ID (scalar numeric) or `NULL`
 #'
-#' @dev
+#' @noRd
 #' @examples
 #' \dontrun{
 #' get_comment_id("<owner>/<repo>", 3)
@@ -139,7 +139,7 @@ post_comment <- function(
 #'
 #' @returns a `gh_response` object
 #'
-#' @dev
+#' @noRd
 #' @examples
 #' \dontrun{
 #' comm_delete("<owner>/<repo>", 4553)
