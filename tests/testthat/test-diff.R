@@ -42,10 +42,10 @@ test_that("diff_split works", {
         )
     )
 
-    diff_text_pr90 <- readRDS(
+    diff_content_pr90 <- readRDS(
         testthat::test_path(
             "fixtures",
-            "diff_text_pr90.RDS"
+            "diff_content_pr90.RDS"
         )
     )
 
@@ -55,16 +55,16 @@ test_that("diff_split works", {
         )
     )
 
-    slightly_complex_diff_text <- readRDS(
+    slightly_complex_diff_content <- readRDS(
         testthat::test_path(
             "fixtures",
-            "slightly_complex_diff_text.RDS"
+            "slightly_complex_diff_content.RDS"
         )
     )
 
     expect_snapshot(
         diff_split(
-            slightly_complex_diff_text
+            slightly_complex_diff_content
         )
     )
 })
