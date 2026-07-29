@@ -2,7 +2,7 @@
 #'
 #' Builds the high-level sentence summarising the line coverage of the patch.
 #'
-#' @param line_cov_delta a `tibble` the output of [get_diff_line_coverage()]
+#' @param line_cov_delta a `tibble` the output of [diff_line_coverage()]
 #' @param target (numeric) the target coverage for the diff. Defaults to 80, but
 #' `compose_comment()` uses the total coverage for base.
 #'

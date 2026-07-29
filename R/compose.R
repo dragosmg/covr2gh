@@ -69,7 +69,7 @@ compose_comment <- function(
         base_coverage = base_coverage
     )
 
-    line_cov_delta <- get_diff_line_coverage(
+    line_cov_delta <- diff_line_coverage(
         pr_details = pr_details,
         head_coverage = head_coverage
     )

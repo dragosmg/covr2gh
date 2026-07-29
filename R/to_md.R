@@ -73,13 +73,13 @@ file_cov_to_md <- function(file_cov_delta, align = "lrrcc") {
 #' Adds a total row, make column names more readable. Then transforms it to
 #' markdown which gets collapsed into a single string.
 #'
-#' @param line_cov_delta (`tibble`) diff line coverage data. The output of
-#'   [get_diff_line_coverage()]
+#' @param line_cov_delta A `tibble` with diff line coverage data. The output of
+#'   [diff_line_coverage()]
 #' @inheritParams knitr::kable
 #'
 #' @returns a markdown table as a string
 #'
-#' @noRd
+#' @keywords internal
 line_cov_to_md <- function(
     line_cov_delta,
     align = "lrrrl"

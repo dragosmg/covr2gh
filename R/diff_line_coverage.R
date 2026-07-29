@@ -23,7 +23,7 @@
 #'   unit tests
 #'
 #' @keywords internal
-get_diff_line_coverage <- function(
+diff_line_coverage <- function(
     pr_details,
     head_coverage
 ) {
