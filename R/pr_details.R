@@ -90,17 +90,6 @@ check_pr_details <- function(
 }
 
 
-# input is the output of get_diff_content
-# returns a data.frame with the position (line number) of the added (?) - maybe
-# modified - lines (in the output file) and their contents
-extract_added_lines <- function(diff_content) {
-    split_diff <- diff_split(diff_content)
-
-    added_lines <- split_diff$head_lines
-
-    added_lines
-}
-
 #' Get the line coverage for the diff
 #'
 #' Are the modified lines covered by unit tests?

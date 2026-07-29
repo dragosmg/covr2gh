@@ -50,38 +50,14 @@ get_diff_content <- function(pr_details) {
         purrr::map(pull_patch) |>
         purrr::list_flatten()
 
-    structure(
-        output,
-        class = "covr2gh_diff_content"
-    )
+    output
 }
 
-is_diff_content <- function(x) {
-    inherits(x, "covr2gh_diff_content")
-}
+# input is the output of get_diff_content
+# returns a data.frame with the position (line number) of the added (?) - maybe
+# modified - lines (in the output file) and their contents
+extract_added_lines <- function(diff_content) {
+    split_diff <- diff_split(diff_content)
 
-check_diff_content <- function(
-    x,
-    ...,
-    allow_null = FALSE,
-    arg = rlang::caller_arg(x),
-    call = rlang::caller_env()
-) {
-    if (!missing(x)) {
-        if (is_diff_content(x)) {
-            return(invisible(NULL))
-        }
-        if (allow_null && rlang::is_null(x)) {
-            return(invisible(NULL))
-        }
-    }
-
-    rlang::stop_input_type(
-        x,
-        "a covr2gh diff content object",
-        ...,
-        allow_null = allow_null,
-        arg = arg,
-        call = call
-    )
+    split_diff$head_lines
 }
