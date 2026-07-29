@@ -51,7 +51,7 @@ test_that("diff_split works", {
 
     expect_snapshot(
         diff_split(
-            diff1_text_pr90
+            diff_content_pr90
         )
     )
 

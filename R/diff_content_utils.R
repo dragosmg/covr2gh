@@ -2,7 +2,7 @@
 #'
 #' Reverse-engineer the combined view of the diff.
 #'
-#' @param diff_content (character) string with the diff contents
+#' @param diff_content A string with the contents of the diff.
 #'
 #' @returns a list with 2 tibbles:
 #'  * `head_lines`: the numbered lines that were added in head
