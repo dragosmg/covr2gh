@@ -69,7 +69,7 @@ compose_comment <- function(
         base_coverage = base_coverage
     )
 
-    line_cov_delta <- get_diff_line_coverage(
+    line_cov_delta <- diff_line_coverage(
         pr_details = pr_details,
         head_coverage = head_coverage
     )
@@ -125,7 +125,7 @@ compose_comment <- function(
 #' @returns a string (character scalar) containing the text for the coverage
 #'   summary.
 #'
-#' @noRd
+#' @keywords internal
 #' @examples
 #' \dontrun{
 #' pr_details <- get_pr_details(

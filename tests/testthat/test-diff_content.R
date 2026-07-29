@@ -1,0 +1,125 @@
+test_that("get_diff_content works", {
+    # nolint start: nonportable_path_linter
+    pr_details <- get_pr_details(
+        "dragosmg/covr2ghdemo",
+        3
+    )
+    # nolint end
+
+    expect_snapshot(
+        get_diff_content(
+            pr_details = pr_details
+        )
+    )
+})
+
+test_that("extract_added_lines works", {
+    # TODO add a couple of tests with more complicated diffs
+    test_diff_content <- testthat::test_path(
+        "fixtures",
+        "diff_content.txt"
+    ) |>
+        readLines() |>
+        stringr::str_flatten(
+            collapse = "\n"
+        )
+
+    expect_snapshot(
+        extract_added_lines(
+            test_diff_content
+        )
+    )
+
+    expect_identical(
+        extract_added_lines(
+            test_diff_content
+        ),
+        tibble::tibble(
+            line = as.integer(
+                c(11, 13, 14)
+            ),
+            source = c(
+                "  if (!is.numeric(x)) {",
+                "      \"`x` must be numeric. You supplied a {.class {class(x)}}\",", # nolint
+                "      call = rlang::caller_env()"
+            )
+        )
+    )
+})
+
+test_that("extract_added_lines with a more complex diff", {
+    slightly_complex_diff_content <- testthat::test_path(
+        "fixtures",
+        "slightly_complex_diff_content.RDS"
+    ) |>
+        readRDS()
+
+    expect_snapshot(
+        purrr::map(
+            slightly_complex_diff_content,
+            extract_added_lines
+        )
+    )
+})
+
+test_that("extract_added_lines with a more complex diff reproducible", {
+    # nolint start: nonportable_path_linter
+    files <- c(
+        "R/compose.R",
+        "R/file_coverage.R",
+        "R/github_action.R",
+        "R/line_coverage.R",
+        "R/pr_details.R",
+        "R/to_md.R"
+    )
+    # nolint end
+
+    pr_details <- structure(
+        list(
+            repo = "dragosmg/covr2gh", # nolint
+            pr_number = 90,
+            is_fork = FALSE,
+            head_name = "badge-href-contd",
+            head_sha = "8d59ad50711fc1054f431c3a64ac98138d09ca5d",
+            base_name = "main",
+            base_sha = "a0c335b6c2fbff30817be9308455ba3c9ff8dbf5",
+            pr_html_url = "https://github.com/dragosmg/covr2gh/pull/90",
+            diff_url = "https://github.com/dragosmg/covr2gh/pull/90.diff"
+        ),
+        class = "pr_details"
+    )
+
+    diff_content_pr90 <- readRDS(
+        testthat::test_path(
+            "fixtures",
+            "diff_content_pr90.RDS"
+        )
+    )
+
+    added_lines <- purrr::map(
+        diff_content_pr90,
+        extract_added_lines
+    )
+
+    # fmt: skip
+    # these lines are checked and are correct
+    expect_identical(
+        added_lines$`R/github_action.R`$line,
+        c(
+            26, 31, 33, 41, 55, 56, 61, 63, 68,
+            69, 70, 71, 73, 74
+        ) |>
+            as.integer()
+    )
+
+    # fmt: skip
+    expect_identical(
+        added_lines$`R/compose.R`$line,
+        c(
+            114, 116, 117, 118, 119, 120, 123,
+            124, 125, 126, 127, 128, 134, 139,
+            140, 141, 142, 143, 182, 183
+        ) |>
+            as.integer()
+    )
+})

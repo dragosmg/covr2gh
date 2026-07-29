@@ -2,7 +2,7 @@
 #'
 #' Reverse-engineer the combined view of the diff.
 #'
-#' @param diff_text (character) string with the diff contents
+#' @param diff_content A string with the contents of the diff.
 #'
 #' @returns a list with 2 tibbles:
 #'  * `head_lines`: the numbered lines that were added in head
@@ -11,8 +11,8 @@
 #' Each `tibble` has 2 columns: `line` and `source``
 #'
 #' @noRd
-diff_split <- function(diff_text) {
-    raw_diff_df <- diff_text |>
+diff_split <- function(diff_content) {
+    raw_diff_df <- diff_content |>
         stringr::str_split(
             pattern = stringr::fixed("\n")
         ) |>

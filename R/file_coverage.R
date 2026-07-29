@@ -54,7 +54,7 @@ file_coverage_digest <- function(
 #'   * `coverage_base` coverage for the base branch, and
 #'   * `delta`: difference in coverage between head and base.
 #'
-#' @noRd
+#' @keywords internal
 combine_file_coverage <- function(
     head_coverage,
     base_coverage,

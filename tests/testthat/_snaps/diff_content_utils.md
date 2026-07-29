@@ -67,29 +67,49 @@
 ---
 
     Code
-      diff_split(diff1_text_pr90)
+      diff_split(diff_content_pr90)
     Output
       $head_lines
-      # A tibble: 8 x 2
-         line source                                                                  
-        <int> <chr>                                                                   
-      1    79 "    # TODO this does not capture situations when the code has changed,~
-      2    80 "    # coverage hasn't (i.e. coverage is 0)"                            
-      3    81 "    # * this is relevant"                                              
-      4    82 "    # * need to return at capturing both files with changes to coverag~
-      5    83 "    # those"                                                           
-      6    84 "    # with changes to content. In this case, because we use the files ~
-      7    85 "    # subset the diff_text,"                                           
-      8    86 "    # we miss a bunch of files functions with content change"          
+      # A tibble: 20 x 2
+          line source                                                                 
+         <int> <chr>                                                                  
+       1   114 "    line_coverage_dfs <- get_diff_line_coverage("                     
+       2   116 "        pr_details = pr_details,"                                     
+       3   117 "        relevant_files = relevant_files,"                             
+       4   118 "        head_coverage = head_coverage,"                               
+       5   119 "        # to figure out if coverage for a given line has changed"     
+       6   120 "        base_coverage = base_coverage"                                
+       7   123 "    # TODO we need to capture lines that have not changed (they're ne~
+       8   124 "    # TODO nor removed), but their coverage has"                      
+       9   125 "    # e.g. line 30 today is uncovered, used to be line 20 and covered~
+      10   126 "    # change in logic that used to take some execution paths in the p~
+      11   127 "    # no longer)"                                                     
+      12   128 ""                                                                     
+      13   134 "        line_coverage_dfs$diff_line_coverage,"                        
+      14   139 "        line_coverage_dfs$diff_line_coverage"                         
+      15   140 "    )"                                                                
+      16   141 ""                                                                     
+      17   142 "    line_cov_loss_details <- compose_line_coverage_loss_details("     
+      18   143 "        line_coverage_dfs$lines_cov_change_wo_code_change"            
+      19   182 ""                                                                     
+      20   183 "        {line_cov_loss_details}"                                      
       
       $base_lines
-      NULL
+      # A tibble: 6 x 2
+         line source                                             
+        <int> <chr>                                              
+      1   114 "    diff_line_coverage <- get_diff_line_coverage("
+      2   115 "        head_coverage = head_coverage,"           
+      3   116 "        relevant_files = relevant_files,"         
+      4   118 "        pr_details = pr_details"                  
+      5   126 "        diff_line_coverage,"                      
+      6   131 "        diff_line_coverage"                       
       
 
 ---
 
     Code
-      diff_split(slightly_complex_diff_text)
+      diff_split(slightly_complex_diff_content)
     Output
       $head_lines
       # A tibble: 4 x 2
