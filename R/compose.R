@@ -125,7 +125,7 @@ compose_comment <- function(
 #' @returns a string (character scalar) containing the text for the coverage
 #'   summary.
 #'
-#' @noRd
+#' @keywords internal
 #' @examples
 #' \dontrun{
 #' pr_details <- get_pr_details(
