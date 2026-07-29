@@ -1,4 +1,4 @@
-# multiplication works
+# diff_line_coverage
 
     Code
       diff_line_coverage(pr_details, head_coverage)

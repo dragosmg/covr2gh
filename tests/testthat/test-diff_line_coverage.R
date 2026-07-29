@@ -1,4 +1,4 @@
-test_that("multiplication works", {
+test_that("diff_line_coverage", {
     head_coverage <- readRDS(
         test_path(
             "fixtures",
