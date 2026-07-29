@@ -14,7 +14,7 @@ test_that("get_pr_details() complains with incorrect inputs", {
         get_pr_details(
             repo = c("foo", "bar")
         ),
-        "`repo` must be a character scalar.",
+        "`repo` must be a single string, not a character vector",
         fixed = TRUE
     )
 
@@ -23,7 +23,7 @@ test_that("get_pr_details() complains with incorrect inputs", {
         get_pr_details(
             repo = 1
         ),
-        "`repo` must be a character scalar.",
+        "`repo` must be a single string, not the number 1",
         fixed = TRUE
     )
 
@@ -31,7 +31,7 @@ test_that("get_pr_details() complains with incorrect inputs", {
         get_pr_details(
             repo = FALSE
         ),
-        "`repo` must be a character scalar.",
+        "`repo` must be a single string, not `FALSE`",
         fixed = TRUE
     )
 
@@ -41,7 +41,7 @@ test_that("get_pr_details() complains with incorrect inputs", {
             repo = "dragosmg/covr2ghdemo", # nolint
             pr_number = c(2, 3)
         ),
-        "`pr_number` must be an integer-like scalar.",
+        "`pr_number` must be a whole number, not a double vector",
         fixed = TRUE
     )
 
@@ -51,7 +51,7 @@ test_that("get_pr_details() complains with incorrect inputs", {
             repo = "dragosmg/covr2ghdemo", # nolint
             pr_number = "foo"
         ),
-        "`pr_number` must be an integer-like scalar.",
+        '`pr_number` must be a whole number, not the string "foo"',
         fixed = TRUE
     )
 
@@ -60,16 +60,49 @@ test_that("get_pr_details() complains with incorrect inputs", {
             repo = "dragosmg/covr2ghdemo", # nolint
             pr_number = FALSE
         ),
-        "`pr_number` must be an integer-like scalar.",
+        "`pr_number` must be a whole number, not `FALSE`",
         fixed = TRUE
+    )
+})
+
+test_that("is_pr_details", {
+    expect_false(is_pr_details("foo"))
+    expect_true(
+        is_pr_details(
+            structure(
+                "foo",
+                class = "covr2gh_pr_details"
+            )
+        )
+    )
+})
+
+test_that("check_pr_details", {
+    expect_snapshot(error = TRUE, check_pr_details("foo"))
+    expect_snapshot(error = TRUE, check_pr_details(1))
+
+    expect_no_error(
+        check_pr_details(
+            structure(
+                "foo",
+                class = "covr2gh_pr_details"
+            )
+        )
+    )
+
+    expect_no_error(
+        check_pr_details(
+            NULL,
+            allow_null = TRUE
+        )
     )
 })
 
 test_that("extract_added_lines works", {
     # TODO add a couple of tests with more complicated diffs
-    test_diff_text <- testthat::test_path(
+    test_diff_content <- testthat::test_path(
         "fixtures",
-        "diff_text.txt"
+        "diff_content.txt"
     ) |>
         readLines() |>
         stringr::str_flatten(
@@ -78,13 +111,13 @@ test_that("extract_added_lines works", {
 
     expect_snapshot(
         extract_added_lines(
-            test_diff_text
+            test_diff_content
         )
     )
 
     expect_identical(
         extract_added_lines(
-            test_diff_text
+            test_diff_content
         ),
         tibble::tibble(
             line = as.integer(
@@ -100,15 +133,15 @@ test_that("extract_added_lines works", {
 })
 
 test_that("extract_added_lines with a more complex diff", {
-    slightly_complex_diff_text <- testthat::test_path(
+    slightly_complex_diff_content <- testthat::test_path(
         "fixtures",
-        "slightly_complex_diff_text.RDS"
+        "slightly_complex_diff_content.RDS"
     ) |>
         readRDS()
 
     expect_snapshot(
         purrr::map(
-            slightly_complex_diff_text,
+            slightly_complex_diff_content,
             extract_added_lines
         )
     )
@@ -141,15 +174,15 @@ test_that("extract_added_lines with a more complex diff reproducible", {
         class = "pr_details"
     )
 
-    diff_text_pr90 <- readRDS(
+    diff_content_pr90 <- readRDS(
         testthat::test_path(
             "fixtures",
-            "diff_text_pr90.RDS"
+            "diff_content_pr90.RDS"
         )
     )
 
     added_lines <- purrr::map(
-        diff_text_pr90,
+        diff_content_pr90,
         extract_added_lines
     )
 
@@ -173,20 +206,5 @@ test_that("extract_added_lines with a more complex diff reproducible", {
             140, 141, 142, 143, 182, 183
         ) |>
             as.integer()
-    )
-})
-
-test_that("get_diff_text works", {
-    # nolint start: nonportable_path_linter
-    pr_details <- get_pr_details(
-        "dragosmg/covr2ghdemo",
-        3
-    )
-    # nolint end
-
-    expect_snapshot(
-        get_diff_text(
-            pr_details = pr_details
-        )
     )
 })

@@ -19,7 +19,7 @@
 #'   * `pr_html_url`: the URL to the PR HTML branch
 #'   * `diff_url`: the diff URL
 #'
-#' @noRd
+#' @keywords internal
 #'
 #' @examples
 #' \dontrun{
@@ -31,19 +31,8 @@ get_pr_details <- function(
     call = rlang::caller_env()
 ) {
     # TODO check for GitHub format (`OWNER/REPO`)
-    if (!rlang::is_scalar_character(repo)) {
-        cli::cli_abort(
-            "`repo` must be a character scalar.",
-            call = call
-        )
-    }
-
-    if (!rlang::is_scalar_integerish(pr_number)) {
-        cli::cli_abort(
-            "`pr_number` must be an integer-like scalar.",
-            call = call
-        )
-    }
+    rlang::check_string(repo, call = call)
+    rlang::check_number_whole(pr_number, call = call)
 
     pr_api_url <- glue::glue(
         "https://api.github.com/repos/{repo}/pulls/{pr_number}"
@@ -64,74 +53,48 @@ get_pr_details <- function(
             pr_html_url = pr_info$html_url,
             diff_url = pr_info$diff_url
         ),
-        class = "pr_details"
+        class = "covr2gh_pr_details"
     )
 
     output
 }
 
+is_pr_details <- function(x) {
+    inherits(x, "covr2gh_pr_details")
+}
 
-#' Get the PR diff
-#'
-#' Sends a GET request to the GitHub API and retrieves the full PR diff, which
-#' is a (comparison) between base (the starting point for the comparison) and
-#' head (the endpoint). The diff is then filtered to only include the "relevant
-#' files".
-#'
-#' @param pr_details a `pr_details` object.
-#'
-#' @returns a named list where the names are file names and the content of each
-#' element is the patch for the specific file.
-#'
-#' @noRd
-#' @examples
-#' \dontrun{
-#' pr_details <- get_pr_details("<owner>/<repo>", 2)
-#'
-#' diff_text <- get_diff_text(pr_details)
-#' }
-get_diff_text <- function(pr_details) {
-    # TODO add inputs checks
-    # TODO standalone rlang?
-
-    # the endpoint can be used to compare branches. once the PR is merged and
-    # the head is deleted it returns a 404. comparing commits can be used, but
-    # the separation between commit hashes is 2-dots (`..`), not 3
-
-    req_url <- glue::glue_data(
-        list(
-            repo = pr_details$repo,
-            base = pr_details$base_name,
-            head = pr_details$head_name
-        ),
-        "https://api.github.com/repos/{repo}/compare/{base}...{head}"
-    )
-
-    # TODO tryCatch
-    reply <- glue::glue("GET {req_url}") |>
-        gh::gh()
-
-    # get the patch element and use filename as name
-    pull_patch <- function(x) {
-        output <- list(x$patch)
-        names(output) <- x$filename
-        output
+check_pr_details <- function(
+    x,
+    ...,
+    allow_null = FALSE,
+    arg = rlang::caller_arg(x),
+    call = rlang::caller_env()
+) {
+    if (!missing(x)) {
+        if (is_pr_details(x)) {
+            return(invisible(NULL))
+        }
+        if (allow_null && rlang::is_null(x)) {
+            return(invisible(NULL))
+        }
     }
 
-    output <- reply$files |>
-        purrr::keep(\(x) stringr::str_starts(x$filename, "R/|src/")) |>
-        purrr::discard(\(x) stringr::str_ends(x$filename, ".rda")) |>
-        purrr::map(pull_patch) |>
-        purrr::list_flatten()
-
-    output
+    rlang::stop_input_type(
+        x,
+        "a covr2gh pr details object",
+        ...,
+        allow_null = allow_null,
+        arg = arg,
+        call = call
+    )
 }
 
-# input is the output of get_diff_text
+
+# input is the output of get_diff_content
 # returns a data.frame with the position (line number) of the added (?) - maybe
 # modified - lines (in the output file) and their contents
-extract_added_lines <- function(diff_text) {
-    split_diff <- diff_split(diff_text)
+extract_added_lines <- function(diff_content) {
+    split_diff <- diff_split(diff_content)
 
     added_lines <- split_diff$head_lines
 
@@ -162,20 +125,20 @@ extract_added_lines <- function(diff_text) {
 #'   * lines_covered: number of added (?) - maybe modified - lines covered by
 #'   unit tests
 #'
-#' @noRd
+#' @keywords internal
 get_diff_line_coverage <- function(
     pr_details,
     head_coverage
 ) {
-    diff_text <- get_diff_text(
+    diff_content <- get_diff_content(
         pr_details = pr_details
     )
 
-    if (rlang::is_empty(diff_text)) {
+    if (rlang::is_empty(diff_content)) {
         return(NULL)
     }
 
-    added_lines <- diff_text |>
+    added_lines <- diff_content |>
         purrr::map(
             extract_added_lines
         ) |>
@@ -188,7 +151,7 @@ get_diff_line_coverage <- function(
         tibble::as_tibble()
 
     # this prevents errors when there are no added / modified lines, but the
-    # diff_text is not empty
+    # diff_content is not empty
     if (rlang::is_empty(added_lines)) {
         return(NULL)
     }
