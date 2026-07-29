@@ -89,7 +89,7 @@
 ---
 
     Code
-      diff_split(slightly_complex_diff_text)
+      diff_split(slightly_complex_diff_content)
     Output
       $head_lines
       # A tibble: 4 x 2
